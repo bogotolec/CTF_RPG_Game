@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterInteraction\Character.cs" />
+    <Compile Include="CharacterInteraction\DBInteraction.cs" />
     <Compile Include="ClientInteraction\ConnectionManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
