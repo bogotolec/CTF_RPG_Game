@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CTF_RPG_Game_Server
+namespace CTF_RPG_Game_Client
 {
     class Program
     {
