@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CTF_RPG_Game.Map
+namespace CTF_RPG_Game.MapComponents
 {
-    class Cell
+    public class Cell
     {
         public string Message;
         public int LandscapeId;

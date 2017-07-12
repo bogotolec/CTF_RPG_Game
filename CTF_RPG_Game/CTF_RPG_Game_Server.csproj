@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,8 +48,8 @@
     <Compile Include="CharacterInteraction\DBInteraction.cs" />
     <Compile Include="CharacterInteraction\Skill.cs" />
     <Compile Include="ClientInteraction\ConnectionManager.cs" />
-    <Compile Include="Map\Cell..cs" />
-    <Compile Include="Map\Map.cs" />
+    <Compile Include="MapComponents\Cell..cs" />
+    <Compile Include="MapComponents\Map.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
