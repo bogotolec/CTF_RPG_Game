@@ -46,6 +46,7 @@
     <Compile Include="CharacterInteraction\Character.cs" />
     <Compile Include="CharacterInteraction\DBInteraction.cs" />
     <Compile Include="CharacterInteraction\ISkill.cs" />
+    <Compile Include="CharacterInteraction\Skill.cs" />
     <Compile Include="ClientInteraction\ConnectionManager.cs" />
     <Compile Include="Map\Cell..cs" />
     <Compile Include="Map\Map.cs" />

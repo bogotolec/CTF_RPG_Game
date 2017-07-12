@@ -29,5 +29,5 @@ namespace CTF_RPG_Game.CharacterInteraction
     }
 
     enum SkillState { Passive, Active };
-    enum CharacterClass { Hacker, SocEng }
+    enum CharacterClass { None, Hacker, SocEng }
 }
