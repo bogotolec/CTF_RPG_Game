@@ -8,6 +8,10 @@ namespace CTF_RPG_Game.Languages
 {
     interface ILanguage
     {
+        #region Auth
         string RegistrationOrLoginText { get; }
+        string AskForRegistrationLogin { get; }
+        string AskForRegistrationPassword { get; }
+        #endregion
     }
 }

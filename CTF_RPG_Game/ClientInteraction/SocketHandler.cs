@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
+using CTF_RPG_Game.Languages;
 
 namespace CTF_RPG_Game.ClientInteraction
 {
     class SocketHandler
     {
         private Socket s;
-        public Language lang;
+        public ILanguage text;
 
         public SocketHandler(Socket socket)
         {
@@ -18,9 +19,29 @@ namespace CTF_RPG_Game.ClientInteraction
         {
             GetMessage();
             ChooseLanguage();
+            bool needRegistration = AskForRegistration();
+            if (needRegistration)
+            {
+                Registration();
+            }
+            else
+            {
+                // TODO
+            }
         }
 
         //////////////////////////////
+
+        private bool AskForRegistration()
+        {
+            SendMessage(text.RegistrationOrLoginText);
+            string answer = GetMessage();
+
+            if (answer.StartsWith("y"))
+                return false;
+            else
+                return true;
+        }
 
         private string GetMessage()
         {
@@ -55,9 +76,9 @@ namespace CTF_RPG_Game.ClientInteraction
             string answer = GetMessage();
 
             if (answer.StartsWith("rus"))
-                lang = Language.Russian;
+                text = Russian.GetLanguage();
             else if (answer.StartsWith("eng"))
-                lang = Language.English;
+                text = null;
             else
             {
                 SendMessage("I cannot understand you, try again\nЯ не могу понять вас, попробуйте еще\n\n");
@@ -67,9 +88,10 @@ namespace CTF_RPG_Game.ClientInteraction
 
         private void Registration()
         {
-
+            SendMessage(text.AskForRegistrationLogin);
+            string login = GetMessage();
+            SendMessage(text.AskForRegistrationPassword);
+            string password = GetMessage();
         }
     }
-
-    enum Language { English, Russian }
 }
