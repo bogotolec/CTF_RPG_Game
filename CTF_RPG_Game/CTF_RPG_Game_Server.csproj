@@ -50,6 +50,7 @@
     <Compile Include="CharacterInteraction\ISkill.cs" />
     <Compile Include="CharacterInteraction\Skill.cs" />
     <Compile Include="ClientInteraction\ConnectionManager.cs" />
+    <Compile Include="ClientInteraction\SocketHandler.cs" />
     <Compile Include="MapComponents\Cell..cs" />
     <Compile Include="MapComponents\Map.cs" />
     <Compile Include="Program.cs" />

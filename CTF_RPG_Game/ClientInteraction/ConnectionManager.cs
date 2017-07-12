@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Threading;
 using System.Net.Sockets;
 using System.Net;
 using CTF_RPG_Game_Server;
@@ -40,10 +40,8 @@ namespace CTF_RPG_Game.ClientInteraction
                 while (true)
                 {
                     Socket handler = ListenSocket.Accept();
-                    
-                    /*
-                     * TODO
-                     */
+                    SocketHandler SH = new SocketHandler(handler);
+                    SH.Handle();
                 }
             }
             catch (Exception ex)
