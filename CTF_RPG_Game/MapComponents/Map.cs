@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.H;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace CTF_RPG_Game.MapComponents
 {
@@ -14,6 +15,32 @@ namespace CTF_RPG_Game.MapComponents
         static int Width;
         static int Height;
         static int MapId;
+        public int[,] LoadMapFile(string name)
+        {
+            try
+            {
+                XmlReader reader = XmlReader.Create(name);
+                reader.ReadToFollowing("data");
+                string csv = (string)reader.ReadElementContentAsString().Trim();
+                string[] csvArray = csv.Split('\n');
+                int[,] IDMap = new int[csvArray.Length, csvArray[0].Split(',').Length - 1];
+                for (int i = 0; i < IDMap.GetLength(0); i++)
+                {
+                    string row = csvArray[i].Trim();
+                    string[] rowArray = row.Split(',');
+                    for (int j = 0; j < IDMap.GetLength(1); j++)
+                    {
+                        IDMap[i,j] = int.Parse(rowArray[j]);
+                    }
+                }
+                return IDMap;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return new int[,] { { },{ } };
+            }
+        }
         public Cell CellFromId(int id)
         {
             Landscape land = (Landscape)id;
@@ -48,33 +75,18 @@ namespace CTF_RPG_Game.MapComponents
         }
         public Map()
         {
-            Console.Write("HI");
+            int[,] IDMap = LoadMapFile("GameMap.tsx");
             Width = 17;
             Height = 17;
-            int[,] idMap = new int[,] { { 34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34 },
-                                        { 34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34 },
-                                        { 34,34,34,34,34,46,30,30,34,34,34,34,34,34,34,34,34 },
-                                        { 34,46,34,34,34,34,34,30,30,30,34,34,34,34,34,34,34 },
-                                        { 34,30,34,34,34,34,34,34,34,30,34,34,34,34,34,34,34 },
-                                        { 34,30,30,30,34,34,34,34,30,30,34,34,34,34,34,34,34 },
-                                        { 34,34,34,30,34,34,34,34,30,34,34,34,34,34,34,34,34 },
-                                        { 34,34,34,30,34,34,34,34,30,34,34,34,34,34,34,34,34 },
-                                        { 34,34,34,30,30,30,30,30,31,30,30,30,30,30,34,34,34 },
-                                        { 34,34,34,34,34,34,34,34,30,34,34,34,34,30,34,34,34 },
-                                        { 34,34,34,34,34,34,34,30,30,34,34,30,30,30,34,34,34 },
-                                        { 34,34,34,34,34,34,30,30,34,34,34,30,34,34,34,34,34 },
-                                        { 34,34,34,34,34,34,30,34,34,34,34,30,30,30,34,34,34 },
-                                        { 34,34,34,34,34,34,30,34,34,34,34,34,34,30,34,34,34 },
-                                        { 34,34,10,10,10,34,30,34,34,34,34,34,34,30,34,34,34 },
-                                        { 34,46,10,10,10,10,30,30,46,34,34,34,34,46,34,34,34 },
-                                        { 34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34 } };
             Cell[,] CellsMassive = new Cell[Height,Width];
             for (int i = 0; i < Height; i++)
             {
                 for (int j = 0; j < Width; j++)
                 {
-                    CellsMassive[i, j] = CellFromId(idMap[i, j]);
+                    CellsMassive[i, j] = CellFromId(IDMap[i, j]);
+                    Console.Write(IDMap[i, j] + " ");
                 }
+                Console.WriteLine();
             }
         }   
     }
