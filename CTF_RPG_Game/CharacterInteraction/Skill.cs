@@ -6,28 +6,31 @@ using System.Threading.Tasks;
 
 namespace CTF_RPG_Game.CharacterInteraction
 {
-    interface ISkill
+    abstract class BasePassiveSkill : ISkill, IPassive
     {
-        int Id { get; }
-        string Name { get; }
-        string Description { get; }
-        int PointsToLearn { get; } 
-        SkillState State { get; }
-        CharacterClass Class { get; }
-        ISkill[] NeededSkills { get; }
+        virtual public int Id { get { return 0; } }
+        virtual public string Name { get { return "Base_passive_skill"; } }
+        virtual public string Description { get { return "No description."; } }
+        virtual public int PointsToLearn { get { return 0; } }
+        public SkillState State { get { return SkillState.Passive; } }
+        virtual public CharacterClass Class { get { return CharacterClass.None; } }
+        virtual public ISkill[] NeededSkills { get { return new ISkill[0]; } }
+        virtual public string PassiveBonusDescription { get { return "That skill is giving nothing"; } }
     }
 
-    interface IActive
+    abstract class BaseActiveSkill : ISkill, IActive
     {
-        string UseDescription { get; }
-        void Use();
+        virtual public int Id { get { return 0; } }
+        virtual public string Name { get { return "Base_active_skill"; } }
+        virtual public string Description { get { return "No description."; } }
+        virtual public int PointsToLearn { get { return 0; } }
+        public SkillState State { get { return SkillState.Active; } }
+        virtual public CharacterClass Class { get { return CharacterClass.None; } }
+        virtual public ISkill[] NeededSkills { get { return new ISkill[0]; } }
+        virtual public string UseDescription { get { return "Nothing."; } }
+        virtual public void Use()
+        {
+            Console.WriteLine("Used base active skill.");
+        } 
     }
-
-    interface IPassive
-    {
-        string PassiveBonusDescription { get; }
-    }
-
-    enum SkillState { Passive, Active };
-    enum CharacterClass { Hacker, SocEng }
 }
