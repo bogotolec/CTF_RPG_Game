@@ -51,6 +51,8 @@
     <Compile Include="CharacterInteraction\Skill.cs" />
     <Compile Include="ClientInteraction\ConnectionManager.cs" />
     <Compile Include="ClientInteraction\SocketHandler.cs" />
+    <Compile Include="Languages\ILanguage.cs" />
+    <Compile Include="Languages\Russian.cs" />
     <Compile Include="MapComponents\Cell..cs" />
     <Compile Include="MapComponents\Map.cs" />
     <Compile Include="Program.cs" />
@@ -62,9 +64,7 @@
   <ItemGroup>
     <None Include="config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Languages\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
