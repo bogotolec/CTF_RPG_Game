@@ -17,6 +17,17 @@ namespace CTF_RPG_Game.CharacterInteraction
         ISkill[] NeededSkills { get; }
     }
 
+    interface IActive
+    {
+        string UseDescription { get; }
+        void Use();
+    }
+
+    interface IPassive
+    {
+        string PassiveBonusDescription { get; }
+    }
+
     enum SkillState { Passive, Active };
     enum CharacterClass { Hacker, SocEng }
 }
