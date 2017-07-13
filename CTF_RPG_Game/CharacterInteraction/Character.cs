@@ -15,5 +15,6 @@ namespace CTF_RPG_Game.CharacterInteraction
         public int Y { get; }
         public int SkillPoints { get; }
         ISkill LearnedSkills { get; }
+        IItem Backpack { get; }
     }
 }
