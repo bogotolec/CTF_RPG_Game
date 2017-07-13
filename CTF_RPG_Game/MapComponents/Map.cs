@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.H;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace CTF_RPG_Game.MapComponents
 {
@@ -14,6 +15,46 @@ namespace CTF_RPG_Game.MapComponents
         static int Width;
         static int Height;
         static int MapId;
+        static Cell[,] CellsMassive;
+        public override string ToString()
+        {
+            string output = "";
+            for (int i = 0; i < Height; i++)
+            {
+                for (int j = 0; j < Width; j++)
+                {
+                    output += CellsMassive[i, j].ToString() + " ";
+                }
+                output += '\n';
+            }
+            return output;
+        }
+        public int[,] LoadMapFile(string name)
+        {
+            try
+            {
+                XmlReader reader = XmlReader.Create(name);
+                reader.ReadToFollowing("data");
+                string csv = (string)reader.ReadElementContentAsString().Trim();
+                string[] csvArray = csv.Split('\n');
+                int[,] IDMap = new int[csvArray.Length, csvArray[0].Split(',').Length - 1];
+                for (int i = 0; i < IDMap.GetLength(0); i++)
+                {
+                    string row = csvArray[i].Trim();
+                    string[] rowArray = row.Split(',');
+                    for (int j = 0; j < IDMap.GetLength(1); j++)
+                    {
+                        IDMap[i,j] = int.Parse(rowArray[j]);
+                    }
+                }
+                return IDMap;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return new int[,] { { },{ } };
+            }
+        }
         public Cell CellFromId(int id)
         {
             Landscape land = (Landscape)id;
@@ -21,59 +62,42 @@ namespace CTF_RPG_Game.MapComponents
             {
                 case Landscape.TP:
                     {
-                        return new Cell { Message = "Teleport", IsPassable = true, IsTaskable = false, IsTeleport = true, IsVisibleWithSkills = false };
+                        return new Cell { Message = "Teleport", IsPassable = true, IsTaskable = false, IsTeleport = true, IsVisibleWithSkills = false, Symbol = 'O'};
                     }
                 case Landscape.UsualWay:
                     {
-                        return new Cell { Message = "UsualWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false };
+                        return new Cell { Message = "UsualWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = ' '};
                     }
                 case Landscape.Task:
                     {
-                        return new Cell { Message = "TASK", IsPassable = true, IsTaskable = true, IsTeleport = false, IsVisibleWithSkills = false };
+                        return new Cell { Message = "TASK", IsPassable = true, IsTaskable = true, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '!'};
                     }
                 case Landscape.SkillWay:
                     {
-                        return new Cell { Message = "SkillWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = true };
+                        return new Cell { Message = "SkillWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = true, Symbol = '-'};
                     }
                 case Landscape.Wall:
                     {
-                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false };
+                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '#'};
                     }
                 default:
                     {
-                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false };
+                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '#' };
                     }
                      
             }
         }
         public Map()
         {
-            Console.Write("HI");
+            int[,] IDMap = LoadMapFile("GameMap.tsx");
             Width = 17;
             Height = 17;
-            int[,] idMap = new int[,] { { 34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34 },
-                                        { 34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34 },
-                                        { 34,34,34,34,34,46,30,30,34,34,34,34,34,34,34,34,34 },
-                                        { 34,46,34,34,34,34,34,30,30,30,34,34,34,34,34,34,34 },
-                                        { 34,30,34,34,34,34,34,34,34,30,34,34,34,34,34,34,34 },
-                                        { 34,30,30,30,34,34,34,34,30,30,34,34,34,34,34,34,34 },
-                                        { 34,34,34,30,34,34,34,34,30,34,34,34,34,34,34,34,34 },
-                                        { 34,34,34,30,34,34,34,34,30,34,34,34,34,34,34,34,34 },
-                                        { 34,34,34,30,30,30,30,30,31,30,30,30,30,30,34,34,34 },
-                                        { 34,34,34,34,34,34,34,34,30,34,34,34,34,30,34,34,34 },
-                                        { 34,34,34,34,34,34,34,30,30,34,34,30,30,30,34,34,34 },
-                                        { 34,34,34,34,34,34,30,30,34,34,34,30,34,34,34,34,34 },
-                                        { 34,34,34,34,34,34,30,34,34,34,34,30,30,30,34,34,34 },
-                                        { 34,34,34,34,34,34,30,34,34,34,34,34,34,30,34,34,34 },
-                                        { 34,34,10,10,10,34,30,34,34,34,34,34,34,30,34,34,34 },
-                                        { 34,46,10,10,10,10,30,30,46,34,34,34,34,46,34,34,34 },
-                                        { 34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34 } };
-            Cell[,] CellsMassive = new Cell[Height,Width];
+            CellsMassive = new Cell[Height,Width];
             for (int i = 0; i < Height; i++)
             {
                 for (int j = 0; j < Width; j++)
                 {
-                    CellsMassive[i, j] = CellFromId(idMap[i, j]);
+                    CellsMassive[i, j] = CellFromId(IDMap[i, j]);
                 }
             }
         }   

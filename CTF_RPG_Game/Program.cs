@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using CTF_RPG_Game.MapComponents;
 
 namespace CTF_RPG_Game_Server
 {
@@ -10,7 +11,10 @@ namespace CTF_RPG_Game_Server
 
         static void Main(string[] args)
         {
-            InitializeServerConfiguration();
+            Map map = new Map();
+            Console.WriteLine(map);
+            Console.ReadKey();
+            InitializeServerConfiguration(); 
         }
 
         private static void InitializeServerConfiguration()
