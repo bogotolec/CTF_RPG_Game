@@ -8,10 +8,32 @@ namespace CTF_RPG_Game.Languages
 {
     interface ILanguage
     {
+        #region Other
+        string Nothing { get; }
+        string None { get; }
+        #endregion
+
         #region Auth
         string RegistrationOrLoginText { get; }
         string AskForRegistrationLogin { get; }
         string AskForRegistrationPassword { get; }
+        #endregion
+
+        #region Skills
+        string BaseActiveSkillName { get; }
+        string BaseActiveSkillDescription { get; }
+
+        string BasePassiveSkillName { get; }
+        string BasePassiveSkillDescription { get; }
+
+        string SkillTeleportationName { get; }
+        string SkillTeleportationDescription { get; }
+        string SkillTeleportationUseDescription { get; }
+        #endregion
+
+        #region Items
+        string ItemBranchName { get; }
+        string ItemBranchDescription { get; }
         #endregion
     }
 }

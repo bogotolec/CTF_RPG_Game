@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CTF_RPG_Game.Languages;
 
 namespace CTF_RPG_Game.CharacterInteraction
 {
     interface IItem
     {
         int Id { get; }
-        string Name { get; }
-        string Description { get; }
+        string Name(ILanguage lang);
+        string Description(ILanguage lang);
         int SellCost { get; }
         int BuyCost { get; }
-        void Sell();
-        void Buy();
     }
 
     interface IEquiped

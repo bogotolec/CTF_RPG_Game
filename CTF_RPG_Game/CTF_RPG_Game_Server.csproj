@@ -48,6 +48,7 @@
     <Compile Include="CharacterInteraction\DBInteraction.cs" />
     <Compile Include="CharacterInteraction\IItem.cs" />
     <Compile Include="CharacterInteraction\ISkill.cs" />
+    <Compile Include="CharacterInteraction\Item.cs" />
     <Compile Include="CharacterInteraction\Skill.cs" />
     <Compile Include="ClientInteraction\ConnectionManager.cs" />
     <Compile Include="ClientInteraction\SocketHandler.cs" />
