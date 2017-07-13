@@ -9,9 +9,8 @@ namespace CTF_RPG_Game_Server
     class Program
     {
         public static int PORT = 8888;
-        private static string DBConnectionString;
+        public static string DBConnectionString;
         public static string CONFIGURATION_FILE = "config";
-        public static SqlConnection SQLCLIENT;
 
 
         static void Main(string[] args)
@@ -20,7 +19,6 @@ namespace CTF_RPG_Game_Server
             Console.WriteLine(map);
             Console.ReadKey();
             InitializeServerConfiguration();
-            SQLCLIENT = ConnectToDB();
         }
 
         private static void InitializeServerConfiguration()
@@ -35,14 +33,6 @@ namespace CTF_RPG_Game_Server
                 else if (cString.ToLower().StartsWith("dbconnectionstring=\""))
                     DBConnectionString = cString.Substring(20).Trim('"');
             }
-        }
-
-        private static SqlConnection ConnectToDB()
-        {
-            if (DBConnectionString == null)
-                throw new NoDBConnectionStringException();
-            
-            return new SqlConnection(DBConnectionString);
         }
     }
 

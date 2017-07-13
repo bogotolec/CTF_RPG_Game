@@ -68,74 +68,81 @@ namespace CTF_RPG_Game.CharacterInteraction
 
         public static Character GetCharacter(int id)
         {
-            SqlCommand command = new SqlCommand();
-            command.CommandText = "SELECT * FROM GameCharacters WHERE Id=" + id.ToString();
-            command.Connection = Program.SQLCLIENT;
+            using (SqlConnection connection = new SqlConnection(Program.DBConnectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "SELECT * FROM dbo.GameCharacters WHERE Id=" + id.ToString();
+                command.Connection = connection;
 
-            SqlDataReader reader = command.ExecuteReader();
-            if (!reader.HasRows)
-                throw new NoCharacterException();
+                SqlDataReader reader = command.ExecuteReader();
+                if (!reader.HasRows)
+                    throw new NoCharacterException();
 
-            reader.Read();
-            Character character = new Character(
-                (int)reader.GetValue(0),
-                (string)reader.GetValue(1),
-                (int)reader.GetValue(2),
-                (int)reader.GetValue(3),
-                (int)reader.GetValue(4),
-                (int)reader.GetValue(5),
-                (string)reader.GetValue(16),
-                (string)reader.GetValue(15),
-                (int)reader.GetValue(6),
-                (int)reader.GetValue(7),
-                (int)reader.GetValue(8),
-                (int)reader.GetValue(9),
-                (int)reader.GetValue(10),
-                (int)reader.GetValue(11),
-                (int)reader.GetValue(12),
-                (int)reader.GetValue(13),
-                (int)reader.GetValue(14));
+                reader.Read();
+                Character character = new Character(
+                    (int)reader.GetValue(0),
+                    (string)reader.GetValue(1),
+                    (int)reader.GetValue(2),
+                    (int)reader.GetValue(3),
+                    (int)reader.GetValue(4),
+                    (int)reader.GetValue(5),
+                    (string)reader.GetValue(16),
+                    (string)reader.GetValue(15),
+                    (int)reader.GetValue(6),
+                    (int)reader.GetValue(7),
+                    (int)reader.GetValue(8),
+                    (int)reader.GetValue(9),
+                    (int)reader.GetValue(10),
+                    (int)reader.GetValue(11),
+                    (int)reader.GetValue(12),
+                    (int)reader.GetValue(13),
+                    (int)reader.GetValue(14));
 
-            return character;
+                return character;
+            }
         }
 
         public void SaveCharacter()
         {
-            List<int> itemlist = new List<int>();
-            foreach (IItem item in Backpack)
+            using (SqlConnection connection = new SqlConnection(Program.DBConnectionString))
             {
-                itemlist.Add(item.Id);
+                List<int> itemlist = new List<int>();
+                foreach (IItem item in Backpack)
+                {
+                    itemlist.Add(item.Id);
+                }
+                string backpackDB = string.Join(",", itemlist);
+
+                List<int> skilllist = new List<int>();
+                foreach (ISkill skill in LearnedSkills)
+                {
+                    skilllist.Add(skill.Id);
+                }
+                string learnedskillsDB = string.Join(",", skilllist);
+
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "UPDATE dbo.GameCharacters SET " +
+                    "Name='" + Name.ToString() + "', " +
+                    "Lvl=" + Level.ToString() + ", " +
+                    "CoordX=" + X.ToString() + ", " +
+                    "CoordY=" + Y.ToString() + ", " +
+                    "SkillPoints=" + SkillPoints.ToString() + ", " +
+                    "HeadId=" + Head == null ? "NULL" : Head.Id.ToString() + ", " +
+                    "BodyId=" + Body == null ? "NULL" : Body.Id.ToString() + ", " +
+                    "LHandId=" + LHand == null ? "NULL" : LHand.Id.ToString() + ", " +
+                    "RHandId=" + RHand == null ? "NULL" : RHand.Id.ToString() + ", " +
+                    "Boots=" + Boots == null ? "NULL" : Boots.Id.ToString() + ", " +
+                    "JeweleryOne=" + JeweleryOne == null ? "NULL" : JeweleryOne.Id.ToString() + ", " +
+                    "JeweleryTwo=" + JeweleryTwo == null ? "NULL" : JeweleryTwo.Id.ToString() + ", " +
+                    "Gold=" + Gold.ToString() + ", " +
+                    "Health=" + Health.ToString() + ", " +
+                    "BackPack='" + backpackDB.ToString() + "', " +
+                    "LearnedSkills=" + learnedskillsDB.ToString() +
+                    " WHERE id=" + ID.ToString() + " LIMIT 1";
+
+                command.Connection = connection;
+                command.ExecuteNonQuery();
             }
-            string backpackDB = string.Join(",", itemlist);
-
-            List<int> skilllist = new List<int>();
-            foreach (ISkill skill in LearnedSkills)
-            {
-                skilllist.Add(skill.Id);
-            }
-            string learnedskillsDB = string.Join(",", skilllist);
-
-            SqlCommand command = new SqlCommand();
-            command.CommandText = "UPDATE GameCharacters SET " +
-                "Name='" + Name.ToString() + "', " +
-                "Lvl=" + Level.ToString() + ", " +
-                "CoordX=" + X.ToString() + ", " +
-                "CoordY=" + Y.ToString() + ", " +
-                "SkillPoints=" + SkillPoints.ToString() + ", " +
-                "HeadId=" + Head == null ? "NULL" : Head.Id.ToString() + ", " +
-                "BodyId=" + Body == null ? "NULL" : Body.Id.ToString() + ", " +
-                "LHandId=" + LHand == null ? "NULL" : LHand.Id.ToString() + ", " +
-                "RHandId=" + RHand == null ? "NULL" : RHand.Id.ToString() + ", " +
-                "Boots=" + Boots == null ? "NULL" : Boots.Id.ToString() + ", " +
-                "JeweleryOne=" + JeweleryOne == null ? "NULL" : JeweleryOne.Id.ToString() + ", " +
-                "JeweleryTwo=" + JeweleryTwo == null ? "NULL" : JeweleryTwo.Id.ToString() + ", " +
-                "Gold=" + Gold.ToString() + ", " +
-                "Health=" + Health.ToString() + ", " +
-                "BackPack='" + backpackDB.ToString() + "', " +
-                "LearnedSkills=" + learnedskillsDB.ToString() +
-                " WHERE id=" + ID.ToString() + " LIMIT 1";
-
-            command.Connection = Program.SQLCLIENT;
         }
     }
 
