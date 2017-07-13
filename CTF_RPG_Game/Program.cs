@@ -12,6 +12,7 @@ namespace CTF_RPG_Game_Server
         static void Main(string[] args)
         {
             Map map = new Map();
+            Console.WriteLine(map);
             Console.ReadKey();
             InitializeServerConfiguration(); 
         }

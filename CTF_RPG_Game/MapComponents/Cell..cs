@@ -14,8 +14,11 @@ namespace CTF_RPG_Game.MapComponents
         public bool IsTaskable;
         public bool IsTeleport;
         public bool IsVisibleWithSkills;
-        
-
+        public char Symbol;
+        public override string ToString()
+        {
+            return Symbol.ToString();
+        }
 
     }
 }

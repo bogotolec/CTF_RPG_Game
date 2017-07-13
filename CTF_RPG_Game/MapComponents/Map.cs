@@ -15,6 +15,20 @@ namespace CTF_RPG_Game.MapComponents
         static int Width;
         static int Height;
         static int MapId;
+        static Cell[,] CellsMassive;
+        public override string ToString()
+        {
+            string output = "";
+            for (int i = 0; i < Height; i++)
+            {
+                for (int j = 0; j < Width; j++)
+                {
+                    output += CellsMassive[i, j].ToString() + " ";
+                }
+                output += '\n';
+            }
+            return output;
+        }
         public int[,] LoadMapFile(string name)
         {
             try
@@ -48,27 +62,27 @@ namespace CTF_RPG_Game.MapComponents
             {
                 case Landscape.TP:
                     {
-                        return new Cell { Message = "Teleport", IsPassable = true, IsTaskable = false, IsTeleport = true, IsVisibleWithSkills = false };
+                        return new Cell { Message = "Teleport", IsPassable = true, IsTaskable = false, IsTeleport = true, IsVisibleWithSkills = false, Symbol = 'O'};
                     }
                 case Landscape.UsualWay:
                     {
-                        return new Cell { Message = "UsualWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false };
+                        return new Cell { Message = "UsualWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = ' '};
                     }
                 case Landscape.Task:
                     {
-                        return new Cell { Message = "TASK", IsPassable = true, IsTaskable = true, IsTeleport = false, IsVisibleWithSkills = false };
+                        return new Cell { Message = "TASK", IsPassable = true, IsTaskable = true, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '!'};
                     }
                 case Landscape.SkillWay:
                     {
-                        return new Cell { Message = "SkillWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = true };
+                        return new Cell { Message = "SkillWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = true, Symbol = '-'};
                     }
                 case Landscape.Wall:
                     {
-                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false };
+                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '#'};
                     }
                 default:
                     {
-                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false };
+                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '#' };
                     }
                      
             }
@@ -78,15 +92,13 @@ namespace CTF_RPG_Game.MapComponents
             int[,] IDMap = LoadMapFile("GameMap.tsx");
             Width = 17;
             Height = 17;
-            Cell[,] CellsMassive = new Cell[Height,Width];
+            CellsMassive = new Cell[Height,Width];
             for (int i = 0; i < Height; i++)
             {
                 for (int j = 0; j < Width; j++)
                 {
                     CellsMassive[i, j] = CellFromId(IDMap[i, j]);
-                    Console.Write(IDMap[i, j] + " ");
                 }
-                Console.WriteLine();
             }
         }   
     }
