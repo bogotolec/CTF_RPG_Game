@@ -27,8 +27,20 @@ namespace CTF_RPG_Game.Languages
 
         #region Auth
         public string RegistrationOrLoginText { get { return "Вы уже зарегистрированы?\nВведите \"Y\", если да, или \"N\", если нет.\n\n>"; } }
+        public string IncorrectSymbol { get { return "Замечен недопустимый символ. Попробуйте еще раз.\n"; } }
+
         public string AskForRegistrationLogin { get { return "Введите желаемый логин: "; } }
         public string AskForRegistrationPassword { get { return "Придумайте пароль (попросите всех отвернуться): "; } }
+        public string AskForConfirmPassword { get { return "Подтвердите пароль: "; } }
+        public string PassesAreNotEqual { get { return "Пароли не совпадают, попробуйте еще раз.\n"; } }
+        public string UserAlreadyExist { get { return "Пользователь с таким логином уже существует. Попробуйте еще раз.\n"; } }
+        
+        public string AskForLogin { get { return "Ваш логин: "; } }
+        public string AskForPassword { get { return "Ваш пароль: "; } }
+        public string WrongLoginOrPassword { get { return "Неправильный логин или пароль.\n"; } }
+
+        public string ChooseName { get { return "Введите имя персонажа: "; } } 
+        public string NameHasIncorrectSymbols { get { return "Имя содержит недопустимые символы. Введите другое имя."; } }
         #endregion
 
         #region Skills

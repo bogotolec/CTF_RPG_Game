@@ -66,7 +66,7 @@ namespace CTF_RPG_Game.CharacterInteraction
             Health = Health;
         }
 
-        public static Character GetCharacter(int id)
+        public static Character Get(int id)
         {
             using (SqlConnection connection = new SqlConnection(Program.DBConnectionString))
             {
@@ -100,6 +100,21 @@ namespace CTF_RPG_Game.CharacterInteraction
 
                 return character;
             }
+        }
+
+        public static Character Create(int id, string name)
+        {
+            using (SqlConnection connection = new SqlConnection(Program.DBConnectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "INSERT INTO dbo.GameCharacters " +
+                    "(Id, Name, Lvl, CoordX, CoordY, SkillPoints, Gold, Health) VALUES " +
+                    "(" + id.ToString() + ", '" + name + "', 8, 8, 0, 0, 100)";
+                command.Connection = connection;
+                command.ExecuteNonQuery();
+            }
+
+            return Get(id);
         }
 
         public void SaveCharacter()

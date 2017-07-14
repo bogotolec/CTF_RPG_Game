@@ -15,8 +15,20 @@ namespace CTF_RPG_Game.Languages
 
         #region Auth
         string RegistrationOrLoginText { get; }
+        string IncorrectSymbol { get; }
+
         string AskForRegistrationLogin { get; }
         string AskForRegistrationPassword { get; }
+        string AskForConfirmPassword { get; }
+        string PassesAreNotEqual { get; }
+        string UserAlreadyExist { get; }
+
+        string AskForLogin { get; }
+        string AskForPassword { get; }
+        string WrongLoginOrPassword { get; }
+
+        string ChooseName { get; }
+        string NameHasIncorrectSymbols { get; }
         #endregion
 
         #region Skills
