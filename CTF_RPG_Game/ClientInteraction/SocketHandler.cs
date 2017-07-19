@@ -58,7 +58,7 @@ namespace CTF_RPG_Game.ClientInteraction
                 return true;
         }
 
-        private string GetMessage()
+        public string GetMessage()
         {
             StringBuilder SB = new StringBuilder();
             byte[] buffer = new byte[1024];
@@ -73,14 +73,14 @@ namespace CTF_RPG_Game.ClientInteraction
             return SB.ToString().Trim().ToLower();
         }
 
-        private void SendMessage(string message)
+        public void SendMessage(string message)
         {
             byte[] buffer = new byte[message.Length];
             buffer = Encoding.UTF8.GetBytes(message);
             s.Send(buffer);
         }
 
-        private void CloseConnection()
+        public void CloseConnection()
         {
             s.Shutdown(SocketShutdown.Both);
         }

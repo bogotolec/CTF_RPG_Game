@@ -20,8 +20,8 @@ namespace CTF_RPG_Game.CharacterInteraction
         public int X { get; }
         public int Y { get; }
 
-        List<ISkill> LearnedSkills;
-        List<IItem> Backpack;
+        public List<ISkill> LearnedSkills;
+        public List<IItem> Backpack;
 
         public IItem Head { get; }
         public IItem Body { get; }
