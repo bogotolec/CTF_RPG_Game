@@ -17,7 +17,7 @@ namespace CTF_RPG_Game.MapComponents
         static int MapId;
         private Cell[,] CellsMassive;
 
-        private Map MapObject;
+        private static  Map MapObject;
 
         private Map()
         {
@@ -114,7 +114,7 @@ namespace CTF_RPG_Game.MapComponents
         }
 
 
-        public Map GetMap()
+        public static Map GetMap()
         {
             if (MapObject == null)
                 MapObject = new Map();

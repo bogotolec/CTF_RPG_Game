@@ -10,11 +10,17 @@ namespace CTF_RPG_Game.ClientInteraction
     {
         private SocketHandler SH;
         private Character character;
+        private Map map;
+        private Result result;
+        private ILanguage lang;
 
-        Game (Character Char, SocketHandler SocketHandler)
+        Game (Character Char, SocketHandler SocketHandler, ILanguage language)
         {
             SH = SocketHandler;
             character = Char;
+            map = Map.GetMap();
+            result = new Result();
+            lang = language;
         }
 
         public void CommandHandlerStart()
@@ -26,7 +32,21 @@ namespace CTF_RPG_Game.ClientInteraction
                 switch (commandwords[0])
                 {
                     case "w":
+                        Move("up");
+                        break;
+                    case "a":
+                        Move("left");
+                        break;
+                    case "s":
+                        Move("down");
+                        break;
+                    case "d":
+                        Move("right");
+                        break;
 
+                    default:
+                        result.Message = lang.UnknownCommand;
+                        break;
                 }
             }
         }
@@ -37,20 +57,34 @@ namespace CTF_RPG_Game.ClientInteraction
             switch (direction)
             {
                 case "up":
-                    x = -1;
-                    break;
-                case "left":
                     y = -1;
                     break;
+                case "left":
+                    x = -1;
+                    break;
                 case "down":
-                    x = 1;
+                    y = 1;
                     break;
                 case "right":
-                    y = 1;
+                    x = 1;
                     break;
             }
 
-
+            if (map[character.Y + y, character.X + x].IsPassable)
+            {
+                character.X += x;
+                character.Y += y;
+                result.Message = map[character.Y, character.X].Message;
+            }
+            else
+            {
+                result.Message = lang.CellIsNotPassable;
+            }
         }
+    }
+
+    struct Result
+    {
+        public string Message;
     }
 }

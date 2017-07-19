@@ -11,6 +11,7 @@ namespace CTF_RPG_Game.Languages
         #region Other
         string Nothing { get; }
         string None { get; }
+        string UnknownCommand { get; }
         #endregion
 
         #region Auth
@@ -46,6 +47,10 @@ namespace CTF_RPG_Game.Languages
         #region Items
         string ItemBranchName { get; }
         string ItemBranchDescription { get; }
+        #endregion
+
+        #region Moving
+        string CellIsNotPassable { get; }
         #endregion
     }
 }

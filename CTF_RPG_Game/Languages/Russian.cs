@@ -23,6 +23,7 @@ namespace CTF_RPG_Game.Languages
         #region Nothing
         public string Nothing { get { return "Ничего"; } }
         public string None { get { return "Нет"; } }
+        public string UnknownCommand { get { return "Команда не опознана."; } }
         #endregion
 
         #region Auth
@@ -58,6 +59,10 @@ namespace CTF_RPG_Game.Languages
         #region Items
         public string ItemBranchName { get { return "Ветка"; } }
         public string ItemBranchDescription { get { return "Простая ветка, ничего особенного."; } }
+        #endregion
+
+        #region Moving
+        public string CellIsNotPassable { get { return "Невозможно переместиться сюда."; } }
         #endregion
     }
 }
