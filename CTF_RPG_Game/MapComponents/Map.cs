@@ -89,6 +89,7 @@ namespace CTF_RPG_Game.MapComponents
         }
         public Map()
         {
+            Console.WriteLine
             int[,] IDMap = LoadMapFile("GameMap.tsx");
             Width = 17;
             Height = 17;
