@@ -12,10 +12,33 @@ namespace CTF_RPG_Game.MapComponents
 
     public class Map
     {
-        static int Width;
-        static int Height;
+        public readonly int Width;
+        public readonly int Height;
         static int MapId;
-        static Cell[,] CellsMassive;
+        private Cell[,] CellsMassive;
+
+        private static  Map MapObject;
+
+        private Map()
+        {
+            int[,] IDMap = LoadMapFile("GameMap.tsx");
+            Width = 17;
+            Height = 17;
+            CellsMassive = new Cell[Height, Width];
+            for (int i = 0; i < Height; i++)
+            {
+                for (int j = 0; j < Width; j++)
+                {
+                    CellsMassive[i, j] = CellFromId(IDMap[i, j]);
+                }
+            }
+        }
+
+        public Cell this[int indexY, int indexX]
+        {
+            get { return CellsMassive[indexY, indexX]; }
+        }
+
         public override string ToString()
         {
             string output = "";
@@ -29,7 +52,8 @@ namespace CTF_RPG_Game.MapComponents
             }
             return output;
         }
-        public int[,] LoadMapFile(string name)
+
+        private int[,] LoadMapFile(string name)
         {
             try
             {
@@ -55,7 +79,8 @@ namespace CTF_RPG_Game.MapComponents
                 return new int[,] { { },{ } };
             }
         }
-        public Cell CellFromId(int id)
+
+        private Cell CellFromId(int id)
         {
             Landscape land = (Landscape)id;
             switch(land)
@@ -87,8 +112,11 @@ namespace CTF_RPG_Game.MapComponents
                      
             }
         }
-        public Map()
+
+
+        public static Map GetMap()
         {
+<<<<<<< HEAD
             Console.WriteLine
             int[,] IDMap = LoadMapFile("GameMap.tsx");
             Width = 17;
@@ -102,5 +130,11 @@ namespace CTF_RPG_Game.MapComponents
                 }
             }
         }   
+=======
+            if (MapObject == null)
+                MapObject = new Map();
+            return MapObject;
+        }
+>>>>>>> 85eec218037da94e351d80cbbb3c48c0a49ee226
     }
 }
