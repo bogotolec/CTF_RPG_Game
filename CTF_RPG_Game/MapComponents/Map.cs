@@ -19,7 +19,7 @@ namespace CTF_RPG_Game.MapComponents
 
         private static  Map MapObject;
 
-        private Map()
+        public Map()
         {
             int[,] IDMap = LoadMapFile("GameMap.tsx");
             Width = 17;
@@ -87,27 +87,27 @@ namespace CTF_RPG_Game.MapComponents
             {
                 case Landscape.TP:
                     {
-                        return new Cell { Message = "Teleport", IsPassable = true, IsTaskable = false, IsTeleport = true, IsVisibleWithSkills = false, Symbol = 'O'};
+                        return new Cell { Message = "Teleport", IsPassable = true, IsTaskable = false, IsTeleport = true, IsVisibleWithSkills = false, Symbol = "@", Color = "blue"};
                     }
                 case Landscape.UsualWay:
                     {
-                        return new Cell { Message = "UsualWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = ' '};
+                        return new Cell { Message = "UsualWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = " ", Color = "black"};
                     }
                 case Landscape.Task:
                     {
-                        return new Cell { Message = "TASK", IsPassable = true, IsTaskable = true, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '!'};
+                        return new Cell { Message = "TASK", IsPassable = true, IsTaskable = true, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "!", Color = "green"};
                     }
                 case Landscape.SkillWay:
                     {
-                        return new Cell { Message = "SkillWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = true, Symbol = '-'};
+                        return new Cell { Message = "SkillWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = true, Symbol = "-", Color = "red"};
                     }
                 case Landscape.Wall:
                     {
-                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '#'};
+                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "#", Color = "gray"};
                     }
                 default:
                     {
-                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '#' };
+                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "#", Color = "gray"};
                     }
                      
             }
