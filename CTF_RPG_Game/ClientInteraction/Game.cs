@@ -86,5 +86,9 @@ namespace CTF_RPG_Game.ClientInteraction
     struct Result
     {
         public string Message;
+        public string BigWindow;
+        public string Commands;
+        public string Info;
+        public string Level;
     }
 }
