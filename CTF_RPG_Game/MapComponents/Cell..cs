@@ -16,13 +16,10 @@ namespace CTF_RPG_Game.MapComponents
         public bool IsVisibleWithSkills;
         public string Symbol;
         public string Color;
-        private Dictionary<string, string> ColorDict = new Dictionary<string, string>();
-        private Dictionary<string, string> SymbolDict = new Dictionary<string, string>();
-        public override string ToString()
-        {
-            return Symbol.ToString();
-        }
-        public Cell()
+        private static Dictionary<string, string> ColorDict = new Dictionary<string, string>();
+        private static Dictionary<string, string> SymbolDict = new Dictionary<string, string>();
+
+        private void CreateDict()
         {
             ColorDict.Add("red", "0001");
             ColorDict.Add("green", "0010");
@@ -46,6 +43,17 @@ namespace CTF_RPG_Game.MapComponents
             SymbolDict.Add("#", "1110");
             SymbolDict.Add(" ", "0000");
             //1111 - Reserved
+        }
+        public override string ToString()
+        {
+            return Symbol.ToString();
+        }
+        public Cell()
+        {
+            if (SymbolDict.Count == 0 && ColorDict.Count == 0)
+            {
+                CreateDict();
+            }
         }
     
     public byte GetCellByte()
