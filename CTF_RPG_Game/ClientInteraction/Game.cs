@@ -14,7 +14,7 @@ namespace CTF_RPG_Game.ClientInteraction
         private Result result;
         private ILanguage lang;
 
-        Game (Character Char, SocketHandler SocketHandler, ILanguage language)
+        public Game(Character Char, SocketHandler SocketHandler, ILanguage language)
         {
             SH = SocketHandler;
             character = Char;

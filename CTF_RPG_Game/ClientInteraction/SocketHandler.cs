@@ -43,6 +43,9 @@ namespace CTF_RPG_Game.ClientInteraction
                 }
                 while (!isLogined);
             }
+
+            Game game = new Game(character, this, text);
+            game.CommandHandlerStart();
         }
 
         //////////////////////////////
