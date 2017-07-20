@@ -116,25 +116,9 @@ namespace CTF_RPG_Game.MapComponents
 
         public static Map GetMap()
         {
-<<<<<<< HEAD
-            Console.WriteLine
-            int[,] IDMap = LoadMapFile("GameMap.tsx");
-            Width = 17;
-            Height = 17;
-            CellsMassive = new Cell[Height,Width];
-            for (int i = 0; i < Height; i++)
-            {
-                for (int j = 0; j < Width; j++)
-                {
-                    CellsMassive[i, j] = CellFromId(IDMap[i, j]);
-                }
-            }
-        }   
-=======
             if (MapObject == null)
                 MapObject = new Map();
             return MapObject;
         }
->>>>>>> 85eec218037da94e351d80cbbb3c48c0a49ee226
     }
 }
