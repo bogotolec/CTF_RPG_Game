@@ -21,7 +21,7 @@ namespace CTF_RPG_Game.MapComponents
 
         public Map()
         {
-            int[,] IDMap = LoadMapFile("Map/GameMap.tsx");
+            int[,] IDMap = LoadMapFile("Map/GameMap.tmx");
             Width = 17;
             Height = 17;
             CellsMassive = new Cell[Height, Width];
