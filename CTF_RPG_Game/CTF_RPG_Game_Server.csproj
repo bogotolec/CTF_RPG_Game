@@ -47,10 +47,8 @@
     <Compile Include="CharacterInteraction\Character.cs" />
     <Compile Include="CharacterInteraction\IItem.cs" />
     <Compile Include="CharacterInteraction\ISkill.cs" />
-    <Compile Include="CharacterInteraction\Item.cs" />
     <Compile Include="CharacterInteraction\Skill.cs" />
     <Compile Include="ClientInteraction\ConnectionManager.cs" />
-    <Compile Include="ClientInteraction\Game.cs" />
     <Compile Include="ClientInteraction\SocketHandler.cs" />
     <Compile Include="Languages\ILanguage.cs" />
     <Compile Include="Languages\Russian.cs" />

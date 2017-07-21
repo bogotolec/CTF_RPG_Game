@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CTF_RPG_Game.Languages;
 
 namespace CTF_RPG_Game.CharacterInteraction
 {
     interface ISkill
     {
         int Id { get; }
-        string Name(ILanguage lang);
-        string Description(ILanguage lang);
+        string Name { get; }
+        string Description { get; }
         int PointsToLearn { get; } 
         SkillState State { get; }
         CharacterClass Class { get; }
@@ -20,15 +19,15 @@ namespace CTF_RPG_Game.CharacterInteraction
 
     interface IActive
     {
-        string UseDescription(ILanguage lang);
-        void Use(string parametrs, Character user);
+        string UseDescription { get; }
+        void Use();
     }
 
     interface IPassive
     {
-        string PassiveBonusDescription(ILanguage lang);
+        string PassiveBonusDescription { get; }
     }
 
-    enum SkillState { Passive, Active }
+    enum SkillState { Passive, Active };
     enum CharacterClass { None, Hacker, SocEng }
 }

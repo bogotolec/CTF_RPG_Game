@@ -1,0 +1,27 @@
+Color:
+0001 - red
+0010 - green
+0100 - blue
+1000 - yellow
+0011 - black
+0110 - white
+1100 - orange
+0111 - light-blue
+1110 - gray
+0000 - purple
+1111 - Reserved
+
+Symbol:
+0001 - '>'
+0010 - '<'
+0100 - '^'
+1000 - 'v'
+0011 - '$'
+0110 - 'X'
+1100 - '!'
+0111 - '@'
+1110 - '#'
+0000 - ' '
+1111 - Reserved
+
+Cell byte = Color + Symbol;
