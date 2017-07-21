@@ -13,6 +13,9 @@ namespace CTF_RPG_Game.CharacterInteraction
 
         public static IItem GetById(int id)
         {
+            if (id == 0)
+                return null;
+
             foreach (IItem item in ItemList)
             {
                 if (item.Id == id)

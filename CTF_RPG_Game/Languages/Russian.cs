@@ -27,7 +27,7 @@ namespace CTF_RPG_Game.Languages
         #endregion
 
         #region Auth
-        public string RegistrationOrLoginText { get { return "Вы уже зарегистрированы?\nВведите \"Y\", если да, или \"N\", если нет.\n\n>"; } }
+        public string RegistrationOrLoginText { get { return "Вы уже зарегистрированы?\nВведите \"Y\", если да, или \"N\", если нет.\n>"; } }
         public string IncorrectSymbol { get { return "Замечен недопустимый символ. Попробуйте еще раз.\n"; } }
 
         public string AskForRegistrationLogin { get { return "Введите желаемый логин: "; } }

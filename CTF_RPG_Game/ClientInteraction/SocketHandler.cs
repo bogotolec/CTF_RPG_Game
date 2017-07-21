@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Security.Cryptography;
 using System.Data.SqlClient;
 using System.Net.Sockets;
@@ -22,8 +23,8 @@ namespace CTF_RPG_Game.ClientInteraction
 
         public void Handle()
         {
-            GetMessage();
-            ChooseLanguage();
+            if (!ChooseLanguage())
+                return;
             bool needRegistration = AskForRegistration();
             if (needRegistration)
             {
@@ -67,6 +68,11 @@ namespace CTF_RPG_Game.ClientInteraction
             byte[] buffer = new byte[1024];
             int receivedBytes;
 
+            while (s.Available == 0)
+            {
+                Thread.Sleep(100);
+            }
+
             while (s.Available > 0)
             {
                 receivedBytes = s.Receive(buffer);
@@ -86,9 +92,10 @@ namespace CTF_RPG_Game.ClientInteraction
         public void CloseConnection()
         {
             s.Shutdown(SocketShutdown.Both);
+            Console.WriteLine("Connection closed");
         }
 
-        private void ChooseLanguage()
+        private bool ChooseLanguage()
         {
             SendMessage("Choose you language (type \"rus\" for russian or \"eng\" for english)\nВыберите язык (введите \"rus\" для русского или \'eng\' для английского)\n>");
             string answer = GetMessage();
@@ -101,7 +108,9 @@ namespace CTF_RPG_Game.ClientInteraction
             {
                 SendMessage("I cannot understand you, try again\nЯ не могу понять вас, попробуйте еще\n\n");
                 CloseConnection();
+                return false;
             }
+            return true;
         }
 
         private bool Registration()
@@ -118,7 +127,9 @@ namespace CTF_RPG_Game.ClientInteraction
             using (SqlConnection connection = new SqlConnection(Program.DBConnectionString))
             {
                 SqlCommand command = new SqlCommand();
-                command.CommandText = "SELECT * FROM dbo.GameUsers WHERE UserLogin=" + login;
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM dbo.GameUsers WHERE UserLogin='" + login + "'";
+                connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.HasRows)
@@ -156,6 +167,7 @@ namespace CTF_RPG_Game.ClientInteraction
                 command.CommandText = "INSERT INTO dbo.GameUsers (UserLogin, PasswordHash) VALUES ('" + 
                     login + "', '" + passwordhash + "')";
                 command.Connection = connection;
+                connection.Open();
                 command.ExecuteNonQuery();
             }
 
@@ -177,10 +189,12 @@ namespace CTF_RPG_Game.ClientInteraction
             using (SqlConnection connection = new SqlConnection(Program.DBConnectionString))
             {
                 SqlCommand command = new SqlCommand();
-                command.CommandText = "SELECT Id FROM dbo.GameUsers WHERE Login=" + login;
+                command.CommandText = "SELECT CharacterId FROM dbo.GameUsers WHERE UserLogin='" + login.ToLower() + "'";
                 command.Connection = connection;
+                connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
+                reader.Read();
                 int id = (int)reader.GetValue(0);
 
                 character = Character.Create(id, name);
@@ -207,20 +221,49 @@ namespace CTF_RPG_Game.ClientInteraction
                 MD5 md5 = MD5.Create();
                 byte[] passbytes = Encoding.ASCII.GetBytes(password);
                 string hash = "";
-                foreach (var b in passbytes)
+                byte[] hashbytes = md5.ComputeHash(passbytes);
+                foreach (var b in hashbytes)
                 {
                     hash += b.ToString("X2");
                 }
 
                 SqlCommand command = new SqlCommand();
-                command.CommandText = "SELECT CharacterId FROM dbo.GameCharacters WHERE UserLogin='" + login +
-                    "', PasswordHash='" + hash + "'";
+                command.CommandText = "SELECT CharacterId FROM dbo.GameUsers WHERE UserLogin='" + login +
+                    "' AND PasswordHash='" + hash + "'";
                 command.Connection = connection;
+                connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.HasRows)
                 {
-                    character = Character.Get((int)reader.GetValue(0));
+                    reader.Read();
+                    int characterId = (int)reader.GetValue(0);
+
+                    try
+                    {
+                        character = Character.Get(characterId);
+                    }
+                    catch (NoCharacterException ex)
+                    {
+                        SendMessage(text.ChooseName);
+                        bool isNameCorrect;
+                        string name = ex.Message;
+                        name = null;
+                        do
+                        {
+                            name = GetMessage();
+                            isNameCorrect = !HasWrongSymbols(name);
+
+                            if (!isNameCorrect)
+                            {
+                                SendMessage(text.NameHasIncorrectSymbols);
+                            }
+                        }
+                        while (!isNameCorrect);
+
+                        character = Character.Create(characterId, name);
+                    }
+
                     return true;
                 }
                 else
