@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharacterInteraction\Character.cs" />
-    <Compile Include="CharacterInteraction\DBInteraction.cs" />
     <Compile Include="CharacterInteraction\IItem.cs" />
     <Compile Include="CharacterInteraction\ISkill.cs" />
     <Compile Include="CharacterInteraction\Item.cs" />
