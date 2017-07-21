@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.WebSockets;
-using System.Text;
 using CTF_RPG_Game.CharacterInteraction;
 using CTF_RPG_Game.Languages;
 using CTF_RPG_Game.MapComponents;
@@ -50,31 +49,6 @@ namespace CTF_RPG_Game.ClientInteraction
                         break;
                 }
             }
-        }
-
-        private void MapToResult()
-        {
-            StringBuilder SB = new StringBuilder();
-            int VisionRange = 10;
-            for (int i = character.Y - VisionRange; i <= character.Y + VisionRange; i++)
-            {
-                for (int j = character.X - VisionRange; j <= character.X + VisionRange; j++)
-                {
-                    if (i < 0 || i > map.Height || j < 0 || j > map.Width)
-                    {
-                        SB.Append(' ');
-                    }
-                    else
-                    {
-                        // TODO WITH FRODAN
-                        // Nado sdelat' standart otobrajeniya here
-                    }
-                }
-
-                SB.Append('\n');
-            }
-
-            result.BigWindow = SB.ToString();
         }
 
         private void Move(string direction)
