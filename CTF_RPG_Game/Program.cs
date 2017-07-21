@@ -1,32 +1,48 @@
 ﻿using System;
 using System.IO;
 using CTF_RPG_Game.MapComponents;
+using System.Data.SqlClient;
+using System.Collections;
 
 namespace CTF_RPG_Game_Server
 {
     class Program
     {
-        public static int PORT;
+        public static int PORT = 8888;
+        public static string DBConnectionString;
         public static string CONFIGURATION_FILE = "config";
+
 
         static void Main(string[] args)
         {
             Map map = Map.GetMap();
             Console.WriteLine(map);
             Console.ReadKey();
-            InitializeServerConfiguration(); 
+            InitializeServerConfiguration();
         }
 
         private static void InitializeServerConfiguration()
         {
-            string[] configStrings = File.ReadAllText(CONFIGURATION_FILE).ToLower().Split('\n');
+            string[] configStrings = File.ReadAllText(CONFIGURATION_FILE).Split('\n');
             foreach (var cString in configStrings)
             {
                 if (cString.StartsWith("#"))
                     continue;
-
-                else if (cString.StartsWith("port="))
+                else if (cString.ToLower().StartsWith("port="))
                     PORT = int.Parse(cString.Substring(5));
+                else if (cString.ToLower().StartsWith("dbconnectionstring=\""))
+                    DBConnectionString = cString.Substring(20).Trim('"');
+            }
+        }
+    }
+
+    class NoDBConnectionStringException : Exception
+    {
+        public override string Message
+        {
+            get
+            {
+                return "В файле конфигурации нет параметра \"BDConnectionString\".";
             }
         }
     }

@@ -1,1 +1,2 @@
 ﻿port=8888
+DBConnectionString="Data Source=GODFORT\SQLEXPRESS;Initial Catalog=RPG_CTF_DB;Integrated Security=True"

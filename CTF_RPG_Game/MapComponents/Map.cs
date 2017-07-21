@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace CTF_RPG_Game.MapComponents
 {
-    enum Landscape { TP = 31, UsualWay = 30, Task = 46, SkillWay = 10, Wall = 34 };
+    enum Landscape { TP = 31, UsualWay = 30, Task = 46, SkillWay = 10, Wall = 34};
 
     public class Map
     {
@@ -17,9 +17,9 @@ namespace CTF_RPG_Game.MapComponents
         static int MapId;
         private Cell[,] CellsMassive;
 
-        private static Map MapObject;
+        private static  Map MapObject;
 
-        public Map()
+        private Map()
         {
             int[,] IDMap = LoadMapFile("GameMap.tsx");
             Width = 17;
@@ -68,7 +68,7 @@ namespace CTF_RPG_Game.MapComponents
                     string[] rowArray = row.Split(',');
                     for (int j = 0; j < IDMap.GetLength(1); j++)
                     {
-                        IDMap[i, j] = int.Parse(rowArray[j]);
+                        IDMap[i,j] = int.Parse(rowArray[j]);
                     }
                 }
                 return IDMap;
@@ -76,40 +76,40 @@ namespace CTF_RPG_Game.MapComponents
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
-                return new int[,] { { }, { } };
+                return new int[,] { { },{ } };
             }
         }
 
         private Cell CellFromId(int id)
         {
             Landscape land = (Landscape)id;
-            switch (land)
+            switch(land)
             {
                 case Landscape.TP:
                     {
-                        return new Cell { Message = "Teleport", IsPassable = true, IsTaskable = false, IsTeleport = true, IsVisibleWithSkills = false, Symbol = "@", Color = "blue" };
+                        return new Cell { Message = "Teleport", IsPassable = true, IsTaskable = false, IsTeleport = true, IsVisibleWithSkills = false, Symbol = 'O'};
                     }
                 case Landscape.UsualWay:
                     {
-                        return new Cell { Message = "UsualWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = " ", Color = "black" };
+                        return new Cell { Message = "UsualWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = ' '};
                     }
                 case Landscape.Task:
                     {
-                        return new Cell { Message = "TASK", IsPassable = true, IsTaskable = true, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "!", Color = "green" };
+                        return new Cell { Message = "TASK", IsPassable = true, IsTaskable = true, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '!'};
                     }
                 case Landscape.SkillWay:
                     {
-                        return new Cell { Message = "SkillWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = true, Symbol = "-", Color = "red" };
+                        return new Cell { Message = "SkillWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = true, Symbol = '-'};
                     }
                 case Landscape.Wall:
                     {
-                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "#", Color = "gray" };
+                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '#'};
                     }
                 default:
                     {
-                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "#", Color = "gray" };
+                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = '#' };
                     }
-
+                     
             }
         }
 
