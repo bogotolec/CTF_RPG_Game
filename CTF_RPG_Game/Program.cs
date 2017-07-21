@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using CTF_RPG_Game.MapComponents;
+using CTF_RPG_Game.ClientInteraction;
 using System.Data.SqlClient;
 using System.Collections;
 
@@ -15,10 +16,9 @@ namespace CTF_RPG_Game_Server
 
         static void Main(string[] args)
         {
-            Map map = Map.GetMap();
-            Console.WriteLine(map);
-            Console.ReadKey();
             InitializeServerConfiguration();
+            ConnectionManager CManager = ConnectionManager.GetManager();
+            CManager.StartListen();
         }
 
         private static void InitializeServerConfiguration()
@@ -33,6 +33,8 @@ namespace CTF_RPG_Game_Server
                 else if (cString.ToLower().StartsWith("dbconnectionstring=\""))
                     DBConnectionString = cString.Substring(20).Trim('"');
             }
+
+            Console.WriteLine("Initialization complete");
         }
     }
 

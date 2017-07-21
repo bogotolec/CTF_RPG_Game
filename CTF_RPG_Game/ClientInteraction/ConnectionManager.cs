@@ -28,7 +28,7 @@ namespace CTF_RPG_Game.ClientInteraction
         }
         // !!!END OF SINGLETON WARNING!!!
 
-        private static void Listen()
+        public void StartListen()
         {
             try
             {
@@ -36,12 +36,18 @@ namespace CTF_RPG_Game.ClientInteraction
                 ListenSocket.Bind(ipPoint);
                 ListenSocket.Listen(32);
 
+                Console.WriteLine("Start listening for connection");
+
                 // Socket handler
                 while (true)
                 {
                     Socket handler = ListenSocket.Accept();
                     SocketHandler SH = new SocketHandler(handler);
-                    SH.Handle();
+
+                    Console.WriteLine("Client connected");
+
+                    Thread Handler = new Thread(SH.Handle);
+                    Handler.Start();
                 }
             }
             catch (Exception ex)
