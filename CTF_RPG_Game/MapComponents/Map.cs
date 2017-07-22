@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using CTF_RPG_Game_Server;
 
 namespace CTF_RPG_Game.MapComponents
 {
@@ -32,6 +33,9 @@ namespace CTF_RPG_Game.MapComponents
                     CellsMassive[i, j] = CellFromId(IDMap[i, j]);
                 }
             }
+
+            if (Program.ConsoleMessages)
+                Console.WriteLine("Map created succesfully");
         }
 
         public Cell this[int indexY, int indexX]

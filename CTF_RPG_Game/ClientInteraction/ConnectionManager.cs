@@ -36,7 +36,8 @@ namespace CTF_RPG_Game.ClientInteraction
                 ListenSocket.Bind(ipPoint);
                 ListenSocket.Listen(32);
 
-                Console.WriteLine("Start listening for connection");
+                if (Program.ConsoleMessages)
+                    Console.WriteLine("Start listening for connection");
 
                 // Socket handler
                 while (true)
@@ -44,7 +45,8 @@ namespace CTF_RPG_Game.ClientInteraction
                     Socket handler = ListenSocket.Accept();
                     SocketHandler SH = new SocketHandler(handler);
 
-                    Console.WriteLine("Client connected");
+                    if (Program.ConsoleMessages)
+                        Console.WriteLine("Client connected");
 
                     Thread Handler = new Thread(SH.Handle);
                     Handler.Start();

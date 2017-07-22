@@ -12,7 +12,7 @@ namespace CTF_RPG_Game_Server
         public static int PORT = 8888;
         public static string DBConnectionString;
         public static string CONFIGURATION_FILE = "config";
-
+        public static bool ConsoleMessages = true;
 
         static void Main(string[] args)
         {
@@ -29,12 +29,15 @@ namespace CTF_RPG_Game_Server
                 if (cString.StartsWith("#"))
                     continue;
                 else if (cString.ToLower().StartsWith("port="))
-                    PORT = int.Parse(cString.Substring(5));
+                    PORT = int.Parse(cString.Substring("port=".Length));
                 else if (cString.ToLower().StartsWith("dbconnectionstring=\""))
                     DBConnectionString = cString.Substring(20).Trim('"');
+                else if (cString.ToLower().StartsWith("ConsoleMessages="))
+                    ConsoleMessages = bool.Parse(cString.Substring("ConsoleMessages=".Length));          
             }
 
-            Console.WriteLine("Initialization complete");
+            if (ConsoleMessages)
+                Console.WriteLine("Initialization complete");
         }
     }
 
