@@ -49,7 +49,10 @@ namespace CTF_RPG_Game.ClientInteraction
                         Console.WriteLine("Client connected");
 
                     Thread Handler = new Thread(SH.Handle);
+                    Thread CloseChecker = new Thread(new ParameterizedThreadStart(SH.CloseCheck));
+
                     Handler.Start();
+                    CloseChecker.Start(Handler);
                 }
             }
             catch (Exception ex)

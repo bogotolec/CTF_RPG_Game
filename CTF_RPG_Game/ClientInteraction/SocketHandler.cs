@@ -49,6 +49,27 @@ namespace CTF_RPG_Game.ClientInteraction
             game.CommandHandlerStart();
         }
 
+        public void CloseCheck(object obj)
+        {
+            Thread parent = (Thread)obj;
+            do
+            {
+                Thread.Sleep(1000);
+            }
+            while (!(s.Poll(100000, SelectMode.SelectRead) && s.Available == 0));
+
+            if (Program.ConsoleMessages)
+                Console.WriteLine("Start closing connection");
+
+            if (character != null)
+                character.SaveCharacter();
+
+            parent.Abort();
+
+            if (Program.ConsoleMessages)
+                Console.WriteLine("Connection closed");
+        }
+
         //////////////////////////////
 
         private bool AskForRegistration()

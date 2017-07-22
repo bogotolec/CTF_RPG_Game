@@ -126,38 +126,45 @@ namespace CTF_RPG_Game.CharacterInteraction
                 List<int> itemlist = new List<int>();
                 foreach (IItem item in Backpack)
                 {
-                    itemlist.Add(item.Id);
+                    if (item == null)
+                        itemlist.Add(0);
+                    else
+                        itemlist.Add(item.Id);
                 }
                 string backpackDB = string.Join(",", itemlist);
 
                 List<int> skilllist = new List<int>();
                 foreach (ISkill skill in LearnedSkills)
                 {
-                    skilllist.Add(skill.Id);
+                    if (skill == null)
+                        skilllist.Add(0);
+                    else
+                        skilllist.Add(skill.Id);
                 }
                 string learnedskillsDB = string.Join(",", skilllist);
 
                 SqlCommand command = new SqlCommand();
-                command.CommandText = "UPDATE dbo.GameCharacters SET " +
+                command.CommandText = "UPDATE dbo.GameСharacters SET " +
                     "Name='" + Name.ToString() + "', " +
                     "Lvl=" + Level.ToString() + ", " +
                     "CoordX=" + X.ToString() + ", " +
                     "CoordY=" + Y.ToString() + ", " +
                     "SkillPoints=" + SkillPoints.ToString() + ", " +
-                    "HeadId=" + Head == null ? "NULL" : Head.Id.ToString() + ", " +
-                    "BodyId=" + Body == null ? "NULL" : Body.Id.ToString() + ", " +
-                    "LHandId=" + LHand == null ? "NULL" : LHand.Id.ToString() + ", " +
-                    "RHandId=" + RHand == null ? "NULL" : RHand.Id.ToString() + ", " +
-                    "Boots=" + Boots == null ? "NULL" : Boots.Id.ToString() + ", " +
-                    "JeweleryOne=" + JeweleryOne == null ? "NULL" : JeweleryOne.Id.ToString() + ", " +
-                    "JeweleryTwo=" + JeweleryTwo == null ? "NULL" : JeweleryTwo.Id.ToString() + ", " +
+                    "HeadId=" + (Head == null ? "0" : Head.Id.ToString()) + ", " +
+                    "BodyId=" + (Body == null ? "0" : Body.Id.ToString()) + ", " +
+                    "LHandId=" + (LHand == null ? "0" : LHand.Id.ToString()) + ", " +
+                    "RHandId=" + (RHand == null ? "0" : RHand.Id.ToString()) + ", " +
+                    "Boots=" + (Boots == null ? "0" : Boots.Id.ToString()) + ", " +
+                    "JeweleryOne=" + (JeweleryOne == null ? "0" : JeweleryOne.Id.ToString()) + ", " +
+                    "JeweleryTwo=" + (JeweleryTwo == null ? "0" : JeweleryTwo.Id.ToString()) + ", " +
                     "Gold=" + Gold.ToString() + ", " +
                     "Health=" + Health.ToString() + ", " +
                     "BackPack='" + backpackDB.ToString() + "', " +
                     "LearnedSkills=" + learnedskillsDB.ToString() +
-                    " WHERE id=" + ID.ToString() + " LIMIT 1";
+                    " WHERE id=" + ID.ToString();
 
                 command.Connection = connection;
+                connection.Open();
                 command.ExecuteNonQuery();
             }
         }
