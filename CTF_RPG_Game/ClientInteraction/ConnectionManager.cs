@@ -3,6 +3,7 @@ using System.Threading;
 using System.Net.Sockets;
 using System.Net;
 using CTF_RPG_Game_Server;
+using System.Collections.Generic;
 
 namespace CTF_RPG_Game.ClientInteraction
 {
@@ -10,7 +11,6 @@ namespace CTF_RPG_Game.ClientInteraction
     {
         private static IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), Program.PORT);
         private static Socket ListenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
 
         // !!!SINGLETON WARNING!!!
         private static ConnectionManager instance;
