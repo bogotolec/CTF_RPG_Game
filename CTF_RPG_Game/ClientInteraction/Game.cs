@@ -67,14 +67,15 @@ namespace CTF_RPG_Game.ClientInteraction
         private void MapToResult()
         {
             StringBuilder SB = new StringBuilder();
-            const int VisionRange = 10;
+            const int HorisontalVisionRange = 25;
+            const int VerticalVisionRange = 12;
 
             const byte Void = 255;
             byte Temp = 0;
 
-            for (int i = character.Y - VisionRange; i <= character.Y + VisionRange; i++)
+            for (int i = character.Y - VerticalVisionRange; i <= character.Y + VerticalVisionRange; i++)
             {
-                for (int j = character.X - VisionRange; j <= character.X + VisionRange; j++)
+                for (int j = character.X - HorisontalVisionRange; j <= character.X + HorisontalVisionRange; j++)
                 {
                     if (i < 0 || i >= map.Height || j < 0 || j >= map.Width)
                     {

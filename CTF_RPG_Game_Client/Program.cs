@@ -17,22 +17,12 @@ namespace CTF_RPG_Game_Client
             Console.OutputEncoding = Encoding.UTF8;
             Console.InputEncoding = Encoding.UTF8;
 
-            // Test
-            Console.WriteLine("!!!");
-            Console.ReadLine();
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("!!!");
-            Console.ReadLine();
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("!!!");
-            Console.ReadLine();
-
             // Create connection
             ConnectionManager Manager = new ConnectionManager(IP, Port);
 
             // Start Game
             Game Game = new Game(Manager);
-
+            Game.Start();
         }
     }
 }
