@@ -23,6 +23,8 @@ namespace CTF_RPG_Game_Client
 
         public void Send(string Data)
         {
+            while (Data.Length == 0)
+                Data = Console.ReadLine();
             byte[] DataBytes = Encoding.UTF8.GetBytes(Data);
             socket.Send(DataBytes);
         }
