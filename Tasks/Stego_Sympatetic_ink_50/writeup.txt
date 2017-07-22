@@ -1,0 +1,7 @@
+Rus:
+В задании предоставляется картинка в png формате. В надписи на ней говорится о симпатических чернилах. 
+Простейший способ решения - открыть картинку в Paint и залить черным цветом. Снизу будет виден флаг.
+
+Eng:
+In that task we have a image in PNG format. There is advice about sympatetic_ink in the inscription.
+To solve this task we can open image in Paint and pour it black color. Flag will be on the bottom. 
