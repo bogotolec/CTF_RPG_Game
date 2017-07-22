@@ -4,6 +4,7 @@ using System.Text;
 using CTF_RPG_Game.CharacterInteraction;
 using CTF_RPG_Game.Languages;
 using CTF_RPG_Game.MapComponents;
+using Newtonsoft.Json;
 
 namespace CTF_RPG_Game.ClientInteraction
 {
@@ -20,14 +21,25 @@ namespace CTF_RPG_Game.ClientInteraction
             SH = SocketHandler;
             character = Char;
             map = Map.GetMap();
-            result = new Result();
             lang = language;
+
+            // Result
+            result = new Result();
+
+            result.Commands =
+@"w, a, s, d - moving";
+
+            result.Info = "";
+            MapToResult();
+            result.Level = character.Level.ToString();
         }
 
         public void CommandHandlerStart()
         {
             while (true)
             {
+                SendResult();
+
                 string[] commandwords = SH.GetMessage().ToLower().Split();
 
                 switch (commandwords[0])
@@ -55,25 +67,26 @@ namespace CTF_RPG_Game.ClientInteraction
         private void MapToResult()
         {
             StringBuilder SB = new StringBuilder();
-            int VisionRange = 10;
+            const int VisionRange = 10;
+
+            const byte Void = 255;
+            byte Temp = 0;
+
             for (int i = character.Y - VisionRange; i <= character.Y + VisionRange; i++)
             {
                 for (int j = character.X - VisionRange; j <= character.X + VisionRange; j++)
                 {
-                    if (i < 0 || i > map.Height || j < 0 || j > map.Width)
+                    if (i < 0 || i >= map.Height || j < 0 || j >= map.Width)
                     {
-                        SB.Append(' ');
+                        SB.Append(Void.ToString("x2"));
                     }
                     else
                     {
-                        // TODO WITH FRODAN
-                        // Nado sdelat' standart otobrajeniya here
+                        Temp = map[i, j].GetCellByte();
+                        SB.Append(Temp.ToString("x2"));
                     }
                 }
-
-                SB.Append('\n');
             }
-
             result.BigWindow = SB.ToString();
         }
 
@@ -101,11 +114,18 @@ namespace CTF_RPG_Game.ClientInteraction
                 character.X += x;
                 character.Y += y;
                 result.Message = map[character.Y, character.X].Message;
+                MapToResult();
             }
             else
             {
                 result.Message = lang.CellIsNotPassable;
             }
+        }
+
+        private void SendResult()
+        {
+            string json = JsonConvert.SerializeObject(result);
+            SH.SendMessage(json);
         }
     }
 

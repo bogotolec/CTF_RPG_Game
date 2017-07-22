@@ -16,32 +16,33 @@ namespace CTF_RPG_Game.MapComponents
         public bool IsVisibleWithSkills;
         public string Symbol;
         public string Color;
-        private static Dictionary<string, string> ColorDict = new Dictionary<string, string>();
-        private static Dictionary<string, string> SymbolDict = new Dictionary<string, string>();
+        private static Dictionary<string, int> ColorDict = new Dictionary<string, int>();
+        private static Dictionary<string, int> SymbolDict = new Dictionary<string, int>();
 
         private void CreateDict()
         {
-            ColorDict.Add("red", "0001");
-            ColorDict.Add("green", "0010");
-            ColorDict.Add("blue", "0100");
-            ColorDict.Add("yellow", "1000");
-            ColorDict.Add("black", "0011");
-            ColorDict.Add("white", "0110");
-            ColorDict.Add("orange", "1100");
-            ColorDict.Add("light-blue", "0111");
-            ColorDict.Add("gray", "1110");
-            ColorDict.Add("purple", "0000");
+            ColorDict.Add("red", 0);
+            ColorDict.Add("green", 1);
+            ColorDict.Add("blue", 2);
+            ColorDict.Add("yellow", 3);
+            ColorDict.Add("black", 4);
+            ColorDict.Add("white", 5);
+            ColorDict.Add("orange", 6);
+            ColorDict.Add("light-blue", 7);
+            ColorDict.Add("gray", 8);
+            ColorDict.Add("purple", 9);
             //1111 - Reserved
-            SymbolDict.Add(">", "0001");
-            SymbolDict.Add("<", "0010");
-            SymbolDict.Add("^", "0100");
-            SymbolDict.Add("v", "1000");
-            SymbolDict.Add("$", "0011");
-            SymbolDict.Add("X", "0110");
-            SymbolDict.Add("!", "1100");
-            SymbolDict.Add("@", "0111");
-            SymbolDict.Add("#", "1110");
-            SymbolDict.Add(" ", "0000");
+            SymbolDict.Add(">", 0);
+            SymbolDict.Add("<", 1);
+            SymbolDict.Add("^", 2);
+            SymbolDict.Add("v", 3);
+            SymbolDict.Add("$", 4);
+            SymbolDict.Add("X", 5);
+            SymbolDict.Add("!", 6);
+            SymbolDict.Add("@", 7);
+            SymbolDict.Add("#", 8);
+            SymbolDict.Add(" ", 9);
+            SymbolDict.Add("-", 10);
             //1111 - Reserved
         }
         public override string ToString()
@@ -58,7 +59,7 @@ namespace CTF_RPG_Game.MapComponents
 
         public byte GetCellByte()
         {
-            return Byte.Parse(ColorDict[Color] + SymbolDict[Symbol]);
+            return Convert.ToByte((ColorDict[Color] << 4) + SymbolDict[Symbol]);
         }
     }
 }
