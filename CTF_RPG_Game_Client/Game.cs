@@ -39,6 +39,7 @@ namespace CTF_RPG_Game_Client
         {
             JsonAnswer Json = Authorization();
 
+            Console.Clear();
             while (true)
             {
                 DrowGame(Json);
@@ -78,7 +79,8 @@ namespace CTF_RPG_Game_Client
         // FU*K THIS SHIT
         public void DrowGame(JsonAnswer Answer)
         {
-            Console.Clear();
+            Console.CursorTop = 0;
+            Console.CursorLeft = 0;
             
             // Create message window
             StringBuilder MessageWindowBuilder = new StringBuilder();
@@ -242,22 +244,25 @@ namespace CTF_RPG_Game_Client
                     if (window == Window.Message)
                     {
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(MessageWindow[MessageWindowIndex]);
-                        MessageWindowIndex++;
+                        Console.Write(MessageWindow.Substring(MessageWindowIndex, MESSAGE_WINDOW_WIDTH));
+                        MessageWindowIndex += MESSAGE_WINDOW_WIDTH;
+                        j += MESSAGE_WINDOW_WIDTH - 1;
                     }
 
                     if (window == Window.Commands)
                     {
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(CommandWindow[CommandsWindowIndex]);
-                        CommandsWindowIndex++;
+                        Console.Write(CommandWindow.Substring(CommandsWindowIndex, COMMAND_WINDOW_WIDTH));
+                        CommandsWindowIndex += COMMAND_WINDOW_WIDTH;
+                        j += COMMAND_WINDOW_WIDTH - 1;
                     }
 
                     if (window == Window.Info)
                     {
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(InfoWindow[InfoWindowIndex]);
-                        InfoWindowIndex++;
+                        Console.Write(InfoWindow.Substring(InfoWindowIndex, INFO_WINDOW_WIDTH));
+                        InfoWindowIndex += INFO_WINDOW_WIDTH;
+                        j += INFO_WINDOW_WIDTH - 1;
                     }
 
                     if (window == Window.BigFrame)
@@ -355,6 +360,8 @@ namespace CTF_RPG_Game_Client
                 }
                 Console.Write('\n');
             }
+            Console.Write((new StringBuilder()).Append(' ', 256));
+            Console.CursorLeft = 0;
         }
 
         private Window AreaOf(int i, int j)
