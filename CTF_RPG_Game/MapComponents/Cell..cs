@@ -23,14 +23,14 @@ namespace CTF_RPG_Game.MapComponents
         {
             ColorDict.Add("red", 0);
             ColorDict.Add("green", 1);
-            ColorDict.Add("blue", 2);
+            ColorDict.Add("blue", 2); // To ConsoleColor.DarkBlue
             ColorDict.Add("yellow", 3);
             ColorDict.Add("black", 4);
             ColorDict.Add("white", 5);
-            ColorDict.Add("orange", 6);
-            ColorDict.Add("light-blue", 7);
+            ColorDict.Add("orange", 6); // Color not exist
+            ColorDict.Add("light-blue", 7); // To ConsoleColor.Blue
             ColorDict.Add("gray", 8);
-            ColorDict.Add("purple", 9);
+            ColorDict.Add("purple", 9); // To ConsoleColor.Magenta
             //1111 - Reserved
             SymbolDict.Add(">", 0);
             SymbolDict.Add("<", 1);
