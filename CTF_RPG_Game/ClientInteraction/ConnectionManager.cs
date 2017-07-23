@@ -11,6 +11,7 @@ namespace CTF_RPG_Game.ClientInteraction
     {
         private static IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), Program.PORT);
         private static Socket ListenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        public static List<SocketHandler> ConnectionList = new List<SocketHandler>();
 
         // !!!SINGLETON WARNING!!!
         private static ConnectionManager instance;
@@ -47,6 +48,8 @@ namespace CTF_RPG_Game.ClientInteraction
 
                     if (Program.ConsoleMessages)
                         Console.WriteLine("Client connected");
+
+                    ConnectionList.Add(SH);
 
                     Thread Handler = new Thread(SH.Handle);
                     Thread CloseChecker = new Thread(new ParameterizedThreadStart(SH.CloseCheck));

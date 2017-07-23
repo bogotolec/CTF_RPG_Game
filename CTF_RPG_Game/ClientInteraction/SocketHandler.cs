@@ -64,8 +64,10 @@ namespace CTF_RPG_Game.ClientInteraction
             if (character != null)
                 character.SaveCharacter();
 
-            parent.Abort();
+            ConnectionManager.ConnectionList.Remove(this);
 
+            parent.Abort();
+            
             if (Program.ConsoleMessages)
                 Console.WriteLine("Connection closed");
         }
