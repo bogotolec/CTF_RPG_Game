@@ -314,6 +314,7 @@ namespace CTF_RPG_Game_Client
                         Console.ForegroundColor = color;
 
                         char c;
+                        bool hasWritten = false;
                         switch (symbol & 0x0F)
                         {
                             case 0:
@@ -342,6 +343,10 @@ namespace CTF_RPG_Game_Client
                                 break;
                             case 8:
                                 c = '#';
+                                Console.BackgroundColor = color;
+                                Console.Write(" ");
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                hasWritten = true;
                                 break;
                             case 9:
                                 c = ' ';
@@ -353,7 +358,9 @@ namespace CTF_RPG_Game_Client
                                 c = ' ';
                                 break;
                         }
-                        Console.Write(c);
+                        
+                        if (!hasWritten)
+                            Console.Write(c);
 
                         BigWindowIndex++;
                     }
