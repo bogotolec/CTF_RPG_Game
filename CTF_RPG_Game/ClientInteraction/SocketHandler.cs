@@ -124,7 +124,6 @@ namespace CTF_RPG_Game.ClientInteraction
         public void CloseConnection()
         {
             s.Shutdown(SocketShutdown.Both);
-            Console.WriteLine("Connection closed");
         }
 
         private bool ChooseLanguage()

@@ -33,22 +33,29 @@ namespace CTF_RPG_Game_Server
 
                 switch (Command)
                 {
-                    case "startlisten":
-                        if (!Listener.IsAlive)
-                            Listener.Start();
-                        if (ConsoleMessages)
-                            Console.WriteLine("Listener started");
-                        break;
-
-                    case "stoplisten":
-                        if (Listener.IsAlive)
+                    case "stopserver":
+                        foreach (var connection in ConnectionManager.ConnectionList)
                         {
-                            // НЕ РОБИТ
-                            Listener.Abort();
+                            Thread closer = new Thread(connection.CloseConnection);
+                            closer.Start();
                         }
 
-                        if (ConsoleMessages)
-                            Console.WriteLine("Listener stoped");
+                        Thread aborter = new Thread(new ThreadStart(Listener.Abort));
+                        aborter.Start();
+
+                        while (ConnectionManager.ConnectionList.Count != 0)
+                        {
+                            Thread.Sleep(1000);
+                        }
+
+                        Environment.Exit(0);
+                        break;
+
+                    case "showconnections":
+                        foreach (var connection in ConnectionManager.ConnectionList)
+                        {
+                            Console.WriteLine(connection);
+                        }
                         break;
 
                     default:
