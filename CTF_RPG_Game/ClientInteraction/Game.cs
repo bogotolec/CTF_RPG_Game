@@ -77,7 +77,11 @@ namespace CTF_RPG_Game.ClientInteraction
             {
                 for (int j = character.X - HorisontalVisionRange; j <= character.X + HorisontalVisionRange; j++)
                 {
-                    if (i < 0 || i >= map.Height || j < 0 || j >= map.Width)
+                    if (i == character.Y && j == character.X)
+                    {
+                        SB.Append("75");
+                    }
+                    else if (i < 0 || i >= map.Height || j < 0 || j >= map.Width)
                     {
                         SB.Append(Void.ToString("x2"));
                     }
