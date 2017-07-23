@@ -21,6 +21,15 @@ namespace CTF_RPG_Game.ClientInteraction
             s = socket;
         }
 
+        public override string ToString()
+        {
+            StringBuilder result = new StringBuilder("Connection:\n");
+            result.Append("\tClient IP: " + s.RemoteEndPoint + "\n");
+            result.Append("\tClient character name: " + (character == null ? "null" : character.Name) + "\n");
+            result.Append("\tClient ID: " + (character == null ? "unknown" : character.ID.ToString()));
+            return result.ToString();
+        }
+
         public void Handle()
         {
             if (!ChooseLanguage())
