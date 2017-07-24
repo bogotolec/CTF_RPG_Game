@@ -1,0 +1,6 @@
+Rus:
+У нас есть стих Эдгара По "Ворон". Если внимательно приглядеться - почти весь текст идет в нижнем регистре, но некоторые буквы выбиваются из него.
+Далее можно вручную выписать все заглавные буквы, либо написать программу. Остается привести ответ в формат флага CRG{} и сдать.
+
+Eng: We have a Edgar's Allan Poe poem. If look attentively, we can notice that all text written in lower case, but some chars are knocking out.
+Further we can make a programm or write out chars by hand. Remains to put it in CRG{} and complete task.

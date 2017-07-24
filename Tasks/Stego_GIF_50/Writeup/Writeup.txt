@@ -3,7 +3,8 @@ Rus:
 стоит посмотреть слои. Ќа одном из них и будет ответ. ќсталось вставить его в CRG{} и сдать. јльтернативно можно было подождать
 пока произойдет анимаци€ без вс€ких инструментов, но этот способ неудобен.
 
-Eng: We have image in GIF-format with book and request to turn the page. Because of GIF, we probably need to look at other layers.
+Eng: 
+We have image in GIF-format with book and request to turn the page. Because of GIF, we probably need to look at other layers.
 On the one of them would be answer. Put it in CRG{} and complete task.
 
 I used this GIF-splitter: https://ezgif.com.
