@@ -272,7 +272,7 @@ namespace CTF_RPG_Game_Client
                         BigWindowFrameIndex++;
                     }
 
-                    if (window == Window.BigData)
+                    if (window == Window.BigData && Answer.Type == "Map")
                     {
                         ConsoleColor color;
                         byte symbol = byte.Parse(Answer.BigWindow.Substring(BigWindowIndex * 2, 2),
@@ -364,6 +364,17 @@ namespace CTF_RPG_Game_Client
 
                         BigWindowIndex++;
                     }
+
+                    if (window == Window.BigData && Answer.Type == "Inventory")
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(Answer.BigWindow.Substring(BigWindowIndex, (BIG_WINDOW_WIDTH - 2) / 2));
+                        BigWindowIndex += (BIG_WINDOW_WIDTH - 2) / 2;
+                        Console.Write('|');
+                        Console.Write(Answer.BigWindow.Substring(BigWindowIndex, (BIG_WINDOW_WIDTH - 2) / 2));
+                        BigWindowIndex += (BIG_WINDOW_WIDTH - 2) / 2;
+                        j += BIG_WINDOW_WIDTH - 3;
+                    }
                 }
                 Console.Write('\n');
             }
@@ -405,5 +416,6 @@ namespace CTF_RPG_Game_Client
         public string Commands;
         public string Info;
         public string Level;
+        public string Type;
     }
 }

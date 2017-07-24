@@ -13,6 +13,11 @@ namespace CTF_RPG_Game.Languages
         private Russian()
         { }
 
+        public override string ToString()
+        {
+            return "Russian";
+        }
+
         public static ILanguage GetLanguage()
         {
             if (This == null)
@@ -24,6 +29,7 @@ namespace CTF_RPG_Game.Languages
         public string Nothing { get { return "Ничего"; } }
         public string None { get { return "Нет"; } }
         public string UnknownCommand { get { return "Команда не опознана."; } }
+        public string BadNumber { get { return "Странное число"; } }
         #endregion
 
         #region Auth
@@ -54,6 +60,9 @@ namespace CTF_RPG_Game.Languages
         public string SkillTeleportationName { get { return "Телепортация"; } }
         public string SkillTeleportationDescription { get { return "Это умение позволяет телепортироваться."; } }
         public string SkillTeleportationUseDescription { get { return "Введите \"use telepor <название метки>\", чтобы переместиться на эту метку."; } }
+        
+        public string SkillJewellerName { get { return "Ювелир"; } }
+        public string SkillJewellerDescription { get { return "Позволяет вам носить второе украшение"; } }
         #endregion
 
         #region Items

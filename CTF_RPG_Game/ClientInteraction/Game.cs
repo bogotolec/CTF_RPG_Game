@@ -16,6 +16,16 @@ namespace CTF_RPG_Game.ClientInteraction
         private Result result;
         private ILanguage lang;
 
+        const int HEIGHT = 25;
+        const int WIDTH = 51;
+
+        const string MAP_COMMANDS =
+@"w, a, s, d - moving
+inventory - open inventory";
+        const string INV_COMMANDS =
+@"page <number> - go to page
+map - open map";
+
         public Game(Character Char, SocketHandler SocketHandler, ILanguage language)
         {
             SH = SocketHandler;
@@ -26,8 +36,8 @@ namespace CTF_RPG_Game.ClientInteraction
             // Result
             result = new Result();
 
-            result.Commands =
-@"w, a, s, d - moving";
+            result.Commands = MAP_COMMANDS;
+
 
             result.Info = "";
             MapToResult();
@@ -42,20 +52,47 @@ namespace CTF_RPG_Game.ClientInteraction
 
                 string[] commandwords = SH.GetMessage().ToLower().Split();
 
+                int InventoryPage = 1;
+
                 switch (commandwords[0])
                 {
                     case "w":
-                        Move("up");
-                        break;
+                        if (!Move("up"))
+                            result.Message = lang.CellIsNotPassable;
+                        goto case "map";
                     case "a":
-                        Move("left");
-                        break;
+                        if (!Move("left"))
+                            result.Message = lang.CellIsNotPassable;
+                        goto case "map";
                     case "s":
-                        Move("down");
-                        break;
+                        if (!Move("down"))
+                            result.Message = lang.CellIsNotPassable;
+                        goto case "map";
                     case "d":
-                        Move("right");
+                        if (!Move("right"))
+                            result.Message = lang.CellIsNotPassable;
+                        goto case "map";
+                    case "map":
+                        MapToResult();
+                        if (result.Message != lang.CellIsNotPassable)
+                            result.Message = map[character.Y, character.X].Message;
+                        result.Commands = MAP_COMMANDS;
                         break;
+
+                    case "page":
+                        if (int.TryParse(commandwords[1], out InventoryPage))
+                            goto case "inventory";
+                        else
+                        {
+                            result.Message = lang.BadNumber;
+                            break;
+                        }
+                    case "inventory":
+                        InventoryToResult(InventoryPage);
+                        result.Message = "";
+                        result.Commands = INV_COMMANDS; 
+                        break;
+
 
                     default:
                         result.Message = lang.UnknownCommand;
@@ -66,9 +103,11 @@ namespace CTF_RPG_Game.ClientInteraction
 
         private void MapToResult()
         {
+            result.Type = "Map";
+
             StringBuilder SB = new StringBuilder();
-            const int HorisontalVisionRange = 25;
-            const int VerticalVisionRange = 12;
+            const int HorisontalVisionRange = WIDTH / 2;
+            const int VerticalVisionRange = HEIGHT / 2;
 
             const byte Void = 255;
             byte Temp = 0;
@@ -95,7 +134,55 @@ namespace CTF_RPG_Game.ClientInteraction
             result.BigWindow = SB.ToString();
         }
 
-        private void Move(string direction)
+        private void InventoryToResult(int page)
+        {
+            result.Type = "Inventory";
+            string[] equiped = new string[HEIGHT];
+            string[] backpacked = new string[HEIGHT];
+
+            if (lang.ToString() == "Russian")
+            {
+                equiped[0] = "НАДЕТО".PadLeft((WIDTH / 2 - "НАДЕТО".Length) / 2 + "НАДЕТО".Length).PadRight(WIDTH / 2);
+                equiped[1] = (new StringBuilder()).Append(' ', WIDTH / 2).ToString();
+                equiped[2] = (" Голова: " + (character.Head == null ? "Пусто" : character.Head.Name(lang))).PadRight(WIDTH / 2);
+                equiped[3] = (" Тело: " + (character.Body == null ? "Пусто" : character.Body.Name(lang))).PadRight(WIDTH / 2);
+                equiped[4] = (" Левая рука: " + (character.LHand == null ? "Пусто" : character.LHand.Name(lang))).PadRight(WIDTH / 2);
+                equiped[5] = (" Правая рука: " + (character.RHand == null ? "Пусто" : character.RHand.Name(lang))).PadRight(WIDTH / 2);
+                equiped[6] = (" Обувь: " + (character.Boots == null ? "Пусто" : character.Boots.Name(lang))).PadRight(WIDTH / 2);
+                equiped[7] = (" Украшение 1: " + (character.JeweleryOne == null ? "Пусто" : character.JeweleryOne.Name(lang))).PadRight(WIDTH / 2);
+                equiped[8] = (" Украшение 2: " + (character.LearnedSkills.Contains(Skill.GetById(2)) ? (character.JeweleryTwo == null ? "Пусто" : character.JeweleryTwo.Name(lang)) : "Заблокировано")).PadRight(WIDTH / 2);
+                for (int i = 9; i < HEIGHT; i++)
+                {
+                    equiped[i] = (new StringBuilder()).Append(' ', WIDTH / 2).ToString();
+                }
+
+                int itemindex = 0;
+                backpacked[0] = "РЮКЗАК".PadLeft((WIDTH / 2 - "РЮКЗАК".Length) / 2 + "РЮКЗАК".Length).PadRight(WIDTH / 2);
+                backpacked[1] = (new StringBuilder()).Append(' ', WIDTH / 2).ToString();
+                while (itemindex < 23 && (page - 1) * 23 + itemindex < character.Backpack.Count)
+                {
+                    if (character.Backpack[((page - 1) * 23) + itemindex] == null)
+                        backpacked[itemindex + 2] =  (new StringBuilder()).Append(' ', WIDTH / 2).ToString();
+                    else
+                        backpacked[itemindex + 2] = (" " + character.Backpack[((page - 1) * 23) + itemindex].Name(lang)).PadRight(WIDTH / 2);
+                    itemindex++;
+                }
+                while (itemindex < 23)
+                {
+                    backpacked[itemindex + 2] = (new StringBuilder()).Append(' ', WIDTH / 2).ToString();
+                    itemindex++;
+                }
+            }
+
+            string[] results = new string[HEIGHT];
+
+            for (int i = 0; i < HEIGHT; i++)
+                results[i] = equiped[i] + backpacked[i];
+
+            result.BigWindow = String.Join("", results);
+        }
+
+        private bool Move(string direction)
         {
             int x = 0, y = 0;
             switch (direction)
@@ -118,12 +205,11 @@ namespace CTF_RPG_Game.ClientInteraction
             {
                 character.X += x;
                 character.Y += y;
-                result.Message = map[character.Y, character.X].Message;
-                MapToResult();
+                return true;
             }
             else
             {
-                result.Message = lang.CellIsNotPassable;
+                return false;
             }
         }
 
@@ -141,5 +227,6 @@ namespace CTF_RPG_Game.ClientInteraction
         public string Commands;
         public string Info;
         public string Level;
+        public string Type;
     }
 }

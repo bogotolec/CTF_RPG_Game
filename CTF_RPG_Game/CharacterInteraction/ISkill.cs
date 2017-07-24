@@ -12,7 +12,7 @@ namespace CTF_RPG_Game.CharacterInteraction
         int Id { get; }
         string Name(ILanguage lang);
         string Description(ILanguage lang);
-        int PointsToLearn { get; } 
+        int PointsToLearn { get; }
         SkillState State { get; }
         CharacterClass Class { get; }
         ISkill[] NeededSkills { get; }

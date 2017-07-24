@@ -12,6 +12,7 @@ namespace CTF_RPG_Game.Languages
         string Nothing { get; }
         string None { get; }
         string UnknownCommand { get; }
+        string BadNumber { get; }
         #endregion
 
         #region Auth
@@ -42,6 +43,9 @@ namespace CTF_RPG_Game.Languages
         string SkillTeleportationName { get; }
         string SkillTeleportationDescription { get; }
         string SkillTeleportationUseDescription { get; }
+
+        string SkillJewellerName { get; }
+        string SkillJewellerDescription { get; }
         #endregion
 
         #region Items
