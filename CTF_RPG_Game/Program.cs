@@ -33,7 +33,12 @@ namespace CTF_RPG_Game_Server
 
                 switch (Command)
                 {
+                    case "ss":
                     case "stopserver":
+                        Console.WriteLine("Do you really want to stop server? (y/n)");
+                        if (Console.ReadLine().ToLower() != "y")
+                            break;
+
                         foreach (var connection in ConnectionManager.ConnectionList)
                         {
                             Thread closer = new Thread(connection.CloseConnection);
@@ -51,6 +56,7 @@ namespace CTF_RPG_Game_Server
                         Environment.Exit(0);
                         break;
 
+                    case "sc":
                     case "showconnections":
                         foreach (var connection in ConnectionManager.ConnectionList)
                         {
@@ -58,9 +64,17 @@ namespace CTF_RPG_Game_Server
                         }
                         break;
 
+                    case "?":
+                    case "commands":
+                    case "help":
+                        Console.WriteLine("StopServer (SS): stop listener, close all connections and exit.");
+                        Console.WriteLine("ShowConnections (SC): show information about every connection.");
+                        Console.WriteLine();
+                        break;
+
                     default:
                         if (ConsoleMessages)
-                            Console.WriteLine("Unknown command");
+                            Console.WriteLine("Unknown command, type 'commands' or 'help' for help");
                         break;
                 }
             }
