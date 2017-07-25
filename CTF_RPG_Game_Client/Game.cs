@@ -101,7 +101,7 @@ namespace CTF_RPG_Game_Client
                     int SymbolNumber = 0;
 
                     while (WordNumber != MessageWords.Length && 
-                        (SymbolNumber + MessageWords[WordNumber]).Length < MESSAGE_WINDOW_WIDTH - 3)
+                        SymbolNumber + (MessageWords[WordNumber]).Length < MESSAGE_WINDOW_WIDTH - 3)
                     {
                         MessageStrings[i] += " " + MessageWords[WordNumber];
                         SymbolNumber += MessageWords[WordNumber].Length + 1;
