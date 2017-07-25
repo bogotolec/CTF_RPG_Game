@@ -53,6 +53,8 @@ map - open map";
                 string[] commandwords = SH.GetMessage().ToLower().Split();
 
                 int InventoryPage = 1;
+                int beginX = character.X;
+                int beginY = character.Y;
 
                 switch (commandwords[0])
                 {
@@ -82,7 +84,7 @@ map - open map";
                         goto case "map";
                     case "map":
                         MapToResult();
-                        if (result.Message != lang.CellIsNotPassable)
+                        if (beginX != character.X || beginY != character.Y)
                             result.Message = map[character.Y, character.X].Message;
                         result.Commands = MAP_COMMANDS;
                         break;
