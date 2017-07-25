@@ -80,7 +80,7 @@ map - open map";
                         break;
 
                     case "page":
-                        if (int.TryParse(commandwords[1], out InventoryPage))
+                        if (commandwords.Length > 1 && int.TryParse(commandwords[1], out InventoryPage))
                             goto case "inventory";
                         else
                         {
