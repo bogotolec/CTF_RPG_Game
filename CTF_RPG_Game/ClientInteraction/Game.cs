@@ -154,38 +154,50 @@ map - open map";
             string[] equiped = new string[HEIGHT];
             string[] backpacked = new string[HEIGHT];
 
-            if (lang.ToString() == "Russian")
-            {
-                equiped[0] = "НАДЕТО".PadLeft((WIDTH / 2 - "НАДЕТО".Length) / 2 + "НАДЕТО".Length).PadRight(WIDTH / 2);
-                equiped[1] = (new StringBuilder()).Append(' ', WIDTH / 2).ToString();
-                equiped[2] = (" Голова: " + (character.Head == null ? "Пусто" : character.Head.Name(lang))).PadRight(WIDTH / 2);
-                equiped[3] = (" Тело: " + (character.Body == null ? "Пусто" : character.Body.Name(lang))).PadRight(WIDTH / 2);
-                equiped[4] = (" Левая рука: " + (character.LHand == null ? "Пусто" : character.LHand.Name(lang))).PadRight(WIDTH / 2);
-                equiped[5] = (" Правая рука: " + (character.RHand == null ? "Пусто" : character.RHand.Name(lang))).PadRight(WIDTH / 2);
-                equiped[6] = (" Обувь: " + (character.Boots == null ? "Пусто" : character.Boots.Name(lang))).PadRight(WIDTH / 2);
-                equiped[7] = (" Украшение 1: " + (character.JeweleryOne == null ? "Пусто" : character.JeweleryOne.Name(lang))).PadRight(WIDTH / 2);
-                equiped[8] = (" Украшение 2: " + (character.LearnedSkills.Contains(Skill.GetById(2)) ? (character.JeweleryTwo == null ? "Пусто" : character.JeweleryTwo.Name(lang)) : "Заблокировано")).PadRight(WIDTH / 2);
-                for (int i = 9; i < HEIGHT; i++)
-                {
-                    equiped[i] = (new StringBuilder()).Append(' ', WIDTH / 2).ToString();
-                }
+            string NOTHING = (new StringBuilder()).Append(' ', WIDTH / 2).ToString();
 
-                int itemindex = 0;
-                backpacked[0] = "РЮКЗАК".PadLeft((WIDTH / 2 - "РЮКЗАК".Length) / 2 + "РЮКЗАК".Length).PadRight(WIDTH / 2);
-                backpacked[1] = (new StringBuilder()).Append(' ', WIDTH / 2).ToString();
-                while (itemindex < 23 && (page - 1) * 23 + itemindex < character.Backpack.Count)
-                {
-                    if (character.Backpack[((page - 1) * 23) + itemindex] == null)
-                        backpacked[itemindex + 2] =  (new StringBuilder()).Append(' ', WIDTH / 2).ToString();
-                    else
-                        backpacked[itemindex + 2] = (" " + character.Backpack[((page - 1) * 23) + itemindex].Name(lang)).PadRight(WIDTH / 2);
-                    itemindex++;
-                }
-                while (itemindex < 23)
-                {
-                    backpacked[itemindex + 2] = (new StringBuilder()).Append(' ', WIDTH / 2).ToString();
-                    itemindex++;
-                }
+            // Equiped field filling
+            equiped[0] = lang.Equiped.PadLeft((WIDTH / 2 - lang.Equiped.Length) / 2 + lang.Equiped.Length).PadRight(WIDTH / 2);
+            equiped[1] = NOTHING;
+            equiped[2] = (" " + lang.Head + ":").PadRight(WIDTH / 2);
+            equiped[3] = ("   " + (character.Head == null ? lang.Empty : character.Head.Name(lang))).PadRight(WIDTH / 2);
+            equiped[4] = (" " + lang.Body + ":").PadRight(WIDTH / 2);
+            equiped[5] = ("   " + (character.Body == null ? lang.Empty : character.Body.Name(lang))).PadRight(WIDTH / 2);
+            equiped[6] = (" " + lang.LHand + ":").PadRight(WIDTH / 2);
+            equiped[7] = ("   " + (character.LHand == null ? lang.Empty : character.LHand.Name(lang))).PadRight(WIDTH / 2);
+            equiped[8] = (" " + lang.Rhand + ":").PadRight(WIDTH / 2);
+            equiped[9] = ("   " + (character.RHand == null ? lang.Empty : character.RHand.Name(lang))).PadRight(WIDTH / 2);
+            equiped[10] = (" " + lang.Boots + ":").PadRight(WIDTH / 2);
+            equiped[11] = ("   " + (character.Boots == null ? lang.Empty : character.Boots.Name(lang))).PadRight(WIDTH / 2);
+            equiped[12] = (" " + lang.Jewelerry + "1:").PadRight(WIDTH / 2);
+            equiped[13] = ("   " + (character.JeweleryOne == null ? lang.Empty : character.JeweleryOne.Name(lang))).PadRight(WIDTH / 2);
+            equiped[14] = (" " + lang.Jewelerry + "2:").PadRight(WIDTH / 2);
+            equiped[15] = ("   " + (character.LearnedSkills.Contains(Skill.GetById(2)) ? (character.JeweleryTwo == null ? lang.Empty : character.JeweleryTwo.Name(lang)) : lang.Locked)).PadRight(WIDTH / 2);
+            for (int i = 16; i < HEIGHT - 3; i++)
+            {
+                equiped[i] = NOTHING;
+            }
+            equiped[HEIGHT - 3] = (" " + lang.Gold + " : " + character.Gold).PadRight(WIDTH / 2);
+            equiped[HEIGHT - 2] = (" " + lang.Health + " : " + character.Health).PadRight(WIDTH / 2);
+            equiped[HEIGHT - 1] = NOTHING;
+
+            // Backpack field filling
+            int itemindex = 0;
+            backpacked[0] = lang.Backpacked.PadLeft((WIDTH / 2 - lang.Backpacked.Length) / 2 + lang.Backpacked.Length).PadRight(WIDTH / 2);
+            backpacked[1] = (lang.Page + ' ' + page).PadLeft((WIDTH / 2 - (lang.Page + ' ' + page).Length) / 2 + (lang.Page + ' ' + page).Length).PadRight(WIDTH / 2);
+            backpacked[2] = NOTHING;
+            while (itemindex < HEIGHT - 3 && (page - 1) * (HEIGHT - 3) + itemindex < character.Backpack.Count)
+            {
+                if (character.Backpack[((page - 1) * (HEIGHT - 3)) + itemindex] == null)
+                    backpacked[itemindex + 3] = NOTHING;
+                else
+                    backpacked[itemindex + 3] = (" " + character.Backpack[((page - 1) * (HEIGHT - 3)) + itemindex].Name(lang)).PadRight(WIDTH / 2);
+                itemindex++;
+            }
+            while (itemindex < HEIGHT - 3)
+            {
+                backpacked[itemindex + 3] = NOTHING;
+                itemindex++;
             }
 
             string[] results = new string[HEIGHT];

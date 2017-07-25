@@ -74,5 +74,21 @@ namespace CTF_RPG_Game.Languages
         #region Moving
         public string CellIsNotPassable { get { return "Невозможно переместиться сюда."; } }
         #endregion
+
+        #region terms
+        public string Equiped { get { return "НАДЕТО"; } }
+        public string Backpacked { get { return "РЮКЗАК"; } }
+        public string Page { get { return "Страница"; } }
+        public string Head { get { return "Голова"; } }
+        public string Body { get { return "Тело"; } }
+        public string LHand { get { return "Левая рука"; } }
+        public string Rhand { get { return "Правая рука"; } }
+        public string Boots { get { return "Обувь"; } }
+        public string Jewelerry { get { return "Драгоценность"; } }
+        public string Gold { get { return "Золото"; } }
+        public string Health { get { return "Здоровье"; } }
+        public string Empty { get { return "Пусто"; } }
+        public string Locked { get { return "Заблокировано"; } }
+        #endregion
     }
 }

@@ -57,5 +57,21 @@ namespace CTF_RPG_Game.Languages
         #region Moving
         string CellIsNotPassable { get; }
         #endregion
+
+        #region terms
+        string Equiped { get; }
+        string Backpacked { get; }
+        string Page { get; }
+        string Head { get; }
+        string Body { get; }
+        string LHand { get; }
+        string Rhand { get; }
+        string Boots { get; }
+        string Jewelerry { get; }
+        string Gold { get; }
+        string Health { get; }
+        string Empty { get; }
+        string Locked { get; }
+        #endregion
     }
 }
