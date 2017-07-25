@@ -31,6 +31,8 @@ namespace CTF_RPG_Game.Languages
         public string UnknownCommand { get { return "Команда не опознана."; } }
         public string BadNumber { get { return "Странное число"; } }
         public string ImpossibleCommand { get { return "Эту команду нельзя использовать сейчас."; } }
+        public string TooBigPage { get { return "У вас нет столько предметов, чтобы перейти на эту страницу"; } }
+        public string YourBackpackHas { get { return "Количество предметов в вашем рюкзаке"; } }
         #endregion
 
         #region Auth

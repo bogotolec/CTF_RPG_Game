@@ -91,7 +91,10 @@ map - open map";
                         if (result.Type != "Inventory")
                             goto ImpossibleCommand;
                         if (commandwords.Length > 1 && int.TryParse(commandwords[1], out InventoryPage))
-                            goto case "inventory";
+                            if ((InventoryPage - 1) * (HEIGHT - 3) > character.Backpack.Count)
+                                { result.Message = lang.TooBigPage; break; }
+                            else
+                                goto case "inventory";
                         else
                         {
                             result.Message = lang.BadNumber;
@@ -99,7 +102,7 @@ map - open map";
                         }
                     case "inventory":
                         InventoryToResult(InventoryPage);
-                        result.Message = "";
+                        result.Message = lang.YourBackpackHas + ": " + (character.Backpack.Count - 1);
                         result.Commands = INV_COMMANDS; 
                         break;
 

@@ -14,6 +14,8 @@ namespace CTF_RPG_Game.Languages
         string UnknownCommand { get; }
         string BadNumber { get; }
         string ImpossibleCommand { get; }
+        string TooBigPage { get; }
+        string YourBackpackHas { get; }
         #endregion
 
         #region Auth
