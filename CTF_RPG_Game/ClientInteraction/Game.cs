@@ -57,18 +57,26 @@ map - open map";
                 switch (commandwords[0])
                 {
                     case "w":
+                        if (result.Type != "Map")
+                            goto ImpossibleCommand;
                         if (!Move("up"))
                             result.Message = lang.CellIsNotPassable;
                         goto case "map";
                     case "a":
+                        if (result.Type != "Map")
+                            goto ImpossibleCommand;
                         if (!Move("left"))
                             result.Message = lang.CellIsNotPassable;
                         goto case "map";
                     case "s":
+                        if (result.Type != "Map")
+                            goto ImpossibleCommand;
                         if (!Move("down"))
                             result.Message = lang.CellIsNotPassable;
                         goto case "map";
                     case "d":
+                        if (result.Type != "Map")
+                            goto ImpossibleCommand;
                         if (!Move("right"))
                             result.Message = lang.CellIsNotPassable;
                         goto case "map";
@@ -80,6 +88,8 @@ map - open map";
                         break;
 
                     case "page":
+                        if (result.Type != "Inventory")
+                            goto ImpossibleCommand;
                         if (commandwords.Length > 1 && int.TryParse(commandwords[1], out InventoryPage))
                             goto case "inventory";
                         else
@@ -96,6 +106,10 @@ map - open map";
 
                     default:
                         result.Message = lang.UnknownCommand;
+                        break;
+
+                    ImpossibleCommand:
+                        result.Message = lang.ImpossibleCommand;
                         break;
                 }
             }

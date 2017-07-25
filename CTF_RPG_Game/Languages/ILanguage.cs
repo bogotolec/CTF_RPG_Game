@@ -13,6 +13,7 @@ namespace CTF_RPG_Game.Languages
         string None { get; }
         string UnknownCommand { get; }
         string BadNumber { get; }
+        string ImpossibleCommand { get; }
         #endregion
 
         #region Auth

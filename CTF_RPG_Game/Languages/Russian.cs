@@ -30,6 +30,7 @@ namespace CTF_RPG_Game.Languages
         public string None { get { return "Нет"; } }
         public string UnknownCommand { get { return "Команда не опознана."; } }
         public string BadNumber { get { return "Странное число"; } }
+        public string ImpossibleCommand { get { return "Эту команду нельзя использовать сейчас."; } }
         #endregion
 
         #region Auth
