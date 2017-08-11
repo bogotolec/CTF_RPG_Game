@@ -13,6 +13,11 @@ namespace CTF_RPG_Game.Languages
         private Russian()
         { }
 
+        public override string ToString()
+        {
+            return "Russian";
+        }
+
         public static ILanguage GetLanguage()
         {
             if (This == null)
@@ -24,6 +29,10 @@ namespace CTF_RPG_Game.Languages
         public string Nothing { get { return "Ничего"; } }
         public string None { get { return "Нет"; } }
         public string UnknownCommand { get { return "Команда не опознана."; } }
+        public string BadNumber { get { return "Странное число"; } }
+        public string ImpossibleCommand { get { return "Эту команду нельзя использовать сейчас."; } }
+        public string TooBigPage { get { return "У вас нет столько предметов, чтобы перейти на эту страницу"; } }
+        public string YourBackpackHas { get { return "Количество предметов в вашем рюкзаке"; } }
         #endregion
 
         #region Auth
@@ -54,6 +63,9 @@ namespace CTF_RPG_Game.Languages
         public string SkillTeleportationName { get { return "Телепортация"; } }
         public string SkillTeleportationDescription { get { return "Это умение позволяет телепортироваться."; } }
         public string SkillTeleportationUseDescription { get { return "Введите \"use telepor <название метки>\", чтобы переместиться на эту метку."; } }
+        
+        public string SkillJewellerName { get { return "Ювелир"; } }
+        public string SkillJewellerDescription { get { return "Позволяет вам носить второе украшение"; } }
         #endregion
 
         #region Items
@@ -63,6 +75,22 @@ namespace CTF_RPG_Game.Languages
 
         #region Moving
         public string CellIsNotPassable { get { return "Невозможно переместиться сюда."; } }
+        #endregion
+
+        #region terms
+        public string Equiped { get { return "НАДЕТО"; } }
+        public string Backpacked { get { return "РЮКЗАК"; } }
+        public string Page { get { return "Страница"; } }
+        public string Head { get { return "Голова"; } }
+        public string Body { get { return "Тело"; } }
+        public string LHand { get { return "Левая рука"; } }
+        public string Rhand { get { return "Правая рука"; } }
+        public string Boots { get { return "Обувь"; } }
+        public string Jewelerry { get { return "Драгоценность"; } }
+        public string Gold { get { return "Золото"; } }
+        public string Health { get { return "Здоровье"; } }
+        public string Empty { get { return "Пусто"; } }
+        public string Locked { get { return "Заблокировано"; } }
         #endregion
     }
 }

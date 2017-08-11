@@ -12,6 +12,10 @@ namespace CTF_RPG_Game.Languages
         string Nothing { get; }
         string None { get; }
         string UnknownCommand { get; }
+        string BadNumber { get; }
+        string ImpossibleCommand { get; }
+        string TooBigPage { get; }
+        string YourBackpackHas { get; }
         #endregion
 
         #region Auth
@@ -42,6 +46,9 @@ namespace CTF_RPG_Game.Languages
         string SkillTeleportationName { get; }
         string SkillTeleportationDescription { get; }
         string SkillTeleportationUseDescription { get; }
+
+        string SkillJewellerName { get; }
+        string SkillJewellerDescription { get; }
         #endregion
 
         #region Items
@@ -51,6 +58,22 @@ namespace CTF_RPG_Game.Languages
 
         #region Moving
         string CellIsNotPassable { get; }
+        #endregion
+
+        #region terms
+        string Equiped { get; }
+        string Backpacked { get; }
+        string Page { get; }
+        string Head { get; }
+        string Body { get; }
+        string LHand { get; }
+        string Rhand { get; }
+        string Boots { get; }
+        string Jewelerry { get; }
+        string Gold { get; }
+        string Health { get; }
+        string Empty { get; }
+        string Locked { get; }
         #endregion
     }
 }

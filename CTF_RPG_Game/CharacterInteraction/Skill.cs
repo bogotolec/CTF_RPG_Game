@@ -102,4 +102,17 @@ namespace CTF_RPG_Game.CharacterInteraction
             
         }
     }
+
+    class Jeweller : BasePassiveSkill
+    {
+        public override int Id { get { return 2; } }
+        public override CharacterClass Class { get { return CharacterClass.SocEng; } }
+        public override int PointsToLearn { get { return 4; } }
+        public override ISkill[] NeededSkills { get { return new ISkill[0]; } }
+
+        public override string Description(ILanguage lang)
+        {
+            return base.Description(lang);
+        }
+    }
 }

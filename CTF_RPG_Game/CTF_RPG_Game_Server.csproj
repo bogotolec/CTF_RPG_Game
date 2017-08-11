@@ -61,6 +61,7 @@
     <Compile Include="Languages\Russian.cs" />
     <Compile Include="MapComponents\Cell..cs" />
     <Compile Include="MapComponents\Map.cs" />
+    <Compile Include="MapComponents\Task.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
