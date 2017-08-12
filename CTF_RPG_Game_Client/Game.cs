@@ -243,6 +243,7 @@ namespace CTF_RPG_Game_Client
 
                     if (window == Window.Message)
                     {
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(MessageWindow.Substring(MessageWindowIndex, MESSAGE_WINDOW_WIDTH));
                         MessageWindowIndex += MESSAGE_WINDOW_WIDTH;
@@ -251,6 +252,7 @@ namespace CTF_RPG_Game_Client
 
                     if (window == Window.Commands)
                     {
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(CommandWindow.Substring(CommandsWindowIndex, COMMAND_WINDOW_WIDTH));
                         CommandsWindowIndex += COMMAND_WINDOW_WIDTH;
@@ -259,6 +261,7 @@ namespace CTF_RPG_Game_Client
 
                     if (window == Window.Info)
                     {
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(InfoWindow.Substring(InfoWindowIndex, INFO_WINDOW_WIDTH));
                         InfoWindowIndex += INFO_WINDOW_WIDTH;
@@ -267,6 +270,7 @@ namespace CTF_RPG_Game_Client
 
                     if (window == Window.BigFrame)
                     {
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(BigWindowFrame[BigWindowFrameIndex]);
                         BigWindowFrameIndex++;
@@ -275,98 +279,131 @@ namespace CTF_RPG_Game_Client
                     if (window == Window.BigData && Answer.Type == "Map")
                     {
                         ConsoleColor color;
-                        byte symbol = byte.Parse(Answer.BigWindow.Substring(BigWindowIndex * 2, 2),
-                            System.Globalization.NumberStyles.HexNumber);
+                        ConsoleColor BackgroundColor;
+                        byte[] symbol = Encoding.UTF8.GetBytes(Answer.BigWindow.Substring(BigWindowIndex * 2, 2));
 
-                        switch ((symbol & 0xF0) >> 4)
+                        #region switches
+                        switch ((symbol[0] & 0xF0) >> 4)
                         {
                             case 0:
-                                color = ConsoleColor.Red;
-                                break;
-                            case 1:
-                                color = ConsoleColor.Green;
-                                break;
-                            case 2:
-                                color = ConsoleColor.DarkBlue;
-                                break;
-                            case 3:
-                                color = ConsoleColor.Yellow;
-                                break;
-                            case 4:
                                 color = ConsoleColor.Black;
                                 break;
-                            case 5:
-                                color = ConsoleColor.White;
-                                break;
-                            case 7:
+                            case 1:
                                 color = ConsoleColor.Blue;
                                 break;
+                            case 2:
+                                color = ConsoleColor.Cyan;
+                                break;
+                            case 3:
+                                color = ConsoleColor.DarkBlue;
+                                break;
+                            case 4:
+                                color = ConsoleColor.DarkCyan;
+                                break;
+                            case 5:
+                                color = ConsoleColor.DarkGray;
+                                break;
+                            case 6:
+                                color = ConsoleColor.DarkGreen;
+                                break;
+                            case 7:
+                                color = ConsoleColor.DarkMagenta;
+                                break;
                             case 8:
-                                color = ConsoleColor.Gray;
+                                color = ConsoleColor.DarkRed;
                                 break;
                             case 9:
+                                color = ConsoleColor.DarkYellow;
+                                break;
+                            case 10:
+                                color = ConsoleColor.Gray;
+                                break;
+                            case 11:
+                                color = ConsoleColor.Green;
+                                break;
+                            case 12:
                                 color = ConsoleColor.Magenta;
                                 break;
-                            default:
+                            case 13:
+                                color = ConsoleColor.Red;
+                                break;
+                            case 14:
                                 color = ConsoleColor.White;
+                                break;
+                            case 15:
+                                color = ConsoleColor.Yellow;
+                                break;
+                            default:
+                                color = ConsoleColor.Black;
                                 break;
                         }
                         Console.ForegroundColor = color;
 
-                        char c;
-                        bool hasWritten = false;
-                        switch (symbol & 0x0F)
+                        switch (symbol[0] & 0x0F)
                         {
                             case 0:
-                                c = '>';
+                                BackgroundColor = ConsoleColor.Black;
                                 break;
                             case 1:
-                                c = '<';
+                                BackgroundColor = ConsoleColor.Blue;
                                 break;
                             case 2:
-                                c = '^';
+                                BackgroundColor = ConsoleColor.Cyan;
                                 break;
                             case 3:
-                                c = 'v';
+                                BackgroundColor = ConsoleColor.DarkBlue;
                                 break;
                             case 4:
-                                c = '$';
+                                BackgroundColor = ConsoleColor.DarkCyan;
                                 break;
                             case 5:
-                                c = 'X';
+                                BackgroundColor = ConsoleColor.DarkGray;
                                 break;
                             case 6:
-                                c = '!';
+                                BackgroundColor = ConsoleColor.DarkGreen;
                                 break;
                             case 7:
-                                c = '@';
+                                BackgroundColor = ConsoleColor.DarkMagenta;
                                 break;
                             case 8:
-                                c = '#';
-                                Console.BackgroundColor = color;
-                                Console.Write(" ");
-                                Console.BackgroundColor = ConsoleColor.Black;
-                                hasWritten = true;
+                                BackgroundColor = ConsoleColor.DarkRed;
                                 break;
                             case 9:
-                                c = ' ';
+                                BackgroundColor = ConsoleColor.DarkYellow;
                                 break;
                             case 10:
-                                c = '-';
+                                BackgroundColor = ConsoleColor.Gray;
+                                break;
+                            case 11:
+                                BackgroundColor = ConsoleColor.Green;
+                                break;
+                            case 12:
+                                BackgroundColor = ConsoleColor.Magenta;
+                                break;
+                            case 13:
+                                BackgroundColor = ConsoleColor.Red;
+                                break;
+                            case 14:
+                                BackgroundColor = ConsoleColor.White;
+                                break;
+                            case 15:
+                                BackgroundColor = ConsoleColor.Yellow;
                                 break;
                             default:
-                                c = ' ';
+                                BackgroundColor = ConsoleColor.Black;
                                 break;
                         }
-                        
-                        if (!hasWritten)
-                            Console.Write(c);
+                        Console.BackgroundColor = BackgroundColor;
+                        #endregion
+
+                        Console.Write(Encoding.ASCII.GetString(symbol, 1, 1));
 
                         BigWindowIndex++;
                     }
 
                     if (window == Window.BigData && Answer.Type == "Inventory")
                     {
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(Answer.BigWindow.Substring(BigWindowIndex, (BIG_WINDOW_WIDTH - 2) / 2));
                         BigWindowIndex += (BIG_WINDOW_WIDTH - 2) / 2;

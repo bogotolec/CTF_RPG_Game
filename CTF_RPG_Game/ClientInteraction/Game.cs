@@ -20,11 +20,9 @@ namespace CTF_RPG_Game.ClientInteraction
         const int WIDTH = 51;
 
         const string MAP_COMMANDS =
-@"w, a, s, d - moving
-inventory - open inventory";
+"w, a, s, d - moving\ninventory - open inventory";
         const string INV_COMMANDS =
-@"page <number> - go to page
-map - open map";
+"page <number> - go to page\nmap - open map";
 
         public Game(Character Char, SocketHandler SocketHandler, ILanguage language)
         {
@@ -85,7 +83,7 @@ map - open map";
                     case "map":
                         MapToResult();
                         if (beginX != character.X || beginY != character.Y)
-                            result.Message = map[character.Y, character.X].Message;
+                            result.Message = ( lang.ToString() == "Russian" ? map[character.Y, character.X].RussianMessage : map[character.Y, character.X].EnglishMessage);
                         result.Commands = MAP_COMMANDS;
                         break;
 
@@ -127,9 +125,8 @@ map - open map";
             StringBuilder SB = new StringBuilder();
             const int HorisontalVisionRange = WIDTH / 2;
             const int VerticalVisionRange = HEIGHT / 2;
-
-            const byte Void = 255;
-            byte Temp = 0;
+            
+            byte[] Temp = new byte[2]{ 0, 0 };
 
             for (int i = character.Y - VerticalVisionRange; i <= character.Y + VerticalVisionRange; i++)
             {
@@ -137,16 +134,20 @@ map - open map";
                 {
                     if (i == character.Y && j == character.X)
                     {
-                        SB.Append("75");
+                        byte[] color = new byte[1] { map[i, j].GetCellBytes()[0] };
+                        color[0] = (byte)((color[0] & 0x0F) + (0x40));
+                        string s = Encoding.UTF8.GetString(color);
+
+                        SB.Append(s + "X");
                     }
                     else if (i < 0 || i >= map.Height || j < 0 || j >= map.Width)
                     {
-                        SB.Append(Void.ToString("x2"));
+                        SB.Append("\0 ");
                     }
                     else
                     {
-                        Temp = map[i, j].GetCellByte();
-                        SB.Append(Temp.ToString("x2"));
+                        Temp = map[i, j].GetCellBytes();
+                        SB.Append(Encoding.UTF8.GetString(Temp));
                     }
                 }
             }
