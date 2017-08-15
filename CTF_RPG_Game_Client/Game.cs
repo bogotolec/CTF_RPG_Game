@@ -40,7 +40,18 @@ namespace CTF_RPG_Game_Client
             while (true)
             {
                 DrowGame(Json);
-                Manager.Send(Console.ReadLine());
+
+                string Command = "";
+
+                do
+                {
+                    Command = Console.ReadLine();
+                    Console.SetCursorPosition(0, HEIGHT);
+                    Console.Write((new StringBuilder()).Append(' ', WIDTH));
+                    Console.CursorLeft = 0;
+                } while (Command == "");
+
+                Manager.Send(Command);
                 Json = JsonConvert.DeserializeObject<JsonAnswer>(Manager.Get());
             }
         }
