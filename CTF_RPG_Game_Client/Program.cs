@@ -18,7 +18,18 @@ namespace CTF_RPG_Game_Client
             Console.InputEncoding = Encoding.UTF8;
 
             // Create connection
-            ConnectionManager Manager = new ConnectionManager(IP, Port);
+            ConnectionManager Manager = null;
+
+            try
+            {
+                Manager = new ConnectionManager(IP, Port);
+            }
+            catch (System.Net.Sockets.SocketException ex)
+            {
+                Console.WriteLine("Connection error: " + ex.Message);
+                Console.WriteLine("Press any key for close...");
+                Console.ReadKey();
+            }
 
             // Start Game
             Game Game = new Game(Manager);

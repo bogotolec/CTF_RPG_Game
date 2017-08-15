@@ -14,8 +14,8 @@ namespace CTF_RPG_Game_Client
 
         // CONSTS
 
-        const int HEIGHT = 32;
-        const int WIDTH = 82;
+        public const int HEIGHT = 32;
+        public const int WIDTH = 82;
 
         const int BIG_WINDOW_WIDTH = 53;
         const int BIG_WINDOW_HEIGHT = HEIGHT - MESSAGE_WINDOW_HEIGHT;
