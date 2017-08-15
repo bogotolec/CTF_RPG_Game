@@ -17,6 +17,8 @@ namespace CTF_RPG_Game_Client
             Console.OutputEncoding = Encoding.UTF8;
             Console.InputEncoding = Encoding.UTF8;
 
+            Console.WindowWidth = CTF_RPG_Game_Client.Game.WIDTH + 1;
+            Console.WindowHeight = CTF_RPG_Game_Client.Game.HEIGHT + 2;
 
             // Create connection
             ConnectionManager Manager = null;
@@ -30,6 +32,7 @@ namespace CTF_RPG_Game_Client
                 Console.WriteLine("Connection error: " + ex.Message);
                 Console.WriteLine("Press any key for close...");
                 Console.ReadKey();
+                Environment.Exit(0);
             }
 
             // Start Game

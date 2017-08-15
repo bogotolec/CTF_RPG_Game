@@ -16,18 +16,15 @@ namespace CTF_RPG_Game_Client
 
         public static readonly int HEIGHT = 32;
         public static readonly int WIDTH = 82;
+        private static readonly int BIG_WINDOW_WIDTH = 53;
+        private static readonly int MESSAGE_WINDOW_HEIGHT = 5;
+        private static readonly int COMMAND_WINDOW_HEIGHT = 20;
 
-        public static readonly int BIG_WINDOW_WIDTH = 53;
-        public static readonly int BIG_WINDOW_HEIGHT = HEIGHT - MESSAGE_WINDOW_HEIGHT;
-
-        public static readonly int MESSAGE_WINDOW_WIDTH = BIG_WINDOW_WIDTH;
-        public static readonly int MESSAGE_WINDOW_HEIGHT = 5;
-
-        public static readonly int COMMAND_WINDOW_WIDTH = WIDTH - BIG_WINDOW_WIDTH;
-        public static readonly int COMMAND_WINDOW_HEIGHT = 20;
-
-        public static readonly int INFO_WINDOW_WIDTH = COMMAND_WINDOW_WIDTH;
-        public static readonly int INFO_WINDOW_HEIGHT = HEIGHT - COMMAND_WINDOW_HEIGHT;
+        private static readonly int MESSAGE_WINDOW_WIDTH = BIG_WINDOW_WIDTH;
+        private static readonly int BIG_WINDOW_HEIGHT = HEIGHT - MESSAGE_WINDOW_HEIGHT;
+        private static readonly int COMMAND_WINDOW_WIDTH = WIDTH - BIG_WINDOW_WIDTH;
+        private static readonly int INFO_WINDOW_WIDTH = COMMAND_WINDOW_WIDTH;
+        private static readonly int INFO_WINDOW_HEIGHT = HEIGHT - COMMAND_WINDOW_HEIGHT;
 
         // Simple constructor
         public Game(ConnectionManager ConnectionManager)
@@ -237,7 +234,7 @@ namespace CTF_RPG_Game_Client
 
             for (int i = 0; i < HEIGHT; i++)
             {
-                for (int j = 0; j < WIDTH; j++)
+                for (int j = 0; j < WIDTH; )
                 {
                     Window window = AreaOf(i, j);
 
@@ -247,16 +244,17 @@ namespace CTF_RPG_Game_Client
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(MessageWindow.Substring(MessageWindowIndex, MESSAGE_WINDOW_WIDTH));
                         MessageWindowIndex += MESSAGE_WINDOW_WIDTH;
-                        j += MESSAGE_WINDOW_WIDTH - 1;
+                        j += MESSAGE_WINDOW_WIDTH;
                     }
 
                     if (window == Window.Commands)
                     {
+                        Console.SetCursorPosition(MESSAGE_WINDOW_WIDTH, i);
                         Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(CommandWindow.Substring(CommandsWindowIndex, COMMAND_WINDOW_WIDTH));
                         CommandsWindowIndex += COMMAND_WINDOW_WIDTH;
-                        j += COMMAND_WINDOW_WIDTH - 1;
+                        j += COMMAND_WINDOW_WIDTH;
                     }
 
                     if (window == Window.Info)
@@ -265,7 +263,7 @@ namespace CTF_RPG_Game_Client
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(InfoWindow.Substring(InfoWindowIndex, INFO_WINDOW_WIDTH));
                         InfoWindowIndex += INFO_WINDOW_WIDTH;
-                        j += INFO_WINDOW_WIDTH - 1;
+                        j += INFO_WINDOW_WIDTH;
                     }
 
                     if (window == Window.BigFrame)
@@ -274,6 +272,7 @@ namespace CTF_RPG_Game_Client
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(BigWindowFrame[BigWindowFrameIndex]);
                         BigWindowFrameIndex++;
+                        j++;
                     }
 
                     if (window == Window.BigData && Answer.Type == "Map")
@@ -399,6 +398,7 @@ namespace CTF_RPG_Game_Client
                         Console.Write(Encoding.ASCII.GetString(symbol, 1, 1));
 
                         BigWindowIndex++;
+                        j++;
                     }
 
                     if (window == Window.BigData && Answer.Type == "Inventory")
@@ -410,12 +410,12 @@ namespace CTF_RPG_Game_Client
                         Console.Write('|');
                         Console.Write(Answer.BigWindow.Substring(BigWindowIndex, (BIG_WINDOW_WIDTH - 2) / 2));
                         BigWindowIndex += (BIG_WINDOW_WIDTH - 2) / 2;
-                        j += BIG_WINDOW_WIDTH - 3;
+                        j += BIG_WINDOW_WIDTH - 2;
                     }
                 }
                 Console.Write('\n');
             }
-            Console.Write((new StringBuilder()).Append(' ', 256));
+            Console.Write((new StringBuilder()).Append(' ', WIDTH));
             Console.CursorLeft = 0;
         }
 
