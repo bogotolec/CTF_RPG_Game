@@ -22,7 +22,7 @@ namespace CTF_RPG_Game.ClientInteraction
         const string MAP_COMMANDS =
 "w, a, s, d - moving\ninventory - open inventory";
         const string INV_COMMANDS =
-"page <number> - go to page\nmap - open map";
+"page <number> - go to page\npage <+/-> go to page\nmap - open map";
 
         public Game(Character Char, SocketHandler SocketHandler, ILanguage language)
         {
@@ -91,14 +91,24 @@ namespace CTF_RPG_Game.ClientInteraction
                         if (result.Type != "Inventory")
                             goto ImpossibleCommand;
                         if (commandwords.Length > 1 && int.TryParse(commandwords[1], out InventoryPage))
-                            if ((InventoryPage - 1) * (HEIGHT - 3) > character.Backpack.Count)
+                            if ((InventoryPage - 1) * (HEIGHT - 3) > character.Backpack.Count || InventoryPage <= 0)
                                 { result.Message = lang.TooBigPage; break; }
                             else
                                 goto case "inventory";
                         else
                         {
-                            result.Message = lang.BadNumber;
-                            break;
+                            if (commandwords[1] == "+")
+                                if ((InventoryPage) * (HEIGHT - 3) > character.Backpack.Count)
+                                    { result.Message = lang.TooBigPage; break; }
+                                else
+                                    { InventoryPage++; goto case "inventory"; }
+                            else if (commandwords[1] == "-")
+                                if (InventoryPage <= 1)
+                                    { result.Message = lang.TooBigPage; break; }
+                                else
+                                    { InventoryPage--; goto case "inventory"; }
+                            else {  result.Message = lang.BadNumber; break; }    
+                            
                         }
                     case "inventory":
                         InventoryToResult(InventoryPage);
