@@ -17,6 +17,7 @@ namespace CTF_RPG_Game_Client
             Console.OutputEncoding = Encoding.UTF8;
             Console.InputEncoding = Encoding.UTF8;
 
+
             // Create connection
             ConnectionManager Manager = null;
 

@@ -14,20 +14,20 @@ namespace CTF_RPG_Game_Client
 
         // CONSTS
 
-        public const int HEIGHT = 32;
-        public const int WIDTH = 82;
+        public static readonly int HEIGHT = 32;
+        public static readonly int WIDTH = 82;
 
-        const int BIG_WINDOW_WIDTH = 53;
-        const int BIG_WINDOW_HEIGHT = HEIGHT - MESSAGE_WINDOW_HEIGHT;
+        public static readonly int BIG_WINDOW_WIDTH = 53;
+        public static readonly int BIG_WINDOW_HEIGHT = HEIGHT - MESSAGE_WINDOW_HEIGHT;
 
-        const int MESSAGE_WINDOW_WIDTH = BIG_WINDOW_WIDTH;
-        const int MESSAGE_WINDOW_HEIGHT = 5;
+        public static readonly int MESSAGE_WINDOW_WIDTH = BIG_WINDOW_WIDTH;
+        public static readonly int MESSAGE_WINDOW_HEIGHT = 5;
 
-        const int COMMAND_WINDOW_WIDTH = WIDTH - BIG_WINDOW_WIDTH;
-        const int COMMAND_WINDOW_HEIGHT = 20;
+        public static readonly int COMMAND_WINDOW_WIDTH = WIDTH - BIG_WINDOW_WIDTH;
+        public static readonly int COMMAND_WINDOW_HEIGHT = 20;
 
-        const int INFO_WINDOW_WIDTH = COMMAND_WINDOW_WIDTH;
-        const int INFO_WINDOW_HEIGHT = HEIGHT - COMMAND_WINDOW_HEIGHT;
+        public static readonly int INFO_WINDOW_WIDTH = COMMAND_WINDOW_WIDTH;
+        public static readonly int INFO_WINDOW_HEIGHT = HEIGHT - COMMAND_WINDOW_HEIGHT;
 
         // Simple constructor
         public Game(ConnectionManager ConnectionManager)
