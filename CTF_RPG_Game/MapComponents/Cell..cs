@@ -14,7 +14,7 @@ namespace CTF_RPG_Game.MapComponents
         public LandscapeCrgm Landscape;
         public bool IsPassable;
         public bool IsTaskable;
-        public int TaskId;
+        public Task CellTask;
         public bool IsTeleport;
         public bool IsVisibleWithSkills;
         public string Symbol;
@@ -116,7 +116,7 @@ namespace CTF_RPG_Game.MapComponents
                         int id;
                         if (int.TryParse(configstring.Substring("T=".Length), out id))
                         {
-                            TaskId = id;
+                            CellTask = Task.GetById(id);
                         }
                         else
                         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CTF_RPG_Game.Languages
 {
-    interface ILanguage
+    public interface ILanguage
     {
         #region Other
         string Nothing { get; }

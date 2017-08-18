@@ -5,7 +5,7 @@ using CTF_RPG_Game.Languages;
 
 namespace CTF_RPG_Game.MapComponents
 {
-    class Task
+    public class Task
     {
         private static List<Task> TaskList = new List<Task>();
 
