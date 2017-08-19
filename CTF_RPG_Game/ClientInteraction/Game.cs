@@ -116,6 +116,10 @@ namespace CTF_RPG_Game.ClientInteraction
                         result.Commands = INV_COMMANDS; 
                         break;
 
+                    case "task":
+                        if (map[character.Y, character.X].CellTask != null)
+                            result.Message = map[character.Y, character.X].CellTask.Message(lang);
+                        break;
 
                     default:
                         result.Message = lang.UnknownCommand;
