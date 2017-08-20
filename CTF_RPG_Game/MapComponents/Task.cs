@@ -32,7 +32,7 @@ namespace CTF_RPG_Game.MapComponents
                 if (str.StartsWith("id="))
                     ID = int.Parse(str.Substring("id=".Length));
 
-                if (str.StartsWith("name"))
+                if (str.StartsWith("name="))
                     Name = str.Substring("name=".Length);
 
                 if (str.StartsWith("messagerussian="))
