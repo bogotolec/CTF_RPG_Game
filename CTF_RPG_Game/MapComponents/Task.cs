@@ -76,7 +76,7 @@ namespace CTF_RPG_Game.MapComponents
 
         public static void CreateTasks()
         {
-            DirectoryInfo DInfo = new DirectoryInfo("Task");
+            DirectoryInfo DInfo = new DirectoryInfo("Tasks");
             DirectoryInfo[] TaskDirs = DInfo.GetDirectories();
 
             foreach (var dir in TaskDirs)

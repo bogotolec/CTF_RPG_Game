@@ -20,6 +20,7 @@ namespace CTF_RPG_Game_Server
         {
             InitializeServerConfiguration();
 
+            Task.CreateTasks();
             Map.GetMap();
 
             Listener.Start();
