@@ -20,7 +20,7 @@ namespace CTF_RPG_Game.ClientInteraction
         const int WIDTH = 51;
 
         const string MAP_COMMANDS =
-"w, a, s, d - moving\ninventory - open inventory";
+"w, a, s, d - moving\ninventory - open inventory\ntask - show task description\nsubmit <CRG{flag}> - solve";
         const string INV_COMMANDS =
 "page <number> - go to page\npage <+/-> go to page\nmap - open map";
 
