@@ -42,13 +42,6 @@ namespace CTF_RPG_Game.Languages
 
         string BasePassiveSkillName { get; }
         string BasePassiveSkillDescription { get; }
-
-        string SkillTeleportationName { get; }
-        string SkillTeleportationDescription { get; }
-        string SkillTeleportationUseDescription { get; }
-
-        string SkillJewellerName { get; }
-        string SkillJewellerDescription { get; }
         #endregion
 
         #region Moving

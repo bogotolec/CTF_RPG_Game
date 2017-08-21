@@ -59,13 +59,6 @@ namespace CTF_RPG_Game.Languages
 
         public string BasePassiveSkillName { get { return "Базовое пассивное умение"; } }
         public string BasePassiveSkillDescription { get { return "Это умение абстрактно, оно не даёт вам бонусов и его нельзя использовать."; } }
-
-        public string SkillTeleportationName { get { return "Телепортация"; } }
-        public string SkillTeleportationDescription { get { return "Это умение позволяет телепортироваться."; } }
-        public string SkillTeleportationUseDescription { get { return "Введите \"use telepor <название метки>\", чтобы переместиться на эту метку."; } }
-        
-        public string SkillJewellerName { get { return "Ювелир"; } }
-        public string SkillJewellerDescription { get { return "Позволяет вам носить второе украшение"; } }
         #endregion
 
         #region Moving

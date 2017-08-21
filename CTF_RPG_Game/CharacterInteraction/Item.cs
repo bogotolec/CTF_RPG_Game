@@ -39,14 +39,14 @@ namespace CTF_RPG_Game.CharacterInteraction
 
         public string Name(ILanguage lang)
         {
-            if (lang.ToString() == "russian")
+            if (lang.ToString() == "Russian")
                 return RussianName;
             return EnglishName;
         } 
         
         public string Description(ILanguage lang)
         {
-            if (lang.ToString() == "russian")
+            if (lang.ToString() == "Russian")
                 return RussianDescription;
             return EnglishDescription;
         }

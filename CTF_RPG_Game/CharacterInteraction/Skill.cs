@@ -82,14 +82,27 @@ namespace CTF_RPG_Game.CharacterInteraction
         public override CharacterClass Class { get { return CharacterClass.Hacker; } }
         public override ISkill[] NeededSkills { get { return new ISkill[0]; } }
 
+        private string RussianName { get { return "Телепортация"; } }
+        private string RussianDescription { get { return "Это умение позволяет телепортироваться."; } }
+        private string RussianUseDescription { get { return "Введите \"use telepor <название метки>\", чтобы переместиться на эту метку."; } }
+
+        private string EnglishName { get { return "Teleportation"; } }
+        private string EnglishDescription { get { return "This skill gives you ability teleport"; } }
+        private string EnglishUseDescription { get { return "Type \"use teleport <mark name>\", to teleportate to that mark."; } }
+
+
         public override string Name(ILanguage lang)
         {
-            return lang.SkillTeleportationName;
+            if (lang.ToString() == "Russian")
+                return RussianName;
+            return EnglishName;
         }
 
         public override string Description(ILanguage lang)
         {
-            return lang.SkillTeleportationDescription;
+            if (lang.ToString() == "Russian")
+                return RussianUseDescription;
+            return EnglishUseDescription;
         }
 
         public override string UseDescription(ILanguage lang)
@@ -110,9 +123,14 @@ namespace CTF_RPG_Game.CharacterInteraction
         public override int PointsToLearn { get { return 4; } }
         public override ISkill[] NeededSkills { get { return new ISkill[0]; } }
 
+        private string RussianDescription { get { return "Позволяет вам носить второе украшение"; } }
+        private string EnglishDescription { get { return "You can wear second jewellerry"; } }
+
         public override string Description(ILanguage lang)
         {
-            return base.Description(lang);
+            if (lang.ToString() == "Russian")
+                return RussianDescription;
+            return EnglishDescription;
         }
     }
 }
