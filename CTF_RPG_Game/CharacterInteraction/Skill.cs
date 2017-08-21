@@ -101,13 +101,15 @@ namespace CTF_RPG_Game.CharacterInteraction
         public override string Description(ILanguage lang)
         {
             if (lang.ToString() == "Russian")
-                return RussianUseDescription;
-            return EnglishUseDescription;
+                return RussianDescription;
+            return EnglishDescription;
         }
 
         public override string UseDescription(ILanguage lang)
         {
-            return lang.SkillTeleportationUseDescription;
+            if (lang.ToString() == "Russian")
+                return RussianUseDescription;
+            return EnglishUseDescription;
         }
 
         public override void Use(string paramets, Character user)
