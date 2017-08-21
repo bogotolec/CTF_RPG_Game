@@ -134,7 +134,7 @@ namespace CTF_RPG_Game.ClientInteraction
             if (answer.StartsWith("rus"))
                 text = Russian.GetLanguage();
             else if (answer.StartsWith("eng"))
-                text = null;
+                text = English.GetLanguage();
             else
             {
                 SendMessage("I cannot understand you, try again\nЯ не могу понять вас, попробуйте еще\n\n");

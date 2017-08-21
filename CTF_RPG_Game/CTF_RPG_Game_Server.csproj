@@ -57,6 +57,7 @@
     <Compile Include="ClientInteraction\ConnectionManager.cs" />
     <Compile Include="ClientInteraction\Game.cs" />
     <Compile Include="ClientInteraction\SocketHandler.cs" />
+    <Compile Include="Languages\English.cs" />
     <Compile Include="Languages\ILanguage.cs" />
     <Compile Include="Languages\Russian.cs" />
     <Compile Include="MapComponents\Cell..cs" />
