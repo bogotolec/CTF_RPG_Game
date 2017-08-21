@@ -51,11 +51,6 @@ namespace CTF_RPG_Game.Languages
         string SkillJewellerDescription { get; }
         #endregion
 
-        #region Items
-        string ItemBranchName { get; }
-        string ItemBranchDescription { get; }
-        #endregion
-
         #region Moving
         string CellIsNotPassable { get; }
         #endregion

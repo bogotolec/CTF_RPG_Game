@@ -68,11 +68,6 @@ namespace CTF_RPG_Game.Languages
         public string SkillJewellerDescription { get { return "Позволяет вам носить второе украшение"; } }
         #endregion
 
-        #region Items
-        public string ItemBranchName { get { return "Ветка"; } }
-        public string ItemBranchDescription { get { return "Простая ветка, ничего особенного."; } }
-        #endregion
-
         #region Moving
         public string CellIsNotPassable { get { return "Невозможно переместиться сюда."; } }
         #endregion
