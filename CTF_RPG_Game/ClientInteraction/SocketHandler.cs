@@ -111,7 +111,7 @@ namespace CTF_RPG_Game.ClientInteraction
                 SB.Append(Encoding.UTF8.GetString(buffer, 0, receivedBytes));
             }
 
-            return SB.ToString().Trim().ToLower();
+            return SB.ToString().Trim();
         }
 
         public void SendMessage(string message)

@@ -92,5 +92,11 @@ namespace CTF_RPG_Game.Languages
         public string Empty { get { return "Пусто"; } }
         public string Locked { get { return "Заблокировано"; } }
         #endregion
+
+        #region Tasks
+        public string AlreadySolved { get { return "Задание уже выполнено"; } }
+        public string WrongFlag { get { return "Неверный флаг"; } }
+        public string CorrectFlag { get { return "Правильно! Вы выполнили задание!"; } }
+        #endregion
     }
 }

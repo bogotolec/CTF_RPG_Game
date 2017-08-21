@@ -12,10 +12,10 @@ namespace CTF_RPG_Game.CharacterInteraction
         public int ID { get; }
         public string Name { get; }
 
-        public int Level { get; }
-        public int SkillPoints { get; }
-        public int Health { get; }
-        public int Gold { get; }
+        public int Level { get; private set; }
+        public int SkillPoints { get; private set; }
+        public int Health { get; private set; }
+        public int Gold { get; private set; }
 
         public int X { get; set; }
         public int Y { get; set; }
@@ -24,13 +24,13 @@ namespace CTF_RPG_Game.CharacterInteraction
         public List<IItem> Backpack;
         public List<int> SolvedTasks;
 
-        public IItem Head { get; }
-        public IItem Body { get; }
-        public IItem LHand { get; }
-        public IItem RHand { get; }
-        public IItem Boots { get; }
-        public IItem JeweleryOne { get; }
-        public IItem JeweleryTwo { get; }
+        public IItem Head { get; private set; }
+        public IItem Body { get; private set; }
+        public IItem LHand { get; private set; }
+        public IItem RHand { get; private set; }
+        public IItem Boots { get; private set; }
+        public IItem JeweleryOne { get; private set; }
+        public IItem JeweleryTwo { get; private set; }
 
         private Character(int id, string name, int level, int x, int y,
             int skillpoints, string learnedskills, string backpack, int head, int body, int lhand,
@@ -178,6 +178,16 @@ namespace CTF_RPG_Game.CharacterInteraction
                 connection.Open();
                 command.ExecuteNonQuery();
             }
+        }
+
+        public void AddGold(int gold)
+        {
+            Gold += gold;
+        }
+
+        public void AddSkillpoints(int learnpoints)
+        {
+            SkillPoints += learnpoints;
         }
     }
 

@@ -75,5 +75,11 @@ namespace CTF_RPG_Game.Languages
         string Empty { get; }
         string Locked { get; }
         #endregion
+
+        #region Tasks
+        string AlreadySolved { get; }
+        string WrongFlag { get; }
+        string CorrectFlag { get; }
+        #endregion
     }
 }

@@ -48,12 +48,12 @@ namespace CTF_RPG_Game.ClientInteraction
             {
                 SendResult();
 
-                string[] commandwords = SH.GetMessage().ToLower().Split();
+                string[] commandwords = SH.GetMessage().Split();
 
                 int InventoryPage = 1;
                 int beginX = character.X;
                 int beginY = character.Y;
-
+                commandwords[0] = commandwords[0].ToLower();
                 switch (commandwords[0])
                 {
                     case "w":
@@ -119,6 +119,34 @@ namespace CTF_RPG_Game.ClientInteraction
                     case "task":
                         if (map[character.Y, character.X].CellTask != null)
                             result.Message = map[character.Y, character.X].CellTask.Message(lang);
+                        break;
+
+                    case "submit":
+                        if (commandwords.Length > 1 && map[character.Y, character.X].CellTask != null)
+                        {
+                            if (commandwords[1] == map[character.Y, character.X].CellTask.Flag)
+                            {
+                                if (!character.SolvedTasks.Contains(map[character.Y, character.X].CellTask.ID))
+                                {
+                                    character.SolvedTasks.Add(map[character.Y, character.X].CellTask.ID);
+                                    character.AddGold(map[character.Y, character.X].CellTask.Gold);
+                                    character.AddSkillpoints(map[character.Y, character.X].CellTask.LearnPoints);
+                                    result.Message = lang.CorrectFlag;
+                                }
+                                else
+                                {
+                                    result.Message = lang.AlreadySolved;
+                                }
+                            }
+                            else
+                            {
+                                result.Message = lang.WrongFlag;
+                            }
+                        }
+                        else
+                        {
+                            result.Message = lang.Nothing;
+                        }
                         break;
 
                     default:
