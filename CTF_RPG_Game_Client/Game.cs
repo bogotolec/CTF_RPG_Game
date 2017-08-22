@@ -15,7 +15,7 @@ namespace CTF_RPG_Game_Client
         // CONSTS
 
         public static readonly int HEIGHT = 32;
-        public static readonly int WIDTH = 82;
+        public static readonly int WIDTH = 83;
         private static readonly int BIG_WINDOW_WIDTH = 53;
         private static readonly int MESSAGE_WINDOW_HEIGHT = 5;
         private static readonly int COMMAND_WINDOW_HEIGHT = 20;
