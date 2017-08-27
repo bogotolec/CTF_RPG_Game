@@ -12,6 +12,7 @@ namespace CTF_RPG_Game.MapComponents
         public int ID { get; }
         public string Name { get; }
         public string Flag { get; }
+        public string Category { get; }
         public int Gold { get; }
         public int LearnPoints { get; }
 
@@ -49,6 +50,9 @@ namespace CTF_RPG_Game.MapComponents
 
                 if (str.StartsWith("learnpoints="))
                     LearnPoints = int.Parse(str.Substring("learnpoints=".Length).Trim('\r'));
+
+                if (str.StartsWith("category="))
+                    Category = str.Substring("category=".Length).Trim('\r');
             }
 
             TaskList.Add(this);
