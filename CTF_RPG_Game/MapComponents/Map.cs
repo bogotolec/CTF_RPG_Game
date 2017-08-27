@@ -177,14 +177,13 @@ namespace CTF_RPG_Game.MapComponents
         {
             while (MapObject == null)
             {
-                string filename;
+                string filename = Program.MAP_NAME;
 
-                do
+                while (!File.Exists("Map/" + filename))
                 {
                     Console.Write("Enter the map name: ");
                     filename = Console.ReadLine();
                 }
-                while (!File.Exists("Map/" + filename));
 
                 MapObject = new Map("Map/" + filename);
             }
