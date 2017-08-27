@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -34,7 +35,11 @@ namespace CTF_RPG_Game_Client
 
         public void Start()
         {
-            JsonAnswer Json = Authorization();
+            JsonAnswer Json;
+            if (File.Exists("Auth"))
+                Json = AuthorizationFile();
+            else
+                Json = Authorization();
 
             Console.Clear();
             while (true)
@@ -72,6 +77,31 @@ namespace CTF_RPG_Game_Client
             }
             while (!IsJson(Answer));
 
+            return JsonConvert.DeserializeObject<JsonAnswer>(Answer);
+        }
+
+        private JsonAnswer AuthorizationFile()
+        {
+            string[] Data = File.ReadAllLines("Auth");
+
+            string Answer = Manager.Get();
+            Manager.Send(Data[0]);
+            Answer = Manager.Get();
+            Manager.Send("y");
+            Answer = Manager.Get();
+
+
+            Manager.Send(Data[1]);
+            Answer = Manager.Get();
+            Manager.Send(Data[2]);
+            Answer = Manager.Get();
+
+            if (!IsJson(Answer))
+            {
+                Console.WriteLine("Incorrect config file");
+                return Authorization();
+            }
+            
             return JsonConvert.DeserializeObject<JsonAnswer>(Answer);
         }
 
