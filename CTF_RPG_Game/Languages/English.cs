@@ -85,6 +85,8 @@ namespace CTF_RPG_Game.Languages
         public string AlreadySolved { get { return "This task has already solved"; } }
         public string WrongFlag { get { return "Wrong flag"; } }
         public string CorrectFlag { get { return "Correct! You solved the task!"; } }
+        public string Category { get { return "Category"; } }
+        public string GoldForSolve { get { return "Gold for solve"; } }
         #endregion
     }
 }

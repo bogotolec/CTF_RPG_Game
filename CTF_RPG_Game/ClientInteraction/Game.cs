@@ -118,7 +118,11 @@ namespace CTF_RPG_Game.ClientInteraction
 
                     case "task":
                         if (map[character.Y, character.X].CellTask != null)
+                        {
                             result.Message = map[character.Y, character.X].CellTask.Message(lang);
+                            result.Info = lang.Category + ": " + map[character.Y, character.X].CellTask.Category;
+                            result.Info = "\n" + lang.GoldForSolve + ": " + map[character.Y, character.X].CellTask.Gold;
+                        }
                         break;
 
                     case "submit":

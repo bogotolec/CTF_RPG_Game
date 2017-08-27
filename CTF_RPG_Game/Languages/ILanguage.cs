@@ -68,6 +68,8 @@ namespace CTF_RPG_Game.Languages
         string AlreadySolved { get; }
         string WrongFlag { get; }
         string CorrectFlag { get; }
+        string Category { get; }
+        string GoldForSolve { get; }
         #endregion
     }
 }

@@ -85,6 +85,8 @@ namespace CTF_RPG_Game.Languages
         public string AlreadySolved { get { return "Задание уже выполнено"; } }
         public string WrongFlag { get { return "Неверный флаг"; } }
         public string CorrectFlag { get { return "Правильно! Вы выполнили задание!"; } }
+        public string Category { get { return "Категория"; } }
+        public string GoldForSolve { get { return "Золота за решение"; } }
         #endregion
     }
 }
