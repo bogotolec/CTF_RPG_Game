@@ -11,7 +11,7 @@ using CTF_RPG_Game_Server;
 namespace CTF_RPG_Game.MapComponents
 {
     public enum Landscape { TP = 31, UsualWay = 30, Task = 46, SkillWay = 10, Wall = 34 };
-    public enum LandscapeCrgm { None, Field, Desert, Forest, Water, Bricks, Lava }
+    public enum LandscapeCrgm { None, Field, Desert, Forest, Water, Bricks, Lava, Sign}
     public enum MapFormat { Tsx, Crgm }
 
     public class Map

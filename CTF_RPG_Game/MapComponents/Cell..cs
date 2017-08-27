@@ -92,6 +92,9 @@ namespace CTF_RPG_Game.MapComponents
                         case "Lv":
                             Landscape = LandscapeCrgm.Lava;
                             break;
+                        case "Sg":
+                            Landscape = LandscapeCrgm.Sign;
+                            break;
                         default:
                             Landscape = LandscapeCrgm.None;
                             break;
@@ -344,6 +347,13 @@ namespace CTF_RPG_Game.MapComponents
                     Color = ConsoleColor.Black;
                     BackgroundColor = ConsoleColor.DarkRed;
                     Symbol = "#";
+                    break;
+                #endregion
+                #region Sign
+                case LandscapeCrgm.Sign:
+                    Color = ConsoleColor.Black;
+                    BackgroundColor = ConsoleColor.Gray;
+                    Symbol = EnglishMessage.Substring(0, 1);
                     break;
                 #endregion
             }
