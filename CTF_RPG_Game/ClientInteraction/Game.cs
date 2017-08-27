@@ -54,6 +54,7 @@ namespace CTF_RPG_Game.ClientInteraction
                 int beginX = character.X;
                 int beginY = character.Y;
                 commandwords[0] = commandwords[0].ToLower();
+                result.Info = null;
                 switch (commandwords[0])
                 {
                     case "w":
