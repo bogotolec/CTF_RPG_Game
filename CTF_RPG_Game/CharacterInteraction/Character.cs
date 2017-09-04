@@ -12,28 +12,29 @@ namespace CTF_RPG_Game.CharacterInteraction
         public int ID { get; }
         public string Name { get; }
 
-        public int Level { get; }
-        public int SkillPoints { get; }
-        public int Health { get; }
-        public int Gold { get; }
+        public int Level { get; private set; }
+        public int SkillPoints { get; private set; }
+        public int Health { get; private set; }
+        public int Gold { get; private set; }
 
         public int X { get; set; }
         public int Y { get; set; }
 
         public List<ISkill> LearnedSkills;
         public List<IItem> Backpack;
+        public List<int> SolvedTasks;
 
-        public IItem Head { get; }
-        public IItem Body { get; }
-        public IItem LHand { get; }
-        public IItem RHand { get; }
-        public IItem Boots { get; }
-        public IItem JeweleryOne { get; }
-        public IItem JeweleryTwo { get; }
+        public IItem Head { get; private set; }
+        public IItem Body { get; private set; }
+        public IItem LHand { get; private set; }
+        public IItem RHand { get; private set; }
+        public IItem Boots { get; private set; }
+        public IItem JeweleryOne { get; private set; }
+        public IItem JeweleryTwo { get; private set; }
 
         private Character(int id, string name, int level, int x, int y,
             int skillpoints, string learnedskills, string backpack, int head, int body, int lhand,
-            int rhand, int boots, int jewelery1, int jewelery2, int gold, int health)
+            int rhand, int boots, int jewelery1, int jewelery2, int gold, int health, string solvedtasks)
         {
             ID = id;
             Name = name;
@@ -52,6 +53,12 @@ namespace CTF_RPG_Game.CharacterInteraction
             foreach (string itemid in backpack.Split(','))
             {
                 Backpack.Add(Item.GetById(int.Parse(itemid)));
+            }
+
+            SolvedTasks = new List<int>();
+            foreach (string taskid in solvedtasks.Split(','))
+            {
+                SolvedTasks.Add(int.Parse(taskid));
             }
 
             Head = Item.GetById(head);
@@ -96,8 +103,9 @@ namespace CTF_RPG_Game.CharacterInteraction
                 int jewelery2 = reader.GetInt32(12);
                 int gold = reader.GetInt32(13);
                 int health = reader.GetInt32(14);
+                string solvedtasks = reader.GetString(17);
                 Character character = new Character(Id, name, level, x, y, skillpoints, learnedskills,
-                    backpack, head, body, lhand, rhand, boots, jewelery1, jewelery2, gold, health);
+                    backpack, head, body, lhand, rhand, boots, jewelery1, jewelery2, gold, health, solvedtasks);
 
                 return character;
             }
@@ -109,8 +117,8 @@ namespace CTF_RPG_Game.CharacterInteraction
             {
                 SqlCommand command = new SqlCommand();
                 command.CommandText = "INSERT INTO dbo.GameCharacters " +
-                    "(Id, Name, Lvl, CoordX, CoordY, SkillPoints, HeadId, BodyId, LHandId, RHandId, Boots, JeweleryOne, JeweleryTwo, Gold, Health, BackPack, LearnedSkills) VALUES " +
-                    "(" + id.ToString() + ", '" + name + "', 0, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0)";
+                    "(Id, Name, Lvl, CoordX, CoordY, SkillPoints, HeadId, BodyId, LHandId, RHandId, Boots, JeweleryOne, JeweleryTwo, Gold, Health, BackPack, LearnedSkills, SolvedTasks) VALUES " +
+                    "(" + id.ToString() + ", '" + name + "', 0, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0)";
                 command.Connection = connection;
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -143,6 +151,8 @@ namespace CTF_RPG_Game.CharacterInteraction
                 }
                 string learnedskillsDB = string.Join(",", skilllist);
 
+                string solvedtasksDB = string.Join(",", SolvedTasks);
+
                 SqlCommand command = new SqlCommand();
                 command.CommandText = "UPDATE dbo.GameCharacters SET " +
                     "Name='" + Name.ToString() + "', " +
@@ -160,13 +170,24 @@ namespace CTF_RPG_Game.CharacterInteraction
                     "Gold=" + Gold.ToString() + ", " +
                     "Health=" + Health.ToString() + ", " +
                     "BackPack='" + backpackDB.ToString() + "', " +
-                    "LearnedSkills=" + learnedskillsDB.ToString() +
+                    "LearnedSkills='" + learnedskillsDB.ToString() + "', " +
+                    "SolvedTasks='" + solvedtasksDB.ToString() + "'" +
                     " WHERE id=" + ID.ToString();
 
                 command.Connection = connection;
                 connection.Open();
                 command.ExecuteNonQuery();
             }
+        }
+
+        public void AddGold(int gold)
+        {
+            Gold += gold;
+        }
+
+        public void AddSkillpoints(int learnpoints)
+        {
+            SkillPoints += learnpoints;
         }
     }
 

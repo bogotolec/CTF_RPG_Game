@@ -111,7 +111,7 @@ namespace CTF_RPG_Game.ClientInteraction
                 SB.Append(Encoding.UTF8.GetString(buffer, 0, receivedBytes));
             }
 
-            return SB.ToString().Trim().ToLower();
+            return SB.ToString().Trim();
         }
 
         public void SendMessage(string message)
@@ -134,7 +134,7 @@ namespace CTF_RPG_Game.ClientInteraction
             if (answer.StartsWith("rus"))
                 text = Russian.GetLanguage();
             else if (answer.StartsWith("eng"))
-                text = null;
+                text = English.GetLanguage();
             else
             {
                 SendMessage("I cannot understand you, try again\nЯ не могу понять вас, попробуйте еще\n\n");

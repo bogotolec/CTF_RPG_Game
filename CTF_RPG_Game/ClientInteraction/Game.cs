@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Web.WebSockets;
+using System.Net.Sockets;
 using System.Text;
 using CTF_RPG_Game.CharacterInteraction;
 using CTF_RPG_Game.Languages;
@@ -20,11 +20,9 @@ namespace CTF_RPG_Game.ClientInteraction
         const int WIDTH = 51;
 
         const string MAP_COMMANDS =
-@"w, a, s, d - moving
-inventory - open inventory";
+"w, a, s, d - moving\ninventory - open inventory\ntask - show task description\nsubmit <CRG{flag}> - solve";
         const string INV_COMMANDS =
-@"page <number> - go to page
-map - open map";
+"page <number> - go to page\npage <+/-> go to page\nmap - open map";
 
         public Game(Character Char, SocketHandler SocketHandler, ILanguage language)
         {
@@ -50,12 +48,13 @@ map - open map";
             {
                 SendResult();
 
-                string[] commandwords = SH.GetMessage().ToLower().Split();
+                string[] commandwords = SH.GetMessage().Split();
 
                 int InventoryPage = 1;
                 int beginX = character.X;
                 int beginY = character.Y;
-
+                commandwords[0] = commandwords[0].ToLower();
+                result.Info = null;
                 switch (commandwords[0])
                 {
                     case "w":
@@ -85,7 +84,7 @@ map - open map";
                     case "map":
                         MapToResult();
                         if (beginX != character.X || beginY != character.Y)
-                            result.Message = map[character.Y, character.X].Message;
+                            result.Message = ( lang.ToString() == "Russian" ? map[character.Y, character.X].RussianMessage : map[character.Y, character.X].EnglishMessage);
                         result.Commands = MAP_COMMANDS;
                         break;
 
@@ -93,14 +92,24 @@ map - open map";
                         if (result.Type != "Inventory")
                             goto ImpossibleCommand;
                         if (commandwords.Length > 1 && int.TryParse(commandwords[1], out InventoryPage))
-                            if ((InventoryPage - 1) * (HEIGHT - 3) > character.Backpack.Count)
+                            if ((InventoryPage - 1) * (HEIGHT - 3) > character.Backpack.Count || InventoryPage <= 0)
                                 { result.Message = lang.TooBigPage; break; }
                             else
                                 goto case "inventory";
                         else
                         {
-                            result.Message = lang.BadNumber;
-                            break;
+                            if (commandwords[1] == "+")
+                                if ((InventoryPage) * (HEIGHT - 3) > character.Backpack.Count)
+                                    { result.Message = lang.TooBigPage; break; }
+                                else
+                                    { InventoryPage++; goto case "inventory"; }
+                            else if (commandwords[1] == "-")
+                                if (InventoryPage <= 1)
+                                    { result.Message = lang.TooBigPage; break; }
+                                else
+                                    { InventoryPage--; goto case "inventory"; }
+                            else {  result.Message = lang.BadNumber; break; }    
+                            
                         }
                     case "inventory":
                         InventoryToResult(InventoryPage);
@@ -108,6 +117,42 @@ map - open map";
                         result.Commands = INV_COMMANDS; 
                         break;
 
+                    case "task":
+                        if (map[character.Y, character.X].CellTask != null)
+                        {
+                            result.Message = map[character.Y, character.X].CellTask.Message(lang);
+                            result.Info = lang.Category + ": " + map[character.Y, character.X].CellTask.Category;
+                            result.Info += "\n" + lang.GoldForSolve + ": " + map[character.Y, character.X].CellTask.Gold;
+                        }
+                        break;
+
+                    case "submit":
+                        if (commandwords.Length > 1 && map[character.Y, character.X].CellTask != null)
+                        {
+                            if (commandwords[1] == map[character.Y, character.X].CellTask.Flag)
+                            {
+                                if (!character.SolvedTasks.Contains(map[character.Y, character.X].CellTask.ID))
+                                {
+                                    character.SolvedTasks.Add(map[character.Y, character.X].CellTask.ID);
+                                    character.AddGold(map[character.Y, character.X].CellTask.Gold);
+                                    character.AddSkillpoints(map[character.Y, character.X].CellTask.LearnPoints);
+                                    result.Message = lang.CorrectFlag;
+                                }
+                                else
+                                {
+                                    result.Message = lang.AlreadySolved;
+                                }
+                            }
+                            else
+                            {
+                                result.Message = lang.WrongFlag;
+                            }
+                        }
+                        else
+                        {
+                            result.Message = lang.Nothing;
+                        }
+                        break;
 
                     default:
                         result.Message = lang.UnknownCommand;
@@ -127,9 +172,8 @@ map - open map";
             StringBuilder SB = new StringBuilder();
             const int HorisontalVisionRange = WIDTH / 2;
             const int VerticalVisionRange = HEIGHT / 2;
-
-            const byte Void = 255;
-            byte Temp = 0;
+            
+            byte[] Temp = new byte[2]{ 0, 0 };
 
             for (int i = character.Y - VerticalVisionRange; i <= character.Y + VerticalVisionRange; i++)
             {
@@ -137,16 +181,20 @@ map - open map";
                 {
                     if (i == character.Y && j == character.X)
                     {
-                        SB.Append("75");
+                        byte[] color = new byte[1] { map[i, j].GetCellBytes()[0] };
+                        color[0] = (byte)((color[0] & 0x0F) + (0x40));
+                        string s = Encoding.UTF8.GetString(color);
+
+                        SB.Append(s + "X");
                     }
                     else if (i < 0 || i >= map.Height || j < 0 || j >= map.Width)
                     {
-                        SB.Append(Void.ToString("x2"));
+                        SB.Append("\0 ");
                     }
                     else
                     {
-                        Temp = map[i, j].GetCellByte();
-                        SB.Append(Temp.ToString("x2"));
+                        Temp = map[i, j].GetCellBytes();
+                        SB.Append(Encoding.UTF8.GetString(Temp));
                     }
                 }
             }

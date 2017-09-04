@@ -59,18 +59,6 @@ namespace CTF_RPG_Game.Languages
 
         public string BasePassiveSkillName { get { return "Базовое пассивное умение"; } }
         public string BasePassiveSkillDescription { get { return "Это умение абстрактно, оно не даёт вам бонусов и его нельзя использовать."; } }
-
-        public string SkillTeleportationName { get { return "Телепортация"; } }
-        public string SkillTeleportationDescription { get { return "Это умение позволяет телепортироваться."; } }
-        public string SkillTeleportationUseDescription { get { return "Введите \"use telepor <название метки>\", чтобы переместиться на эту метку."; } }
-        
-        public string SkillJewellerName { get { return "Ювелир"; } }
-        public string SkillJewellerDescription { get { return "Позволяет вам носить второе украшение"; } }
-        #endregion
-
-        #region Items
-        public string ItemBranchName { get { return "Ветка"; } }
-        public string ItemBranchDescription { get { return "Простая ветка, ничего особенного."; } }
         #endregion
 
         #region Moving
@@ -91,6 +79,14 @@ namespace CTF_RPG_Game.Languages
         public string Health { get { return "Здоровье"; } }
         public string Empty { get { return "Пусто"; } }
         public string Locked { get { return "Заблокировано"; } }
+        #endregion
+
+        #region Tasks
+        public string AlreadySolved { get { return "Задание уже выполнено"; } }
+        public string WrongFlag { get { return "Неверный флаг"; } }
+        public string CorrectFlag { get { return "Правильно! Вы выполнили задание!"; } }
+        public string Category { get { return "Категория"; } }
+        public string GoldForSolve { get { return "Золота за решение"; } }
         #endregion
     }
 }

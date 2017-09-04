@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CTF_RPG_Game.Languages
 {
-    interface ILanguage
+    public interface ILanguage
     {
         #region Other
         string Nothing { get; }
@@ -42,18 +42,6 @@ namespace CTF_RPG_Game.Languages
 
         string BasePassiveSkillName { get; }
         string BasePassiveSkillDescription { get; }
-
-        string SkillTeleportationName { get; }
-        string SkillTeleportationDescription { get; }
-        string SkillTeleportationUseDescription { get; }
-
-        string SkillJewellerName { get; }
-        string SkillJewellerDescription { get; }
-        #endregion
-
-        #region Items
-        string ItemBranchName { get; }
-        string ItemBranchDescription { get; }
         #endregion
 
         #region Moving
@@ -74,6 +62,14 @@ namespace CTF_RPG_Game.Languages
         string Health { get; }
         string Empty { get; }
         string Locked { get; }
+        #endregion
+
+        #region Tasks
+        string AlreadySolved { get; }
+        string WrongFlag { get; }
+        string CorrectFlag { get; }
+        string Category { get; }
+        string GoldForSolve { get; }
         #endregion
     }
 }

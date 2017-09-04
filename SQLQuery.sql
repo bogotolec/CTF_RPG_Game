@@ -34,7 +34,8 @@ CREATE TABLE [dbo].[GameCharacters](
 	[Gold] int NOT NULL,
 	[Health] int NOT NULL,
 	[BackPack] [varchar](500) NOT NULL,
-	[LearnedSkills] [varchar](500) NOT NULL
+	[LearnedSkills] [varchar](500) NOT NULL,
+	[SolvedTasks] [varchar](500) NOT NULL
 ) ON [PRIMARY]
 
 ALTER TABLE [dbo].[GameCharacters]

@@ -4,43 +4,84 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.IO;
 using System.Xml.Linq;
 using CTF_RPG_Game_Server;
 
 namespace CTF_RPG_Game.MapComponents
 {
-    enum Landscape { TP = 31, UsualWay = 30, Task = 46, SkillWay = 10, Wall = 34 };
+    public enum Landscape { TP = 31, UsualWay = 30, Task = 46, SkillWay = 10, Wall = 34 };
+    public enum LandscapeCrgm { None, Field, Desert, Forest, Water, Bricks, Lava, Sign}
+    public enum MapFormat { Tsx, Crgm }
 
     public class Map
     {
         public readonly int Width;
         public readonly int Height;
-        static int MapId;
-        private Cell[,] CellsMassive;
+        private Cell[][] CellsMassive;
 
         private static Map MapObject;
 
-        public Map()
+        private Map(string filename)
         {
-            int[,] IDMap = LoadMapFile("Map/GameMap.tmx");
-            Width = 17;
-            Height = 17;
-            CellsMassive = new Cell[Height, Width];
-            for (int i = 0; i < Height; i++)
+            if (filename.EndsWith(".crgm"))
             {
-                for (int j = 0; j < Width; j++)
+                Stream stream = File.OpenRead(filename);
+
+                byte[] buff = new byte[stream.Length];
+
+                stream.Read(buff, 0, (int)stream.Length);
+
+                string[] strings = Encoding.UTF8.GetString(buff).Split(';');
+
+                Height = int.Parse(strings[0]);
+                Width = int.Parse(strings[1]);
+
+                CellsMassive = new Cell[Height][];
+                for (int i = 0; i < Height; i++)
                 {
-                    CellsMassive[i, j] = CellFromId(IDMap[i, j]);
+                    CellsMassive[i] = new Cell[Width];
+                    for (int j = 0; j < Width; j++)
+                    {
+                        CellsMassive[i][j] = new Cell(strings[i * Width + j + 2]);
+                    }
                 }
+
+            }
+            else if (filename.EndsWith(".tsx"))
+            {
+                int[,] IDMap = LoadMapFileTsx(filename);
+                Width = 17;
+                Height = 17;
+                CellsMassive = new Cell[Height][];
+                for (int i = 0; i < Height; i++)
+                {
+                    CellsMassive[i] = new Cell[Width];
+                    for (int j = 0; j < Width; j++)
+                    {
+                        CellsMassive[i][j] = CellFromId(IDMap[i, j]);
+                    }
+                }
+            }
+            else
+            {
+                if (Program.ConsoleMessages)
+                    Console.WriteLine("Unsupported map format");
+                return;
             }
 
             if (Program.ConsoleMessages)
                 Console.WriteLine("Map created succesfully");
         }
 
+        private Map()
+        {
+
+        }
+
         public Cell this[int indexY, int indexX]
         {
-            get { return CellsMassive[indexY, indexX]; }
+            get { return CellsMassive[indexY][indexX]; }
         }
 
         public override string ToString()
@@ -50,14 +91,14 @@ namespace CTF_RPG_Game.MapComponents
             {
                 for (int j = 0; j < Width; j++)
                 {
-                    output += CellsMassive[i, j].ToString() + " ";
+                    output += CellsMassive[i][j].ToString() + " ";
                 }
                 output += '\n';
             }
             return output;
         }
 
-        private int[,] LoadMapFile(string name)
+        private int[,] LoadMapFileTsx(string name)
         {
             try
             {
@@ -84,6 +125,21 @@ namespace CTF_RPG_Game.MapComponents
             }
         }
 
+        private Map LoadMapFileCrgm(string name)
+        {
+            Stream stream = File.OpenRead(name);
+            byte[] buff = new byte[stream.Length];
+
+            stream.Read(buff, 0, (int)stream.Length);
+
+
+            Map map = new Map();
+
+            
+
+            return map;
+        }
+
         private Cell CellFromId(int id)
         {
             Landscape land = (Landscape)id;
@@ -91,37 +147,47 @@ namespace CTF_RPG_Game.MapComponents
             {
                 case Landscape.TP:
                     {
-                        return new Cell { Message = "Teleport", IsPassable = true, IsTaskable = false, IsTeleport = true, IsVisibleWithSkills = false, Symbol = "@", Color = "blue" };
+                        return new Cell { EnglishMessage = "Teleport", RussianMessage = "Teleport", IsPassable = true, IsTaskable = false, IsTeleport = true, IsVisibleWithSkills = false, Symbol = "@", Color = ConsoleColor.Blue };
                     }
                 case Landscape.UsualWay:
                     {
-                        return new Cell { Message = "UsualWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = " ", Color = "black" };
+                        return new Cell { EnglishMessage = "UsualWay", RussianMessage = "UsualWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = " ", Color = ConsoleColor.Black };
                     }
                 case Landscape.Task:
                     {
-                        return new Cell { Message = "TASK", IsPassable = true, IsTaskable = true, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "!", Color = "green" };
+                        return new Cell { EnglishMessage = "TASK", RussianMessage = "TASK",  IsPassable = true, IsTaskable = true, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "!", Color = ConsoleColor.Green };
                     }
                 case Landscape.SkillWay:
                     {
-                        return new Cell { Message = "SkillWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = true, Symbol = "-", Color = "red" };
+                        return new Cell { EnglishMessage = "SkillWay", RussianMessage = "SkillWay", IsPassable = true, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = true, Symbol = "-", Color = ConsoleColor.Red };
                     }
                 case Landscape.Wall:
                     {
-                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "#", Color = "gray" };
+                        return new Cell { EnglishMessage = "Wall", RussianMessage = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "#", Color = ConsoleColor.Gray };
                     }
                 default:
                     {
-                        return new Cell { Message = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "#", Color = "gray" };
+                        return new Cell { EnglishMessage = "Wall", RussianMessage = "Wall", IsPassable = false, IsTaskable = false, IsTeleport = false, IsVisibleWithSkills = false, Symbol = "#", Color = ConsoleColor.Gray };
                     }
 
             }
         }
-
-
+        
         public static Map GetMap()
         {
-            if (MapObject == null)
-                MapObject = new Map();
+            while (MapObject == null)
+            {
+                string filename = Program.MAP_NAME;
+
+                while (!File.Exists("Map/" + filename))
+                {
+                    Console.Write("Enter the map name: ");
+                    filename = Console.ReadLine();
+                }
+
+                MapObject = new Map("Map/" + filename);
+            }
+
             return MapObject;
         }
     }

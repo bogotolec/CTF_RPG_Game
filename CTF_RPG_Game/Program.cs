@@ -11,6 +11,7 @@ namespace CTF_RPG_Game_Server
         public static int PORT = 8888;
         public static string DBConnectionString;
         public static string CONFIGURATION_FILE = "config";
+        public static string MAP_NAME = "none";
         public static bool ConsoleMessages = true;
 
         private static ConnectionManager CManager = ConnectionManager.GetManager();
@@ -19,6 +20,9 @@ namespace CTF_RPG_Game_Server
         static void Main(string[] args)
         {
             InitializeServerConfiguration();
+
+            Task.CreateTasks();
+            Map.GetMap();
 
             Listener.Start();
 
@@ -91,8 +95,10 @@ namespace CTF_RPG_Game_Server
                     PORT = int.Parse(cString.Substring("port=".Length));
                 else if (cString.ToLower().StartsWith("dbconnectionstring=\""))
                     DBConnectionString = cString.Substring(20).Trim('"');
-                else if (cString.ToLower().StartsWith("ConsoleMessages="))
-                    ConsoleMessages = bool.Parse(cString.Substring("ConsoleMessages=".Length));          
+                else if (cString.ToLower().StartsWith("consolemessages="))
+                    ConsoleMessages = bool.Parse(cString.Substring("consolemessages=".Length));
+                else if (cString.ToLower().StartsWith("map="))
+                    MAP_NAME = cString.Substring("map=".Length);
             }
 
             if (ConsoleMessages)

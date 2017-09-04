@@ -5,13 +5,14 @@ using CTF_RPG_Game.Languages;
 
 namespace CTF_RPG_Game.MapComponents
 {
-    class Task
+    public class Task
     {
         private static List<Task> TaskList = new List<Task>();
 
         public int ID { get; }
         public string Name { get; }
         public string Flag { get; }
+        public string Category { get; }
         public int Gold { get; }
         public int LearnPoints { get; }
 
@@ -30,25 +31,28 @@ namespace CTF_RPG_Game.MapComponents
             foreach (var str in config)
             {
                 if (str.StartsWith("id="))
-                    ID = int.Parse(str.Substring("id=".Length));
+                    ID = int.Parse(str.Substring("id=".Length).Trim('\r'));
 
-                if (str.StartsWith("name"))
-                    Name = str.Substring("name=".Length);
+                if (str.StartsWith("name="))
+                    Name = str.Substring("name=".Length).Trim('\r');
 
                 if (str.StartsWith("messagerussian="))
-                    MessageRussian = str.Substring("messagerussian=".Length);
+                    MessageRussian = str.Substring("messagerussian=".Length).Trim('\r');
 
                 if (str.StartsWith("messageenglish="))
-                    MessageEnglish = str.Substring("messageenglish=".Length);
+                    MessageEnglish = str.Substring("messageenglish=".Length).Trim('\r');
 
                 if (str.StartsWith("flag="))
-                    Flag = str.Substring("flag=".Length);
+                    Flag = str.Substring("flag=".Length).Trim('\r');
 
                 if (str.StartsWith("gold="))
-                    Gold = int.Parse(str.Substring("gold=".Length));
+                    Gold = int.Parse(str.Substring("gold=".Length).Trim('\r'));
 
                 if (str.StartsWith("learnpoints="))
-                    LearnPoints = int.Parse(str.Substring("learnpoints=".Length));
+                    LearnPoints = int.Parse(str.Substring("learnpoints=".Length).Trim('\r'));
+
+                if (str.StartsWith("category="))
+                    Category = str.Substring("category=".Length).Trim('\r');
             }
 
             TaskList.Add(this);
@@ -76,7 +80,7 @@ namespace CTF_RPG_Game.MapComponents
 
         public static void CreateTasks()
         {
-            DirectoryInfo DInfo = new DirectoryInfo("Task");
+            DirectoryInfo DInfo = new DirectoryInfo("Tasks");
             DirectoryInfo[] TaskDirs = DInfo.GetDirectories();
 
             foreach (var dir in TaskDirs)

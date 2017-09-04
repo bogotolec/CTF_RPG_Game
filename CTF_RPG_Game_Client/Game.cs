@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -14,20 +15,17 @@ namespace CTF_RPG_Game_Client
 
         // CONSTS
 
-        const int HEIGHT = 32;
-        const int WIDTH = 82;
+        public static readonly int HEIGHT = 32;
+        public static readonly int WIDTH = 83;
+        private static readonly int BIG_WINDOW_WIDTH = 53;
+        private static readonly int MESSAGE_WINDOW_HEIGHT = 5;
+        private static readonly int COMMAND_WINDOW_HEIGHT = 20;
 
-        const int BIG_WINDOW_WIDTH = 53;
-        const int BIG_WINDOW_HEIGHT = HEIGHT - MESSAGE_WINDOW_HEIGHT;
-
-        const int MESSAGE_WINDOW_WIDTH = BIG_WINDOW_WIDTH;
-        const int MESSAGE_WINDOW_HEIGHT = 5;
-
-        const int COMMAND_WINDOW_WIDTH = WIDTH - BIG_WINDOW_WIDTH;
-        const int COMMAND_WINDOW_HEIGHT = 20;
-
-        const int INFO_WINDOW_WIDTH = COMMAND_WINDOW_WIDTH;
-        const int INFO_WINDOW_HEIGHT = HEIGHT - COMMAND_WINDOW_HEIGHT;
+        private static readonly int MESSAGE_WINDOW_WIDTH = BIG_WINDOW_WIDTH;
+        private static readonly int BIG_WINDOW_HEIGHT = HEIGHT - MESSAGE_WINDOW_HEIGHT;
+        private static readonly int COMMAND_WINDOW_WIDTH = WIDTH - BIG_WINDOW_WIDTH;
+        private static readonly int INFO_WINDOW_WIDTH = COMMAND_WINDOW_WIDTH;
+        private static readonly int INFO_WINDOW_HEIGHT = HEIGHT - COMMAND_WINDOW_HEIGHT;
 
         // Simple constructor
         public Game(ConnectionManager ConnectionManager)
@@ -37,13 +35,28 @@ namespace CTF_RPG_Game_Client
 
         public void Start()
         {
-            JsonAnswer Json = Authorization();
+            JsonAnswer Json;
+            if (File.Exists("Auth"))
+                Json = AuthorizationFile();
+            else
+                Json = Authorization();
 
             Console.Clear();
             while (true)
             {
                 DrowGame(Json);
-                Manager.Send(Console.ReadLine());
+
+                string Command = "";
+
+                do
+                {
+                    Command = Console.ReadLine();
+                    Console.SetCursorPosition(0, HEIGHT);
+                    Console.Write((new StringBuilder()).Append(' ', WIDTH));
+                    Console.CursorLeft = 0;
+                } while (Command == "");
+
+                Manager.Send(Command);
                 Json = JsonConvert.DeserializeObject<JsonAnswer>(Manager.Get());
             }
         }
@@ -64,6 +77,31 @@ namespace CTF_RPG_Game_Client
             }
             while (!IsJson(Answer));
 
+            return JsonConvert.DeserializeObject<JsonAnswer>(Answer);
+        }
+
+        private JsonAnswer AuthorizationFile()
+        {
+            string[] Data = File.ReadAllLines("Auth");
+
+            string Answer = Manager.Get();
+            Manager.Send(Data[0]);
+            Answer = Manager.Get();
+            Manager.Send("y");
+            Answer = Manager.Get();
+
+
+            Manager.Send(Data[1]);
+            Answer = Manager.Get();
+            Manager.Send(Data[2]);
+            Answer = Manager.Get();
+
+            if (!IsJson(Answer))
+            {
+                Console.WriteLine("Incorrect config file");
+                return Authorization();
+            }
+            
             return JsonConvert.DeserializeObject<JsonAnswer>(Answer);
         }
 
@@ -237,148 +275,188 @@ namespace CTF_RPG_Game_Client
 
             for (int i = 0; i < HEIGHT; i++)
             {
-                for (int j = 0; j < WIDTH; j++)
+                for (int j = 0; j < WIDTH; )
                 {
                     Window window = AreaOf(i, j);
 
                     if (window == Window.Message)
                     {
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(MessageWindow.Substring(MessageWindowIndex, MESSAGE_WINDOW_WIDTH));
                         MessageWindowIndex += MESSAGE_WINDOW_WIDTH;
-                        j += MESSAGE_WINDOW_WIDTH - 1;
+                        j += MESSAGE_WINDOW_WIDTH;
                     }
 
                     if (window == Window.Commands)
                     {
+                        Console.SetCursorPosition(MESSAGE_WINDOW_WIDTH, i);
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(CommandWindow.Substring(CommandsWindowIndex, COMMAND_WINDOW_WIDTH));
                         CommandsWindowIndex += COMMAND_WINDOW_WIDTH;
-                        j += COMMAND_WINDOW_WIDTH - 1;
+                        j += COMMAND_WINDOW_WIDTH;
                     }
 
                     if (window == Window.Info)
                     {
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(InfoWindow.Substring(InfoWindowIndex, INFO_WINDOW_WIDTH));
                         InfoWindowIndex += INFO_WINDOW_WIDTH;
-                        j += INFO_WINDOW_WIDTH - 1;
+                        j += INFO_WINDOW_WIDTH;
                     }
 
                     if (window == Window.BigFrame)
                     {
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(BigWindowFrame[BigWindowFrameIndex]);
                         BigWindowFrameIndex++;
+                        j++;
                     }
 
                     if (window == Window.BigData && Answer.Type == "Map")
                     {
                         ConsoleColor color;
-                        byte symbol = byte.Parse(Answer.BigWindow.Substring(BigWindowIndex * 2, 2),
-                            System.Globalization.NumberStyles.HexNumber);
+                        ConsoleColor BackgroundColor;
+                        byte[] symbol = Encoding.UTF8.GetBytes(Answer.BigWindow.Substring(BigWindowIndex * 2, 2));
 
-                        switch ((symbol & 0xF0) >> 4)
+                        #region switches
+                        switch ((symbol[0] & 0xF0) >> 4)
                         {
                             case 0:
-                                color = ConsoleColor.Red;
-                                break;
-                            case 1:
-                                color = ConsoleColor.Green;
-                                break;
-                            case 2:
-                                color = ConsoleColor.DarkBlue;
-                                break;
-                            case 3:
-                                color = ConsoleColor.Yellow;
-                                break;
-                            case 4:
                                 color = ConsoleColor.Black;
                                 break;
-                            case 5:
-                                color = ConsoleColor.White;
-                                break;
-                            case 7:
+                            case 1:
                                 color = ConsoleColor.Blue;
                                 break;
+                            case 2:
+                                color = ConsoleColor.Cyan;
+                                break;
+                            case 3:
+                                color = ConsoleColor.DarkBlue;
+                                break;
+                            case 4:
+                                color = ConsoleColor.DarkCyan;
+                                break;
+                            case 5:
+                                color = ConsoleColor.DarkGray;
+                                break;
+                            case 6:
+                                color = ConsoleColor.DarkGreen;
+                                break;
+                            case 7:
+                                color = ConsoleColor.DarkMagenta;
+                                break;
                             case 8:
-                                color = ConsoleColor.Gray;
+                                color = ConsoleColor.DarkRed;
                                 break;
                             case 9:
+                                color = ConsoleColor.DarkYellow;
+                                break;
+                            case 10:
+                                color = ConsoleColor.Gray;
+                                break;
+                            case 11:
+                                color = ConsoleColor.Green;
+                                break;
+                            case 12:
                                 color = ConsoleColor.Magenta;
                                 break;
-                            default:
+                            case 13:
+                                color = ConsoleColor.Red;
+                                break;
+                            case 14:
                                 color = ConsoleColor.White;
+                                break;
+                            case 15:
+                                color = ConsoleColor.Yellow;
+                                break;
+                            default:
+                                color = ConsoleColor.Black;
                                 break;
                         }
                         Console.ForegroundColor = color;
 
-                        char c;
-                        bool hasWritten = false;
-                        switch (symbol & 0x0F)
+                        switch (symbol[0] & 0x0F)
                         {
                             case 0:
-                                c = '>';
+                                BackgroundColor = ConsoleColor.Black;
                                 break;
                             case 1:
-                                c = '<';
+                                BackgroundColor = ConsoleColor.Blue;
                                 break;
                             case 2:
-                                c = '^';
+                                BackgroundColor = ConsoleColor.Cyan;
                                 break;
                             case 3:
-                                c = 'v';
+                                BackgroundColor = ConsoleColor.DarkBlue;
                                 break;
                             case 4:
-                                c = '$';
+                                BackgroundColor = ConsoleColor.DarkCyan;
                                 break;
                             case 5:
-                                c = 'X';
+                                BackgroundColor = ConsoleColor.DarkGray;
                                 break;
                             case 6:
-                                c = '!';
+                                BackgroundColor = ConsoleColor.DarkGreen;
                                 break;
                             case 7:
-                                c = '@';
+                                BackgroundColor = ConsoleColor.DarkMagenta;
                                 break;
                             case 8:
-                                c = '#';
-                                Console.BackgroundColor = color;
-                                Console.Write(" ");
-                                Console.BackgroundColor = ConsoleColor.Black;
-                                hasWritten = true;
+                                BackgroundColor = ConsoleColor.DarkRed;
                                 break;
                             case 9:
-                                c = ' ';
+                                BackgroundColor = ConsoleColor.DarkYellow;
                                 break;
                             case 10:
-                                c = '-';
+                                BackgroundColor = ConsoleColor.Gray;
+                                break;
+                            case 11:
+                                BackgroundColor = ConsoleColor.Green;
+                                break;
+                            case 12:
+                                BackgroundColor = ConsoleColor.Magenta;
+                                break;
+                            case 13:
+                                BackgroundColor = ConsoleColor.Red;
+                                break;
+                            case 14:
+                                BackgroundColor = ConsoleColor.White;
+                                break;
+                            case 15:
+                                BackgroundColor = ConsoleColor.Yellow;
                                 break;
                             default:
-                                c = ' ';
+                                BackgroundColor = ConsoleColor.Black;
                                 break;
                         }
-                        
-                        if (!hasWritten)
-                            Console.Write(c);
+                        Console.BackgroundColor = BackgroundColor;
+                        #endregion
+
+                        Console.Write(Encoding.ASCII.GetString(symbol, 1, 1));
 
                         BigWindowIndex++;
+                        j++;
                     }
 
                     if (window == Window.BigData && Answer.Type == "Inventory")
                     {
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(Answer.BigWindow.Substring(BigWindowIndex, (BIG_WINDOW_WIDTH - 2) / 2));
                         BigWindowIndex += (BIG_WINDOW_WIDTH - 2) / 2;
                         Console.Write('|');
                         Console.Write(Answer.BigWindow.Substring(BigWindowIndex, (BIG_WINDOW_WIDTH - 2) / 2));
                         BigWindowIndex += (BIG_WINDOW_WIDTH - 2) / 2;
-                        j += BIG_WINDOW_WIDTH - 3;
+                        j += BIG_WINDOW_WIDTH - 2;
                     }
                 }
                 Console.Write('\n');
             }
-            Console.Write((new StringBuilder()).Append(' ', 256));
+            Console.Write((new StringBuilder()).Append(' ', WIDTH));
             Console.CursorLeft = 0;
         }
 
