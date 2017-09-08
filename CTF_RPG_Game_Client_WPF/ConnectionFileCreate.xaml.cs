@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -29,8 +30,10 @@ namespace CTF_RPG_Game_Client_WPF
             UInt16 Port;
             if (IPAddress.TryParse(ServerIpText.Text, out IP) && UInt16.TryParse(ServerPortText.Text, out Port))
             {
-                File.Create("connection.cfg");
-                File.WriteAllText("connection.cfg", ServerIpText.Text + "\n" + ServerPortText);
+                FileStream stream = File.Create("connection.cfg");
+                byte[] data = Encoding.UTF8.GetBytes(ServerIpText.Text + "\n" + ServerPortText.Text);
+                stream.Write(data, 0, data.Length);
+                stream.Close();
                 this.Close();
             }
             else

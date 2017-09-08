@@ -15,14 +15,19 @@ using System.Windows.Shapes;
 
 namespace CTF_RPG_Game_Client_WPF
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        public static ConnectionManager Manager;
+
         public MainWindow()
         {
             InitializeComponent();
+            this.Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, EventArgs e)
+        {
+            Manager = ConnectionManager.GetManager();
         }
     }
 }

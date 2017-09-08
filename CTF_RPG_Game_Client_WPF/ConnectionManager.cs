@@ -8,7 +8,7 @@ using System.IO;
 
 namespace CTF_RPG_Game_Client_WPF
 {
-    class ConnectionManager
+    public class ConnectionManager
     {
         private IPEndPoint IPEP;
         Socket S;
@@ -31,13 +31,20 @@ namespace CTF_RPG_Game_Client_WPF
             {
                 Console.WriteLine(ex.Message);
                 ConnectionFileCreate window = new ConnectionFileCreate();
-                goto Start;
+                window.Show();
+                window.Closing += Window_Closing;
+                return;
             }
 
             S = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             S.Connect(IPEP);
 
             Auth();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MainWindow.Manager = new ConnectionManager();
         }
 
         private void Auth()
