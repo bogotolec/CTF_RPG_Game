@@ -20,6 +20,7 @@ namespace CTF_RPG_Game.MapComponents
         public string Symbol;
         public ConsoleColor Color;
         public ConsoleColor BackgroundColor = ConsoleColor.Black;
+        public List<Task> NeededTasks = new List<Task>();
         private static Dictionary<ConsoleColor, int> ColorDict = new Dictionary<ConsoleColor, int>();
 
         private void CreateDict()
