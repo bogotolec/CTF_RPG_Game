@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.IO;
+using System.Windows;
 
 namespace CTF_RPG_Game_Client_WPF
 {
@@ -17,7 +18,6 @@ namespace CTF_RPG_Game_Client_WPF
 
         private ConnectionManager()
         {
-        Start:
             try
             {
                 string[] data = File.ReadAllLines("connection.cfg");
@@ -37,7 +37,16 @@ namespace CTF_RPG_Game_Client_WPF
             }
 
             S = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            S.Connect(IPEP);
+            try
+            {
+                S.Connect(IPEP);
+            }
+            catch (SocketException ex)
+            {
+                Console.WriteLine(ex.Message);
+                MessageBox.Show("Не удаётся подключиться к серверу.");
+                Environment.Exit(0);
+            }
 
             Auth();
         }
@@ -49,7 +58,37 @@ namespace CTF_RPG_Game_Client_WPF
 
         private void Auth()
         {
+            try
+            {
+                Thread.Sleep(1000);
+                if (S.Available > 0)
+                    Get();
 
+                if (!File.Exists("auth.cfg"))
+                {
+                    AuthFileCreate window = new AuthFileCreate();
+                    window.Show();
+                    window.Closing += AuthWindow_Closing;
+                    return;
+                }
+
+                string[] data = File.ReadAllLines("auth.cfg");
+
+                Get(data[0]);
+                Get("y");
+                Get(data[1]);
+                Get(data[2]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                MessageBox.Show("Произошла ошибка при входе. Возможно, неверен логин/пароль, либо вы не зарегистрированы", "ERROR", MessageBoxButton.OK);
+            }
+        }
+
+        private void AuthWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Auth();
         }
 
         public void Send(string Data)
@@ -59,6 +98,17 @@ namespace CTF_RPG_Game_Client_WPF
 
         public string Get()
         {
+            while (S.Available == 0)
+                Thread.Sleep(50);
+            Thread.Sleep(100);
+            byte[] buffer = new byte[S.Available];
+            S.Receive(buffer);
+            return Encoding.UTF8.GetString(buffer);
+        }
+
+        public string Get(string request)
+        {
+            Send(request);
             while (S.Available == 0)
                 Thread.Sleep(50);
             Thread.Sleep(100);

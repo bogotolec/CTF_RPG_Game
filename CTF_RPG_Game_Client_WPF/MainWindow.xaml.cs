@@ -18,16 +18,13 @@ namespace CTF_RPG_Game_Client_WPF
     public partial class MainWindow : Window
     {
         public static ConnectionManager Manager;
+        private JsonData LastAnswer;
 
         public MainWindow()
         {
             InitializeComponent();
-            this.Loaded += MainWindow_Loaded;
-        }
-
-        private void MainWindow_Loaded(object sender, EventArgs e)
-        {
             Manager = ConnectionManager.GetManager();
+            LastAnswer = JsonData.Parse(Manager.Get("map"));
         }
     }
 }
