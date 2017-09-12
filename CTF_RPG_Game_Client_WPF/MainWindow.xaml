@@ -5,8 +5,101 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CTF_RPG_Game_Client_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="CRG" Height="600" Width="805"
+        MinHeight="600" MaxHeight="600"
+        MinWidth="805" MaxWidth="805">
     <Grid>
-        
+        <Border Background="Beige" BorderBrush="Black" BorderThickness="2" CornerRadius="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="500" Width="500" Margin="10,10,0,0">
+            <Grid x:Name="MapGrid" HorizontalAlignment="Left" Height="500" VerticalAlignment="Top" Width="500">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Border>
+
+        <Border Background="Beige" BorderBrush="Black" BorderThickness="2" CornerRadius="10" Padding="5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="170" Width="272" Margin="510,10,0,0">
+            <TextBlock x:Name="MessageTextBlock" Text="Message" FontSize="14" FontFamily="Consolas" HorizontalAlignment="Left" Height="155" TextWrapping="Wrap" VerticalAlignment="Top" Width="252"/>
+        </Border>
+
+        <Grid HorizontalAlignment="Left" Height="325" Margin="515,185,0,0" VerticalAlignment="Top" Width="267">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button x:Name="ButtonW" Content="W" FontFamily="consolas" FontSize="30" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="1"/>
+            <Button x:Name="ButtonA" Content="A" FontFamily="consolas" FontSize="30" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Grid.RowSpan="1"/>
+            <Button x:Name="ButtonS" Content="S" FontFamily="consolas" FontSize="30" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2" Grid.RowSpan="1"/>
+            <Button x:Name="ButtonD" Content="D" FontFamily="consolas" FontSize="30" Grid.Column="4" Grid.Row="5" Grid.ColumnSpan="2" Grid.RowSpan="1"/>
+
+            <Button x:Name="ButtonInventory" Content="Inventory" FontFamily="consolas" FontSize="20" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1"/>
+            <Button x:Name="ButtonTaskInfo" Content="Task Info" FontFamily="consolas" FontSize="20" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="1"/>
+            <Button x:Name="ButtonInputFlag" Content="Input flag" FontFamily="consolas" FontSize="20" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="1"/>
+            <TextBox x:Name="FlagTextBox" BorderBrush="Black" FontFamily="consolas" BorderThickness="2" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" Grid.RowSpan="1"/>
+        </Grid>
+
+
     </Grid>
 </Window>
