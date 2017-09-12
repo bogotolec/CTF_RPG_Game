@@ -1,0 +1,8 @@
+id=3
+name=Big problem
+messagerussian=СРОЧНО. КТО-ТО ВЗЛОМАЛ НАШ СЕРВЕР! ВСЕ, ЧТО У НАС ЕСТЬ ЭТО ДАМП ТРАФФИКА! ТЫ ОБЪЯСНИШЬ, ЧТО ПРОИСХОДИТ? ТЫ ЖЕ УМЕЕШЬ РАБОТАТЬ С WIRESHARK?
+messageenglish=QUICKLY. SOMEBODY HAS PWNED OUR SERVER! WE ONLY HAVE A TRAFFIC DUMP. CAN YOU EXPLAIN WHAT HAPPENED? DO YOU REALLY KNOW HOW TO WORK WITH WIRESHARK?
+flag=CRG{this_is_real_netcat}
+gold=200
+learnpoints=2
+category=FORENSTIC

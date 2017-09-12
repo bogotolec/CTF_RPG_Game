@@ -1,0 +1,8 @@
+id=11
+name=monster
+messagerussian=Нахальные синие монстры напали на Землю. Сможет ли Доктор в очередной раз её спасти? http://162.212.152.75/
+messageenglish=Impudent blue monsters attacked Earth. Can Doctor save her again? http://162.212.152.75/
+flag=CRG{turn_it_back_pls}
+gold=50
+learnpoints=1
+category=WEB

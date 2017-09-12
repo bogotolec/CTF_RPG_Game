@@ -1,0 +1,8 @@
+id=1
+name=Binary search
+messagerussian=Мой друг - олимпиадник по программированию, но даже он не справился с int32. Поможешь?
+messageenglish=My friend is programming geek, but even he didn't manage with int32. Can you help?
+flag=CRG{algoritm_that_everyone_must_know}
+gold=50
+learnpoints=1
+category=PPC

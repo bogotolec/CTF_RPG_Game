@@ -1,0 +1,8 @@
+id=10
+name=tardis
+messagerussian=Тардис опять вышла из строя, а Доктор ведь должен мир спасать. Расшифруешь? http://162.212.152.75/
+messageenglish=Tardis has broken again, but Doctor needs to save the word. Can you decrypt? http://162.212.152.75/
+flag=CRG{Applause_to_Master}
+gold=50
+learnpoints=1
+category=WEB

@@ -1,0 +1,8 @@
+id=4
+name=Strange book
+messagerussian=Перед тобой закрытая дверь и открытая книга. Можешь сделать наоборот?
+messageenglish=testtesttest
+flag=CRG{0451}
+gold=50
+learnpoints=1
+category=STEGO
