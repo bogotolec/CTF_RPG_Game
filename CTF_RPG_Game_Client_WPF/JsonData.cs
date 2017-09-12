@@ -4,12 +4,12 @@ namespace CTF_RPG_Game_Client_WPF
 {
     class JsonData
     {
-        public string Message { get; }
-        public string BigWindow { get; }
-        public string Commands { get; }
-        public string Info { get; }
-        public string Level { get; }
-        public string Type { get; }
+        public string Message { get; set; }
+        public string BigWindow { get; set; }
+        public string Commands { get; set; }
+        public string Info { get; set; }
+        public string Level { get; set; }
+        public string Type { get; set; }
 
         private JsonData()
         { }
