@@ -1,0 +1,19 @@
+﻿<Window x:Class="CTF_RPG_Game_Client_WPF.ConnectionFileCreate"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CTF_RPG_Game_Client_WPF"
+        mc:Ignorable="d"
+        Title="Create connection file" Height="150" Width="250"
+        MinHeight="150" MaxHeight="150"
+        MinWidth="250" MaxWidth="250">
+    <Grid>
+        <Label x:Name="ServerIPLabel" Content="Server IP:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ServerPortLabel" Content="Server port:" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ServerIpText" HorizontalAlignment="Left" Height="23" Margin="86,12,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="146"/>
+        <TextBox x:Name="ServerPortText" HorizontalAlignment="Left" Height="23" Margin="86,40,0,0" TextWrapping="Wrap" Text="6970" VerticalAlignment="Top" Width="146"/>
+        <Button x:Name="ButtonCreate" Content="Create file" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="222" Height="38"/>
+
+    </Grid>
+</Window>

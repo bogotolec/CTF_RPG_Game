@@ -24,7 +24,7 @@ namespace CTF_RPG_Game.MapComponents
                 return "Error";
         }
 
-        public Task(string PathToConfig)
+        private Task(string PathToConfig)
         {
             string[] config = File.ReadAllText(PathToConfig + "config").Split('\n');
 
