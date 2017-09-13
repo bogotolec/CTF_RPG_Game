@@ -166,7 +166,7 @@ namespace CTF_RPG_Game.MapComponents
                     
                     if (!IsPassable)
                     {
-                        BackgroundColor = ConsoleColor.DarkGreen;
+                        BackgroundColor = ConsoleColor.Green;
                         Color = ConsoleColor.Green;
                         Symbol = "#";
                     }
@@ -256,7 +256,7 @@ namespace CTF_RPG_Game.MapComponents
                 #endregion
                 #region Forest
                 case LandscapeCrgm.Forest:
-                    BackgroundColor = ConsoleColor.Green;
+                    BackgroundColor = ConsoleColor.DarkGreen;
 
                     if (!IsPassable)
                     {
