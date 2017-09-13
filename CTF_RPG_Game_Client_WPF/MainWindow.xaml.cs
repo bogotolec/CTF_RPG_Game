@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +22,7 @@ namespace CTF_RPG_Game_Client_WPF
         private JsonData LastAnswer;
         private Map CurrentMap;
         private List<Image> ImagesMap = new List<Image>();
+        private Dictionary<string, BitmapImage> ImageLibrary = new Dictionary<string, BitmapImage>();
 
         public MainWindow()
         {
@@ -28,10 +30,14 @@ namespace CTF_RPG_Game_Client_WPF
             Manager = ConnectionManager.GetManager();
             LastAnswer = JsonData.Parse(Manager.Get("map"));
 
+            InitImageLibrary();
+
             ButtonW.Click += ButtonW_Click;
             ButtonA.Click += ButtonA_Click;
             ButtonS.Click += ButtonS_Click;
             ButtonD.Click += ButtonD_Click;
+
+
 
             DrowMap();
         }
@@ -60,6 +66,33 @@ namespace CTF_RPG_Game_Client_WPF
             DrowMap();
         }
 
+        private void InitImageLibrary()
+        {
+            string dir = Directory.GetCurrentDirectory();
+
+            BitmapImage Bricks = new BitmapImage(new Uri(dir + "\\textures\\bricks.png")),
+                        Desert = new BitmapImage(new Uri(dir + "\\textures\\desert.png")),
+                        DesertNoPass = new BitmapImage(new Uri(dir + "\\textures\\desert_no_pass.png")),
+                        Field = new BitmapImage(new Uri(dir + "\\textures\\field.png")),
+                        Forest = new BitmapImage(new Uri(dir + "\\textures\\forest.png")),
+                        ForestNoPass = new BitmapImage(new Uri(dir + "\\textures\\forest_no_pass.png")),
+                        Lava = new BitmapImage(new Uri(dir + "\\textures\\lava.png")),
+                        Sign = new BitmapImage(new Uri(dir + "\\textures\\sign.png")),
+                        Water = new BitmapImage(new Uri(dir + "\\textures\\water.png")),
+                        WaterNoPass = new BitmapImage(new Uri(dir + "\\textures\\water_no_pass.png"));
+
+            ImageLibrary.Add("Bricks", Bricks);
+            ImageLibrary.Add("Desert", Desert);
+            ImageLibrary.Add("DesertNoPass", DesertNoPass);
+            ImageLibrary.Add("Field", Field);
+            ImageLibrary.Add("Forest", Forest);
+            ImageLibrary.Add("ForestNoPass", ForestNoPass);
+            ImageLibrary.Add("Lava", Lava);
+            ImageLibrary.Add("Sign", Sign);
+            ImageLibrary.Add("Water", Water);
+            ImageLibrary.Add("WaterNoPass", WaterNoPass);
+        }
+
         private void DrowMap()
         {
             CurrentMap = new Map(LastAnswer.BigWindow, 25, 51);
@@ -67,43 +100,45 @@ namespace CTF_RPG_Game_Client_WPF
             {
                 for (int j = 0; j < Map.WIDTH; j++)
                 {
-
+                    Image img = new Image();
+                    switch (CurrentMap[i, j].Land)
+                    {
+                        case Landskape.Bricks:
+                            img.Source = ImageLibrary["Bricks"];
+                            break;
+                        case Landskape.Desert:
+                            if (CurrentMap[i, j].IsPassable)
+                                img.Source = ImageLibrary["Desert"];
+                            else
+                                img.Source = ImageLibrary["DesertNoPass"];
+                            break;
+                        case Landskape.Field:
+                            img.Source = ImageLibrary["Field"];
+                            break;
+                        case Landskape.Forest:
+                            if (CurrentMap[i, j].IsPassable)
+                                img.Source = ImageLibrary["Forest"];
+                            else
+                                img.Source = ImageLibrary["ForestNoPass"];
+                            break;
+                        case Landskape.Lava:
+                            img.Source = ImageLibrary["Lava"];
+                            break;
+                        case Landskape.Sign:
+                            img.Source = ImageLibrary["Sign"];
+                            break;
+                        case Landskape.Water:
+                            if (CurrentMap[i, j].IsPassable)
+                                img.Source = ImageLibrary["Water"];
+                            else
+                                img.Source = ImageLibrary["WaterNoPass"];
+                            break;
+                    }
+                    Grid.SetColumn(img, j);
+                    Grid.SetRow(img, i);
+                    ImagesMap.Add(img);
+                    MapGrid.Children.Add(img);
                 }
-            }
-        }
-    }
-
-    public class SimpleCommand : ICommand
-    {
-        // Ссылка на метод который будет выполняться при активации команды (в интерфейс не входит)
-        private Action _action;
-
-        // Конструктор, т.к. класс делался для того, чтобы показать вызов разных методов, 
-        // то в качестве параметра и передается метод, который необходимо вызывать
-        public SimpleCommand(Action p_action)
-        {
-            _action = p_action;
-        }
-
-        // Метод, возвращающий true если команда может быть выполнена, в противном случае false 
-        // (входит в интерфейс)
-        // У меня, для упрощения всегда возвращается true
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        // Событие, которое необходимо вызывать, если поменялась доступность команды, 
-        // т.к. у меня всегда команда доступна, см. выше, то я это событие и не вызываю (входит в интерфейс)
-        public event EventHandler CanExecuteChanged;
-
-        // Метод, который вызывается, при срабатывании команды (у меня вызывается метод переданный 
-        // в конструктор)
-        public void Execute(object parameter)
-        {
-            if (_action != null)
-            {
-                _action();
             }
         }
     }

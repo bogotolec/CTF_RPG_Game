@@ -34,7 +34,7 @@ namespace CTF_RPG_Game_Client_WPF
             {
                 if (IsColor)
                 {
-                    colors[i / width, i % width] = Convert.ToByte(c);
+                    colors[i / width, i % width] = (byte)(Convert.ToUInt16(c) & 0xFF);
                 }
                 else
                 {
@@ -115,8 +115,10 @@ namespace CTF_RPG_Game_Client_WPF
                     pass = false;
                     break;
                 case 8:
-                    Land = Landskape.Lava;
-                    pass = false;
+                    if (symbol == '#')
+                        Land = Landskape.Bricks;
+                    else
+                        Land = Landskape.Lava;
                     break;
                 case 9:
                     Land = Landskape.Desert;
@@ -138,7 +140,10 @@ namespace CTF_RPG_Game_Client_WPF
                     pass = false;
                     break;
                 case 13:
-                    Land = Landskape.Lava;
+                    if (symbol == '#')
+                        Land = Landskape.Bricks;
+                    else
+                        Land = Landskape.Lava;
                     pass = false;
                     break;
                 case 14:
