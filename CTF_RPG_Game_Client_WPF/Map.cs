@@ -28,21 +28,27 @@ namespace CTF_RPG_Game_Client_WPF
             byte[,] colors = new byte[height, width];
             char[,] symbols = new char[height, width];
 
-            bool IsColor = true;
+            int IsColor = 0;
             int i = 0;
             foreach (var c in mapconfig)
             {
-                if (IsColor)
+                if (IsColor == 0)
                 {
-                    colors[i / width, i % width] = (byte)(Convert.ToUInt16(c) & 0xFF);
+                    colors[i / width, i % width] = (byte)(Convert.ToByte(c.ToString(), 16) << 4);
+                    IsColor++;
+                }
+                else if (IsColor == 1)
+                {
+                    colors[i / width, i % width] += (byte)(Convert.ToByte(c.ToString(), 16));
+                    IsColor++;
                 }
                 else
                 {
+                    IsColor += 1;
                     symbols[i / width, i % width] = c;
                     i++;
+                    IsColor = 0;
                 }
-
-                IsColor = !IsColor;
             }
 
             int differenceH = height - HEIGHT,

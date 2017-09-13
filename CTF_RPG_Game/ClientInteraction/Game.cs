@@ -181,24 +181,36 @@ namespace CTF_RPG_Game.ClientInteraction
                 {
                     if (i == character.Y && j == character.X)
                     {
-                        byte[] color = new byte[1] { map[i, j].GetCellBytes()[0] };
-                        color[0] = (byte)((color[0] & 0x0F) + (0x40));
-                        string s = Encoding.UTF8.GetString(color);
+                        byte color = map[i, j].GetCellBytes()[0];
 
-                        SB.Append(s + "X");
+                        SB.Append(ToHex(color) + "X");
                     }
                     else if (i < 0 || i >= map.Height || j < 0 || j >= map.Width)
                     {
-                        SB.Append("\0 ");
+                        SB.Append("00 ");
                     }
                     else
                     {
                         Temp = map[i, j].GetCellBytes();
-                        SB.Append(Encoding.UTF8.GetString(Temp));
+                        SB.Append(ToHex(Temp[0]) + map[i, j].ToString());
                     }
                 }
             }
             result.BigWindow = SB.ToString();
+        }
+
+        private string ToHex(byte b)
+        {
+            return ToHex1((byte)((b & 0xF0) >> 4)).ToString() + ToHex1((byte)(b & 0x0F));
+        }
+
+        private char ToHex1(byte b)
+        {
+            if (b < 10)
+                return (char)(b + '0');
+            else if (b < 16)
+                return (char)(b + 'A' - 10);
+            return '?';
         }
 
         private void InventoryToResult(int page)
