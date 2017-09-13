@@ -93,8 +93,20 @@ namespace CTF_RPG_Game_Client_WPF
             ImageLibrary.Add("WaterNoPass", WaterNoPass);
         }
 
+        private void Clear()
+        {
+            foreach(var c in ImagesMap)
+            {
+                MapGrid.Children.Remove(c);
+            }
+            ImagesMap = new List<Image>();
+        }
+
         private void DrowMap()
         {
+            MessageTextBlock.Text = LastAnswer.Message;
+            Clear();
+
             CurrentMap = new Map(LastAnswer.BigWindow, 25, 51);
             for (int i = 0; i < Map.HEIGHT; i++)
             {
