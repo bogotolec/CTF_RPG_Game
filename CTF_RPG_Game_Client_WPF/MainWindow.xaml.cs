@@ -37,9 +37,23 @@ namespace CTF_RPG_Game_Client_WPF
             ButtonS.Click += ButtonS_Click;
             ButtonD.Click += ButtonD_Click;
 
-
+            ButtonTaskInfo.Click += ButtonTaskInfo_Click;
+            ButtonInputFlag.Click += ButtonInputFlag_Click;
 
             DrowMap();
+        }
+
+        private void ButtonInputFlag_Click(object sender, RoutedEventArgs e)
+        {
+            LastAnswer = JsonData.Parse(Manager.Get("submit " + FlagTextBox.Text));
+            MessageTextBlock.Text = LastAnswer.Message;
+        }
+
+        private void ButtonTaskInfo_Click(object sender, RoutedEventArgs e)
+        {
+            LastAnswer = JsonData.Parse(Manager.Get("task"));
+            if (LastAnswer.Info != null)
+                new TaskInfoWindow(LastAnswer.Message, LastAnswer.Info).Show();
         }
 
         private void ButtonD_Click(object sender, RoutedEventArgs e)
