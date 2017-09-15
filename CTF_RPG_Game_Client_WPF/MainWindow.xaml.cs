@@ -21,7 +21,7 @@ namespace CTF_RPG_Game_Client_WPF
         public static ConnectionManager Manager;
         private JsonData LastAnswer;
         private Map CurrentMap;
-        private List<Image> ImagesMap = new List<Image>();
+        private List<UIElement> ImagesMap = new List<UIElement>();
         private Dictionary<string, BitmapImage> ImageLibrary = new Dictionary<string, BitmapImage>();
 
         public MainWindow()
@@ -93,7 +93,8 @@ namespace CTF_RPG_Game_Client_WPF
                         Lava = new BitmapImage(new Uri(dir + "\\textures\\lava.png")),
                         Sign = new BitmapImage(new Uri(dir + "\\textures\\sign.png")),
                         Water = new BitmapImage(new Uri(dir + "\\textures\\water.png")),
-                        WaterNoPass = new BitmapImage(new Uri(dir + "\\textures\\water_no_pass.png"));
+                        WaterNoPass = new BitmapImage(new Uri(dir + "\\textures\\water_no_pass.png")),
+                        Hero = new BitmapImage(new Uri(dir + "\\textures\\hero.png"));
 
             ImageLibrary.Add("Bricks", Bricks);
             ImageLibrary.Add("Desert", Desert);
@@ -105,6 +106,7 @@ namespace CTF_RPG_Game_Client_WPF
             ImageLibrary.Add("Sign", Sign);
             ImageLibrary.Add("Water", Water);
             ImageLibrary.Add("WaterNoPass", WaterNoPass);
+            ImageLibrary.Add("Hero", Hero);
         }
 
         private void Clear()
@@ -113,7 +115,7 @@ namespace CTF_RPG_Game_Client_WPF
             {
                 MapGrid.Children.Remove(c);
             }
-            ImagesMap = new List<Image>();
+            ImagesMap = new List<UIElement>();
         }
 
         private void DrowMap()
@@ -152,6 +154,15 @@ namespace CTF_RPG_Game_Client_WPF
                             break;
                         case Landskape.Sign:
                             img.Source = ImageLibrary["Sign"];
+                            TextBlock s = new TextBlock();
+                            s.Text = CurrentMap[i, j].SignSymbol.ToString();
+                            s.FontFamily = new FontFamily("Consolas");
+                            s.FontSize = 20;
+                            s.TextAlignment = TextAlignment.Center;
+                            Grid.SetColumn(s, j);
+                            Grid.SetRow(s, i);
+                            ImagesMap.Add(s);
+                            MapGrid.Children.Add(s);
                             break;
                         case Landskape.Water:
                             if (CurrentMap[i, j].IsPassable)
@@ -164,6 +175,28 @@ namespace CTF_RPG_Game_Client_WPF
                     Grid.SetRow(img, i);
                     ImagesMap.Add(img);
                     MapGrid.Children.Add(img);
+                    if (i == 12 && j == 12)
+                    {
+                        Image img1 = new Image();
+                        img1.Source = ImageLibrary["Hero"];
+                        Grid.SetColumn(img1, j);
+                        Grid.SetRow(img1, i);
+                        ImagesMap.Add(img1);
+                        MapGrid.Children.Add(img1);
+                    }
+                    if (CurrentMap[i,j].IsTaskable)
+                    {
+                        TextBlock s = new TextBlock();
+                        s.Text = "!";
+                        s.FontFamily = new FontFamily("Consolas");
+                        s.FontSize = 20;
+                        s.TextAlignment = TextAlignment.Center;
+                        s.Foreground = Brushes.Red;
+                        Grid.SetColumn(s, j);
+                        Grid.SetRow(s, i);
+                        ImagesMap.Add(s);
+                        MapGrid.Children.Add(s);
+                    }
                 }
             }
         }

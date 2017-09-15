@@ -1,0 +1,8 @@
+id=13
+name=Floppy
+messagerussian=Старая дискета...
+messageenglish=Old floppy... 
+flag=CRG{fl0ppies_are_immortal}
+gold=200
+learnpoints=4
+category=REVERSE
