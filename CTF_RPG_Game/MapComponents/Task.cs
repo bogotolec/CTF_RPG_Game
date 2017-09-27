@@ -85,7 +85,7 @@ namespace CTF_RPG_Game.MapComponents
 
             foreach (var dir in TaskDirs)
             {
-                new Task(dir.FullName + '\\');
+                new Task(dir.FullName + '/');
             }
         }
 

@@ -78,7 +78,7 @@ namespace CTF_RPG_Game.CharacterInteraction
             using (SqlConnection connection = new SqlConnection(Program.DBConnectionString))
             {
                 SqlCommand command = new SqlCommand();
-                command.CommandText = "SELECT * FROM dbo.GameCharacters WHERE Id=" + id.ToString();
+                command.CommandText = "SELECT * FROM GameCharacters WHERE Id=" + id.ToString();
                 command.Connection = connection;
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -116,7 +116,7 @@ namespace CTF_RPG_Game.CharacterInteraction
             using (SqlConnection connection = new SqlConnection(Program.DBConnectionString))
             {
                 SqlCommand command = new SqlCommand();
-                command.CommandText = "INSERT INTO dbo.GameCharacters " +
+                command.CommandText = "INSERT INTO GameCharacters " +
                     "(Id, Name, Lvl, CoordX, CoordY, SkillPoints, HeadId, BodyId, LHandId, RHandId, Boots, JeweleryOne, JeweleryTwo, Gold, Health, BackPack, LearnedSkills, SolvedTasks) VALUES " +
                     "(" + id.ToString() + ", '" + name + "', 0, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0)";
                 command.Connection = connection;
@@ -154,7 +154,7 @@ namespace CTF_RPG_Game.CharacterInteraction
                 string solvedtasksDB = string.Join(",", SolvedTasks);
 
                 SqlCommand command = new SqlCommand();
-                command.CommandText = "UPDATE dbo.GameCharacters SET " +
+                command.CommandText = "UPDATE GameCharacters SET " +
                     "Name='" + Name.ToString() + "', " +
                     "Lvl=" + Level.ToString() + ", " +
                     "CoordX=" + X.ToString() + ", " +
